@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/13 16:01:51 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/13 17:47:28 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ SRCS_DIR	= srcs
 OBJS_DIR	= objs
 
 SRCS		=				\
-	main.c
+	main.c					\
+	parse_map_byte.c		\
+	parse_map.c				\
+	print_map_error.c
 
 INCLUDES	=				\
 	.						\

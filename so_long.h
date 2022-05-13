@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 15:46:27 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/14 00:49:06 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdint.h>
 # include <stddef.h>
+# include <stdbool.h>
 
 // ========================================================================== //
 //                                Useful Typedefs			                  //
@@ -57,8 +58,8 @@ typedef struct s_pos
 // A tile that may be defined in a map file.
 typedef enum e_tile
 {
-	SL_TILE_WALL,
 	SL_TILE_FLOOR,
+	SL_TILE_WALL,
 	SL_TILE_COIN,
 	SL_TILE_EXIT,
 	SL_TILE_PLAYER,
@@ -69,24 +70,49 @@ typedef enum e_parsing_error
 {
 	SL_PERR_SUCCESS,
 	SL_PERR_CANT_READ,
-	SL_PERR_MISSING_WALL,
-	SL_PERR_NOT_A_RECTANGLE,
+	SL_PERR_OUT_OF_MEMORY,
+	SL_PERR_INVALID_MAP,
 }	t_perr;
 
-// A fully parsed map.
-typedef struct s_map
+// Stores the state required when reading a map.
+typedef struct s_map_parser
 {
-	size_t	width;
-	size_t	height;
-	t_tile	*tiles;
-}	t_map;
+	uint32_t	players;
+	uint32_t	coins;
+	uint32_t	exits;
+	bool		is_rectangle;
+	bool		is_enclosed;
+	bool		contains_invalid_character;
+	char		invalid_character;
+
+	uint32_t	width;
+	uint32_t	height;
+
+	uint32_t	line_len;
+	size_t		cap;
+	t_tile		*tiles;
+}	t_map_parser;
+
 
 // Parses a map defined in the provided file descriptor.
-t_perr	sl_parse_map(int fd, t_map *map);
+//
+// Whatever happens, once this function has returned, the initialized
+// `t_map_parser` instance should be freed using the `sl_free_map_parser`
+// function.
+t_perr	sl_parse_map(int fd, t_map_parser *p);
 
-// Frees the resources allocated for a `t_map` instance. The provided map must
-// come from a successful call to `sl_pase_map`.
-t_perr	sl_free_map(t_map *map);
+// Parses a single byte for a map.
+//
+// If the function returns `false`, then the system is out of memory.
+bool	sl_parse_byte(uint8_t byte, t_map_parser *p);
+
+// Frees the resources allocated for a properly initialized `t_map_parser`
+// instance.
+void	sl_free_map_parser(t_map_parser *p);
+
+// Prints to the standard error an error describing why the provided map was
+// rejected.
+void	sl_print_map_error(t_map_parser *p);
 
 // ========================================================================== //
 //                                Game State                                  //
@@ -122,7 +148,7 @@ typedef struct s_game
 // This function returns whether the operation is a success, and in that case,
 // the initialized `t_game` instance should be passed to the `sl_deinit_game`
 // function.
-bool	sl_init_game(t_game *game, t_map *map);
+bool	sl_init_game(t_game *game, t_tile *tiles, uint32_t w, uint32_t h);
 
 // Frees the resources allocated for a `game` instance using the `sl_init_game`
 // function.

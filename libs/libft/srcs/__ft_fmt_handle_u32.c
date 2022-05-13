@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_uint32_to_str.c                                 :+:      :+:    :+:   */
+/*   __ft_fmt_handle_u32.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 21:21:28 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/14 00:18:55 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/13 19:30:43 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/14 00:01:53 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "__libft_fmt.h"
 #include "libft.h"
 
-char	*ft_uint32_to_str(uint32_t i, t_str base, char *buf_end)
+bool	__ft_fmt_handle_u32(t_writer w, va_list args)
 {
-	if (i == 0)
-		return (*(--buf_end) = base.data[0], buf_end);
-	while (i)
-	{
-		buf_end--;
-		*buf_end = base.data[i % base.len];
-		i /= base.len;
-	}
-	return (buf_end);
+	char	buf[10];
+	char	*start;
+
+	start = ft_uint32_to_str(
+			va_arg(args, uint32_t),
+			(t_str){"0123456789", 10}, buf + 10);
+	return (w.write(w.self, start, 10 - (start - buf)));
 }

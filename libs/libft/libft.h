@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:00 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 15:39:34 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/13 20:00:42 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <limits.h>
+# include <stdarg.h>
 
 // ========================================================================== //
 //                                   Math                                     //
@@ -66,6 +67,9 @@ int			ft_str_cmp(const char *a, const char *b);
 // Returns a pointer to the first character `c` within `s`. If the character
 // is not in `s`, `NULL` is returned.
 const char	*ft_str_find(const char *s, char c);
+
+// Determines whether `needle` can be found at the start of `s`.
+bool		ft_str_starts_with(const char *s, const char *needle);
 
 // ========================================================================== //
 //                                   Format                                   //
@@ -184,6 +188,38 @@ t_rdres		ft_reader_refill(t_reader *reader);
 
 // Reads a single byte from the provided `reader_t` instance.
 t_rdres		ft_read_byte(t_reader *reader, uint8_t *byte);
+
+// ========================================================================== //
+//                                   Format                                   //
+// ========================================================================== //
+
+// A function that may be used to write the first `count` bytes referenced
+// by `to_write`.
+typedef bool	(*t_writer_fn)(void *self, void *to_write, size_t count);
+
+// Describes a way to write data somewhere.
+typedef struct s_writer
+{
+	void		*self;
+	t_writer_fn	write;
+}	t_writer;
+
+// Formats the provided string and writes it using the provided `t_writer`
+// instance.
+bool		ft_fmt_write_va(t_writer writer, const char *format, va_list args);
+
+// Formats the provided string and writes it using the provided `t_writer`
+// instance.
+bool		ft_fmt_write(t_writer writer, const char *format, ...);
+
+// Formats the provided string and writes the provided file descriptor.
+bool		ft_fmt_fd(int fd, const char *format, ...);
+
+// Formats the provided string and writes to the standard output.
+bool		ft_fmt(const char *format, ...);
+
+// Formats the provided string and writes to the standard error.
+bool		ft_fmt_err(const char *format, ...);
 
 // ========================================================================== //
 //                                Allocations                                 //

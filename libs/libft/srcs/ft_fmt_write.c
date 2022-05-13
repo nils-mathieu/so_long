@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_uint32_to_str.c                                 :+:      :+:    :+:   */
+/*   ft_fmt_write.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 21:21:28 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/14 00:18:55 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/13 17:52:34 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/13 19:21:19 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "__libft_fmt.h"
 
-char	*ft_uint32_to_str(uint32_t i, t_str base, char *buf_end)
+bool	ft_fmt_write(t_writer writer, const char *format, ...)
 {
-	if (i == 0)
-		return (*(--buf_end) = base.data[0], buf_end);
-	while (i)
+	va_list	args;
+	bool	ret;
+
+	va_start(args, format);
+	ret = ft_fmt_write_va(writer, format, args);
+	va_end(args);
+	return (ret);
+}
+
+bool	ft_fmt_write_va(t_writer writer, const char *format, va_list args)
+{
+	while (*format)
 	{
-		buf_end--;
-		*buf_end = base.data[i % base.len];
-		i /= base.len;
+		if (!__ft_fmt_parse_format(writer, &format, args))
+			return (false);
 	}
-	return (buf_end);
+	return (true);
 }
