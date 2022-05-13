@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_str_nlen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 14:20:48 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 15:50:11 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/06 11:45:21 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/06 11:46:11 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include "libft.h"
 
-int	main(void)
+size_t	ft_str_nlen(const char *s, size_t n)
 {
-	return (0);
+	const char	*t;
+
+	t = s;
+	while (n && *t)
+	{
+		t++;
+		n--;
+	}
+	return (t - s);
 }

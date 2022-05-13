@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_str_find.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 14:20:48 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 15:50:11 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/04 12:10:43 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/04 12:16:34 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include "libft.h"
 
-int	main(void)
+const char	*ft_str_find(const char *s, char c)
 {
-	return (0);
+	while (*s)
+	{
+		if (*s == c)
+			return (s);
+		s++;
+	}
+	return (NULL);
 }

@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_size_min.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 14:20:48 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 15:50:11 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/06 11:42:44 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/06 11:43:28 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include "libft.h"
 
-int	main(void)
+size_t	ft_size_min(size_t a, size_t b)
 {
-	return (0);
+	if (a < b)
+		return (a);
+	else
+		return (b);
 }

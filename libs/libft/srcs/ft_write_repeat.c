@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_write_repeat.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 14:20:48 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 15:50:11 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/05 21:13:51 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/05 21:31:12 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include "libft.h"
 
-int	main(void)
+bool	ft_write_repeat(int fd, const void *data, size_t len, size_t n)
 {
-	return (0);
+	uint8_t		container[64];
+	t_buffer	buf;
+
+	buf.data = container;
+	buf.init = 0;
+	buf.cap = 64;
+	while (n)
+	{
+		ft_write_buffered(fd, &buf, data, len);
+		n--;
+	}
+	return (ft_write_all(fd, buf.data, buf.init));
 }

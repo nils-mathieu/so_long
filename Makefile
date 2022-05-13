@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/13 14:24:04 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/13 16:01:51 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,17 @@ CFLAGS		= -Wall -Wextra -Werror
 SRCS_DIR	= srcs
 OBJS_DIR	= objs
 
-SRCS		=			\
+SRCS		=				\
 	main.c
 
-HEADERS		=
+INCLUDES	=				\
+	.						\
+	libs/minilibx			\
+	libs/libft
 
-INCLUDES_DIR	= includes
+LIBS		=				\
+	libs/libft/libft.a		\
+	libs/minilibx/libmlx.a
 
 # ============================================================================ #
 #                                 Intermediates                                #
@@ -29,13 +34,14 @@ INCLUDES_DIR	= includes
 
 SRC_FILES = $(addprefix $(SRCS_DIR)/,$(SRCS))
 OBJ_FILES = $(patsubst %.c,$(OBJS_DIR)/%.o,$(SRCS))
-HEADER_FILES = $(addprefix $(INCLUDES_DIR)/,$(HEADERS))
 
 ifdef DEBUG
 	CFLAGS += -g3 -D DEBUG
 else
 	CFLAGS += -O3
 endif
+
+INCLUDE_FLAGS = $(addprefix -I , $(INCLUDES))
 
 # ============================================================================ #
 #                                   Functions                                  #
@@ -46,23 +52,32 @@ all: $(NAME)
 
 .PHONY:
 clean:
+	make -C libs/minilibx clean
+	make -C libs/libft fclean
 	rm -vf $(OBJ_FILES)
 
 .PHONY: fclean
 fclean:
+	make -C libs/minilibx clean
+	make -C libs/libft fclean
 	rm -vf $(OBJ_FILES) $(NAME)
 
 .PHONY: re
-re: fclean re
+re: fclean all
 
 # ============================================================================ #
 #                                    Recipes                                   #
 # ============================================================================ #
 
-$(NAME): $(OBJ_FILES)
-	cc $(CLFAGS) $(OBJ_FILES) -o $(NAME)
+$(NAME): $(OBJ_FILES) $(LIBS)
+	cc $(CLFAGS) $(OBJ_FILES) $(LIBS) -o $(NAME)
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER_FILES)
-	@mkdir -p $@
-	@rmdir $@
-	cc $(CFLAGS) -c $< -o $@
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+	@mkdir -p $(dir $@)
+	cc $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+
+libs/minilibx/libmlx.a:
+	make -C libs/minilibx do_configure
+
+libs/libft/libft.a:
+	make -C libs/libft libft.a

@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_str_cmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 14:20:48 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 15:50:11 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/07 19:01:49 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/07 19:09:57 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include "libft.h"
 
-int	main(void)
+int	ft_str_cmp(const char *a, const char *b)
 {
-	return (0);
+	if (a == b)
+		return (0);
+	while (*a && *b && *a == *b)
+	{
+		a++;
+		b++;
+	}
+	return ((int)(unsigned char)*a - (int)(unsigned char)*b);
 }
