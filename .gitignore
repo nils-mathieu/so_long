@@ -1,3 +1,7 @@
-so_long
+/so_long
 *.o
-.vscode
+/.vscode
+/libs/libft/libft.a
+/libs/minilibx/libmlx.a
+/libs/minilibx/libmlx_Linux.a
+/libs/minilibx/test/mlx-test
