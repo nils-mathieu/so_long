@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/13 17:47:28 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/14 09:56:33 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ SRCS		=				\
 	main.c					\
 	parse_map_byte.c		\
 	parse_map.c				\
-	print_map_error.c
+	print_map_error.c		\
+	load_images.c			\
+	start_game.c
 
 INCLUDES	=				\
 	.						\
@@ -73,7 +75,7 @@ re: fclean all
 # ============================================================================ #
 
 $(NAME): $(OBJ_FILES) $(LIBS)
-	cc $(CLFAGS) $(OBJ_FILES) $(LIBS) -o $(NAME)
+	cc $(CLFAGS) $(OBJ_FILES) $(LIBS) -lXext -lX11 -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)

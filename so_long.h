@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/14 00:49:06 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/14 09:35:12 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdint.h>
 # include <stddef.h>
 # include <stdbool.h>
+
+// The number of images that have to be loaded within a `t_game` instance.
+# define IMAGE_COUNT 3
 
 // ========================================================================== //
 //                                Useful Typedefs			                  //
@@ -93,7 +96,6 @@ typedef struct s_map_parser
 	t_tile		*tiles;
 }	t_map_parser;
 
-
 // Parses a map defined in the provided file descriptor.
 //
 // Whatever happens, once this function has returned, the initialized
@@ -125,33 +127,46 @@ typedef struct s_sprite
 	t_pos	*pos;
 }	t_sprite;
 
+// Identifies an image loaded for a `t_game`.
+//
+// Those values can be used as indices for the `image` field.
+typedef enum e_game_image
+{
+	SL_GIMG_PLAYER,
+	SL_GIMG_EXIT,
+	SL_GIMG_COIN,
+}	t_gimg;
+
 // Stores the state of the game.
 typedef struct s_game
 {
 	t_mlx		mlx;
 	t_win		win;
 
-	t_img		player_image;
-	t_img		floor_image;
-	t_img		wall_image;
-	t_img		coin_image;
-	t_img		exit_image;
+	t_img		images[IMAGE_COUNT];
 
 	uint32_t	width;
 	uint32_t	height;
 
+	size_t		sprites_len;
+	size_t		sprites_cap;
 	t_sprite	*sprites;
 }	t_game;
 
-// Initializes a `t_game` instance.
-//
-// This function returns whether the operation is a success, and in that case,
-// the initialized `t_game` instance should be passed to the `sl_deinit_game`
-// function.
-bool	sl_init_game(t_game *game, t_tile *tiles, uint32_t w, uint32_t h);
+// An error that might occur during the game's execution.
+typedef enum e_game_error
+{
+	SL_GERR_SUCCESS,
+	SL_GERR_MLX,
+	SL_GERR_IMAGE,
+}	t_gerr;
 
-// Frees the resources allocated for a `game` instance using the `sl_init_game`
-// function.
-void	sl_deinit_game(t_game *game);
+// Loads `IMAGE_COUNT` images into `images`.
+bool	sl_load_images(t_mlx mlx, t_img *images);
+
+// Starts the game for the provided *valid* map.
+//
+// This function will only return once the game instance is closed.
+t_gerr	sl_game_start(t_tile *tiles, uint32_t width, uint32_t height);
 
 #endif
