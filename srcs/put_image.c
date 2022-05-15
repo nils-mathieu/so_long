@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delta_time.c                                       :+:      :+:    :+:   */
+/*   put_image.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 18:41:19 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 00:25:51 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/15 22:34:28 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/16 00:16:32 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include "libft.h"
 
-#ifdef SL_BONUS
-
-float	sl_delta_time(t_instant *prev)
+void	sl_put_image(t_imgi *dst_img, t_upos dst, t_imgi *src_img, t_rect src)
 {
-	t_instant	now;
-	float		delta;
+	size_t	x;
+	size_t	y;
+	t_rgba	c;
 
-	clock_gettime(1, &now);
-	delta = (float)(
-			(double)(now.tv_sec - prev->tv_sec)
-			+ (double)(now.tv_nsec - prev->tv_nsec) / 1e9);
-	*prev = now;
-	return (delta);
+	y = 0;
+	while (y < src.height)
+	{
+		x = 0;
+		while (x < src.width)
+		{
+			c = *(t_rgba *)(src_img->addr + src_img->line_len * (src.y + y)
+					+ 4 * (src.x + x));
+			if (c.a != 0)
+				*(t_rgba *)(dst_img->addr + dst_img->line_len
+						* (dst.y + y) + 4 * (dst.x + x)) = c;
+			x++;
+		}
+		y++;
+	}
 }
-
-#else
-
-float	sl_delta_time(t_instant *prev)
-{
-	(void)prev;
-	return (0.16);
-}
-
-#endif

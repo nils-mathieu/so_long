@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_image.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/15 23:06:36 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/15 23:23:59 by nmathieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+#include "mlx.h"
+
+inline static bool	fill_addr(t_imgi *result)
+{
+	int	bpp;
+	int	endian;
+
+	result->addr = (uint8_t *)mlx_get_data_addr(
+			result->image,
+			&bpp,
+			(int *)&result->line_len,
+			&endian);
+	return (bpp == 32 && endian == 0);
+}
+
+bool	sl_create_image(t_mlx mlx, uint32_t w, uint32_t h, t_imgi *result)
+{
+	result->image = mlx_new_image(mlx, w, h);
+	if (!result->image)
+		return (false);
+	return (fill_addr(result));
+}
+
+bool	sl_load_image(t_mlx mlx, const char *s, t_imgi *result)
+{
+	int	w;
+	int	h;
+
+	result->image = mlx_xpm_file_to_image(mlx, (char *)s, &w, &h);
+	if (!result->image)
+		return (false);
+	return (fill_addr(result));
+}

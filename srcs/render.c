@@ -1,43 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_images.c                                      :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/14 09:32:03 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 23:21:14 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/15 22:22:58 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/16 00:13:00 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "mlx.h"
+#include <stdio.h>
 
-static const char	**pathes(void)
+void	sl_render_game(t_game *game)
 {
-	static const char	*pathes[IMAGE_COUNT] = {
-		"assets/spaceship.xpm",
-		"assets/portal.xpm",
-		"assets/spacecoin.xpm",
-	};
-
-	return (pathes);
-}
-
-bool	sl_load_images(t_mlx mlx, t_imgi *images)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < IMAGE_COUNT)
-	{
-		if (!sl_load_image(mlx, (char *)pathes()[i], &images[i]))
-		{
-			while (i)
-				mlx_destroy_image(mlx, images[--i].image);
-			return (false);
-		}
-		i++;
-	}
-	return (true);
+	sl_put_image(&game->canvas, (t_upos){(uint32_t)(game->player_pos.x / 32.0), (uint32_t)(game->player_pos.y / 32.0)}, &game->images[SL_GIMG_PLAYER], (t_rect){0, 0, 32, 32});
+	mlx_put_image_to_window(game->mlx, game->win, game->canvas.image, 0, 0);
 }

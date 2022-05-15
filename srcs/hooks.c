@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:49:51 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 21:58:16 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 23:03:23 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int	sl_loop_hook(t_game *game)
 {
 	game->delta_time = sl_delta_time(&game->frame_last_instant);
 	sl_move_player(game);
+	sl_render_game(game);
 	return (0);
 }

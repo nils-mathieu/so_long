@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 21:49:40 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 00:31:31 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,22 @@
 # include <stdbool.h>
 # include <time.h>
 
-// The number of images that have to be loaded within a `t_game` instance.
-# define IMAGE_COUNT 3
+// ========================================================================== //
+//                               Game Rules                                   //
+// ========================================================================== //
+
+# define TARGET_DELTA 0.16
+
+// The force applied on the player when a key is pressed.
+# define PLAYER_ACCELERATION_FORCE 60000.0
+// The coef applied to the velocity to determine how quickly the player should
+// stop when they are doing nothing.
+# define PLAYER_DRAG_AMOUNT 0.0005
+
+// The width of the window.
+# define WIDTH 1280
+// The height of the window.
+# define HEIGHT 720
 
 // ========================================================================== //
 //                                Useful Typedefs			                  //
@@ -71,6 +85,30 @@ typedef struct s_uint32_position
 	uint32_t	x;
 	uint32_t	y;
 }	t_upos;
+
+/// A discrete rectangle.
+typedef struct s_rectangle
+{
+	uint32_t	x;
+	uint32_t	y;
+	uint32_t	width;
+	uint32_t	height;
+}	t_rect;
+
+// A color, encoded as an RGBA array of `uint8_t`s.
+//
+// The RGBA - Value transmutation expects a little endian system.
+typedef struct s_color
+{
+	union
+	{
+		uint8_t	b;
+		uint8_t	g;
+		uint8_t	r;
+		uint8_t	a;
+	};
+	uint32_t	val;
+}	t_rgba;
 
 // ========================================================================== //
 //                                 	Parsing                                   //
@@ -150,6 +188,9 @@ void	sl_print_map_error(t_map_parser *p);
 //                                Game State                                  //
 // ========================================================================== //
 
+// The number of images that have to be loaded within a `t_game` instance.
+# define IMAGE_COUNT 3
+
 // Identifies an image loaded for a `t_game`.
 //
 // Those values can be used as indices for the `image` field.
@@ -160,13 +201,22 @@ typedef enum e_game_image
 	SL_GIMG_COIN,
 }	t_gimg;
 
+// Represents a game canvas.
+typedef struct s_image_and_address
+{
+	t_img		image;
+	uint8_t		*addr;
+	uint32_t	line_len;
+}	t_imgi;
+
 // Stores the state of the game.
 typedef struct s_game
 {
 	t_mlx		mlx;
 	t_win		win;
 
-	t_img		images[IMAGE_COUNT];
+	t_imgi		images[IMAGE_COUNT];
+	t_imgi		canvas;
 
 	uint32_t	width;
 	uint32_t	height;
@@ -192,7 +242,7 @@ typedef enum e_game_error
 }	t_gerr;
 
 // Loads `IMAGE_COUNT` images into `images`.
-bool	sl_load_images(t_mlx mlx, t_img *images);
+bool	sl_load_images(t_mlx mlx, t_imgi *images);
 
 // Starts the game for the provided *valid* map.
 //
@@ -225,5 +275,21 @@ int		sl_key_release_hook(unsigned long keysym, t_game *game);
 // Properly move the player within the game world, preventing them from
 // going through walls.
 void	sl_move_player(t_game *game);
+
+// Renders the curremt game state on the screen.
+void	sl_render_game(t_game *game);
+
+// ========================================================================== //
+//                                Rendering                                   //
+// ========================================================================== //
+
+// Creates a new empty image.
+bool	sl_create_image(t_mlx mlx, uint32_t w, uint32_t h, t_imgi *result);
+
+// Loads a new image from a file in the XPM format.
+bool	sl_load_image(t_mlx mlx, const char *s, t_imgi *result);
+
+// Puts a portion of `src` into `dst`.
+void	sl_put_image(t_imgi *dst_img, t_upos dst, t_imgi *src_img, t_rect src);
 
 #endif
