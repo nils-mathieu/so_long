@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 23:32:32 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 00:55:55 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_gerr	init_game(t_game *g, t_map *map)
 	g->width = map->width;
 	g->height = map->height;
 	g->player_pos = (t_fpos){map->player.x, map->player.y};
-	clock_gettime(1, &g->frame_last_instant);
+	g->frame_last_instant = sl_get_current_timestamp();
 	return (SL_GERR_SUCCESS);
 }
 

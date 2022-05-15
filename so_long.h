@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 00:31:31 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 00:55:20 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 //                               Game Rules                                   //
 // ========================================================================== //
 
-# define TARGET_DELTA 0.16
+// The minim amount of time between each frame. This should be measured in
+// nanoseconds.
+# define TARGET_DELTA 0016000000
 
 // The force applied on the player when a key is pressed.
 # define PLAYER_ACCELERATION_FORCE 60000.0
@@ -57,9 +59,6 @@ typedef void			*t_win;
 // This pointer should be passed to the `mlx_destroy_image` once it is not
 // needed anymore.
 typedef void			*t_img;
-
-// A simle type alias for the `struct timeval` type defined in `time.h`.
-typedef struct timespec	t_instant;
 
 // ========================================================================== //
 //                                 	  Math                                    //
@@ -169,20 +168,20 @@ typedef struct s_map_parser
 // Whatever happens, once this function has returned, the initialized
 // `t_map_parser` instance should be freed using the `sl_free_map_parser`
 // function.
-t_perr	sl_parse_map(int fd, t_map_parser *p);
+t_perr		sl_parse_map(int fd, t_map_parser *p);
 
 // Parses a single byte for a map.
 //
 // If the function returns `false`, then the system is out of memory.
-bool	sl_parse_byte(uint8_t byte, t_map_parser *p);
+bool		sl_parse_byte(uint8_t byte, t_map_parser *p);
 
 // Frees the resources allocated for a properly initialized `t_map_parser`
 // instance.
-void	sl_free_map_parser(t_map_parser *p);
+void		sl_free_map_parser(t_map_parser *p);
 
 // Prints to the standard error an error describing why the provided map was
 // rejected.
-void	sl_print_map_error(t_map_parser *p);
+void		sl_print_map_error(t_map_parser *p);
 
 // ========================================================================== //
 //                                Game State                                  //
@@ -221,7 +220,7 @@ typedef struct s_game
 	uint32_t	width;
 	uint32_t	height;
 
-	t_instant	frame_last_instant;
+	uint64_t	frame_last_instant;
 	float		delta_time;
 
 	bool		pressing_up;
@@ -242,54 +241,57 @@ typedef enum e_game_error
 }	t_gerr;
 
 // Loads `IMAGE_COUNT` images into `images`.
-bool	sl_load_images(t_mlx mlx, t_imgi *images);
+bool		sl_load_images(t_mlx mlx, t_imgi *images);
 
 // Starts the game for the provided *valid* map.
 //
 // This function will only return once the game instance is closed.
-t_gerr	sl_game_start(t_map *map);
+t_gerr		sl_game_start(t_map *map);
+
+// Ges the current timestamp, in nanoseconds.
+uint64_t	sl_get_current_timestamp(void);
 
 // Computes the amout of time since `prev`, in seconds.
 //
 // `prev` is updated to the current instant.
-float	sl_delta_time(t_instant *prev);
+float		sl_delta_time(uint64_t *prev);
 
 // Advances the game by one frame. This function is called by the event loop
 // of MiniLibX.
 //
 // This includes updating the game world and drawing the next frame.
-int		sl_loop_hook(t_game *game);
+int			sl_loop_hook(t_game *game);
 
 // Stops the MiniLibX event loop. This is called by MLX when the users wants
 // the window to be closed.
-int		sl_destroy_hook(t_game *game);
+int			sl_destroy_hook(t_game *game);
 
 // Handle the player's key presses. This is called by MLX when the user presses
 // a key.
-int		sl_key_press_hook(unsigned long keysym, t_game *game);
+int			sl_key_press_hook(unsigned long keysym, t_game *game);
 
 // Handle the player's key presses. This is called by MLX when the user presses
 // a key.
-int		sl_key_release_hook(unsigned long keysym, t_game *game);
+int			sl_key_release_hook(unsigned long keysym, t_game *game);
 
 // Properly move the player within the game world, preventing them from
 // going through walls.
-void	sl_move_player(t_game *game);
+void		sl_move_player(t_game *game);
 
 // Renders the curremt game state on the screen.
-void	sl_render_game(t_game *game);
+void		sl_render_game(t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //
 // ========================================================================== //
 
 // Creates a new empty image.
-bool	sl_create_image(t_mlx mlx, uint32_t w, uint32_t h, t_imgi *result);
+bool		sl_create_image(t_mlx mlx, uint32_t w, uint32_t h, t_imgi *result);
 
 // Loads a new image from a file in the XPM format.
-bool	sl_load_image(t_mlx mlx, const char *s, t_imgi *result);
+bool		sl_load_image(t_mlx mlx, const char *s, t_imgi *result);
 
 // Puts a portion of `src` into `dst`.
-void	sl_put_image(t_imgi *dst_img, t_upos dst, t_imgi *src_img, t_rect src);
+void		sl_put_image(t_imgi *dst_img, t_upos dst, t_imgi *src_img, t_rect src);
 
 #endif
