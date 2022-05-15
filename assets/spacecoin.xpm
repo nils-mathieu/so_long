@@ -1,0 +1,33 @@
+/* XPM */
+static char *spacecoin[] = {
+/* columns rows colors chars-per-pixel */
+"180 20 7 1 ",
+"  c None",
+". c black",
+"X c #A22633",
+"o c #F77622",
+"O c #FEAE34",
+"+ c #FEE761",
+"@ c white",
+/* pixels */
+"                                                                                                                                                                                    ",
+"   ..............       .............       ............          .........            ......             .........         ............        .............      ..............   ",
+"  .++++++++@@@+++.     .oo++++++@@@++.     .ooo++++++@@+.        .oooo+++@+.          .ooooo@.           .++++@oooo.       .++++++@@+ooo.      .++++++@@@++oo.    .+++++++@@@++++.  ",
+" .+oooooooooooooo+.   .oo+ooooooooooo+.   .ooo+oooooooooo.       .ooo+ooooo.          .oooooo.           .ooooo+ooo.      .oooooooooo+ooo.    .+ooooooooooo+oo.  .+oooooooooooooo+. ",
+" .+OOOOOOOOOOOOOo+.   .oo+OOOOOOOOOOo+.   .ooo+OOOOOOOOOo.       .ooo+OOOOo.          .ooooo@.           .OOOOo+ooo.      .OOOOOOOOOo+ooo.    .+OOOOOOOOOOo+oo.  .+OOOOOOOOOOOOOo+. ",
+" .+OOOOo+OOo@OOOo+.   .OO+OOOo+Oo@OOo+.   .OOO+OOo+Oo@OOo.       .OOO+Oo@Oo.          .OOOOOO.           .Oo@Oo+OOO.      .OOo+Oo@OOo+OOO.    .+OOo+Oo@OOOo+OO.  .+OOOOo+OOo@OOOo+. ",
+" .+OOOOo++++@OOOo+.   .XX+OOOo+++@OOo+.   .XXX+OOo+++@OOo.       .XXX+o+@Oo.          .XXXXXX.           .o++@o+XXX.      .OOo+++@OOo+XXX.    .+OOo+++@OOOo+XX.  .+OOOOo++++@OOOo+. ",
+" .+OOOo++++++@OOo+.   .oo+OOo+++++@Oo+.   .ooo+Oo+++++@Oo.       .ooo++++@o.          .ooooo@.           .o+++o+ooo.      .Oo+++++@Oo+ooo.    .+Oo+++++@OOo+oo.  .+OOOo++++++@OOo+. ",
+" .+OOOo++Oo++@OOo+.   .oo+OOo++Oo+@Oo+.   .ooo+Oo++Oo+@Oo.       .ooo++Oo@o.          .ooooo@.           .o+o+o+ooo.      .Oo++Oo+@Oo+ooo.    .+Oo++Oo+@OOo+oo.  .+OOOo++Oo++@OOo+. ",
+" .+OOOo++OOOOOOOo+.   .OO+OOo++OOOOOo+.   .OOO+Oo++OOOOOo.       .OOO++OOOo.          .OOOOO@.           .o+OOo+OOO.      .Oo++OOOOOo+OOO.    .+Oo++OOOOOOo+OO.  .+OOOo++OOOOOOOo+. ",
+" .+OOOo++++++@OOo+.   .OO+OOo+++++@Oo+.   .OOO+Oo+++++@Oo.       .OOO+o++@o.          .OOOOO@.           .oo++o+OOO.      .Oo+++++@Oo+OOO.    .+Oo+++++@OOo+OO.  .+OOOo++++++@OOo+. ",
+" .+OOOOOOOo++@OOo+.   .XX+OOOOOOo+@Oo+.   .XXX+OOOOOo+@Oo.       .XXX+Oo+@o.          .XXXXX@.           .OOo+o+XXX.      .OOOOOo+@Oo+XXX.    .+OOOOOo+@OOo+XX.  .+OOOOOOOo++@OOo+. ",
+" .+OOOo++Oo++@OOo+.   .oo+OOo++Oo+@Oo+.   .ooo+Oo++Oo+@Oo.       .ooo+Oo+@o.          .ooooo@.           .o+o+o+ooo.      .Oo++Oo+@Oo+ooo.    .+Oo++Oo+@OOo+oo.  .+OOOo++Oo++@OOo+. ",
+" .+OOOo++++++@OOo+.   .XX+OOo+++++@Oo+.   .XXX+Oo+++++@Oo.       .XXX++++@o.          .XXXXX@.           .o++@o+XXX.      .Oo+++++@Oo+XXX.    .+Oo+++++@OOo+XX.  .+OOOo++++++@OOo+. ",
+" .+OOOOo++++@OOOo+.   .XX+OOOo+++@OOo+.   .XXX+OOo+++@OOo.       .XXX+o+@Oo.          .XXXXXX.           .Oo+@o+XXX.      .OOo+++@OOo+XXX.    .+OOo+++@OOOo+XX.  .+OOOOo++++@OOOo+. ",
+" .+OOOOo+OOo@OOOo+.   .oo+OOOo+Oo@OOo+.   .ooo+OOo+Oo@OOo.       .ooo+Oo@Oo.          .ooooo@.           .Oo@Oo+ooo.      .OOo+Oo@OOo+ooo.    .+OOo+Oo@OOOo+oo.  .+OOOOo+OOo@OOOo+. ",
+" .+OOOOOOOOOOOOOo+.   .oo+OOOOOOOOOOo+.   .ooo+OOOOOOOOOo.       .ooo+OOOOo.          .ooooo@.           .OOOOo+ooo.      .OOOOOOOOOo+ooo.    .+OOOOOOOOOOo+oo.  .+OOOOOOOOOOOOOo+. ",
+"  .++++++++@@@+++.     .oo++++++@@@++.     .ooo++++++@@+.        .oooo+++@+.          .oooooo.           .++++@oooo.       .++++++@@+ooo.      .++++++@@@++oo.    .+++++++@@@++++.  ",
+"   ..............       .............       ............          .........            ......             .........         ............        .............      ..............   ",
+"                                                                                                                                                                                    "
+};

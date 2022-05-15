@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 16:01:32 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 18:48:34 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdint.h>
 # include <stddef.h>
 # include <stdbool.h>
+# include <time.h>
 
 // The number of images that have to be loaded within a `t_game` instance.
 # define IMAGE_COUNT 3
@@ -29,19 +30,22 @@
 //
 // This pointer should be passed to the `mlx_destroy_display` and `free`
 // functions when it is not needed anymore.
-typedef void	*t_mlx;
+typedef void			*t_mlx;
 
 // A pointer to the data of an active window, managed by a `t_mlx` instance.
 //
 // This pointer should be passed to the `mlx_destory_window` function when it is
 // not needed anymore.
-typedef void	*t_win;
+typedef void			*t_win;
 
 // A pointer to the data of a loaded image, managed by a `t_mlx` instance.
 //
 // This pointer should be passed to the `mlx_destroy_image` once it is not
 // needed anymore.
-typedef void	*t_img;
+typedef void			*t_img;
+
+// A simle type alias for the `struct timeval` type defined in `time.h`.
+typedef struct timespec	t_instant;
 
 // ========================================================================== //
 //                                   Math                                     //
@@ -151,6 +155,9 @@ typedef struct s_game
 	size_t		sprites_len;
 	size_t		sprites_cap;
 	t_sprite	*sprites;
+
+	t_instant	frame_last_instant;
+	float		delta_time;
 }	t_game;
 
 // An error that might occur during the game's execution.
@@ -169,9 +176,14 @@ bool	sl_load_images(t_mlx mlx, t_img *images);
 // This function will only return once the game instance is closed.
 t_gerr	sl_game_start(t_tile *tiles, uint32_t width, uint32_t height);
 
+// Computes the amout of time since `prev`, in seconds.
+//
+// `prev` is updated to the current instant.
+float	sl_delta_time(t_instant *prev);
+
 // Advances the game by one frame.
 //
 // This includes updating the game world and drawing the next frame.
-void	sl_game_loop(t_game *game);
+int		sl_game_loop(t_game *game);
 
 #endif

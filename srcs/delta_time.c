@@ -1,20 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_loop.c                                        :+:      :+:    :+:   */
+/*   delta_time.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 15:34:51 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 18:48:58 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/15 18:41:19 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/15 18:43:45 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "libft.h"
 
-int	sl_game_loop(t_game *game)
+#ifdef SL_BONUS
+
+float	sl_delta_time(t_instant *prev)
 {
-	game->delta_time = sl_delta_time(&game->frame_last_instant);
-	return (0);
+	t_instant	now;
+	float		delta;
+
+	clock_gettime(1, &now);
+	delta = (float)(
+			(double)(now.tv_sec - prev->tv_sec)
+			+ (double)(now.tv_nsec - prev->tv_nsec) / 1e9);
+	*prev = now;
+	return (delta);
 }
+
+#else
+
+float	sl_delta_time(t_instant *prev)
+{
+	(void)prev;
+	return (0.16);
+}
+
+#endif

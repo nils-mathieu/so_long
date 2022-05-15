@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/15 17:17:55 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/15 18:46:51 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS		=				\
 	print_map_error.c		\
 	load_images.c			\
 	start_game.c			\
-	game_loop.c
+	game_loop.c				\
+	delta_time.c
 
 INCLUDES	=				\
 	.						\
@@ -72,13 +73,13 @@ fclean:
 re: fclean all
 
 .PHONY: bonus
-bonus: $(eval CFLAGS += -D BONUS) $(NAME)
+bonus: $(eval CFLAGS += -D SL_BONUS) $(NAME)
 
 # ============================================================================ #
 #                                    Recipes                                   #
 # ============================================================================ #
 
-$(NAME): $(OBJ_FILES) $(LIBS)
+$(NAME): $(LIBS) $(OBJ_FILES)
 	cc $(CLFAGS) $(OBJ_FILES) $(LIBS) -lXext -lX11 -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
