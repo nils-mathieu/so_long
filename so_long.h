@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/14 09:35:12 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:01:32 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,5 +168,10 @@ bool	sl_load_images(t_mlx mlx, t_img *images);
 //
 // This function will only return once the game instance is closed.
 t_gerr	sl_game_start(t_tile *tiles, uint32_t width, uint32_t height);
+
+// Advances the game by one frame.
+//
+// This includes updating the game world and drawing the next frame.
+void	sl_game_loop(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/14 09:56:33 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/15 17:17:55 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRCS		=				\
 	parse_map.c				\
 	print_map_error.c		\
 	load_images.c			\
-	start_game.c
+	start_game.c			\
+	game_loop.c
 
 INCLUDES	=				\
 	.						\
@@ -69,6 +70,9 @@ fclean:
 
 .PHONY: re
 re: fclean all
+
+.PHONY: bonus
+bonus: $(eval CFLAGS += -D BONUS) $(NAME)
 
 # ============================================================================ #
 #                                    Recipes                                   #

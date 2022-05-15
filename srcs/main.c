@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:20:48 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/14 09:37:53 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 16:44:43 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	main(int argc, char **argv)
 	gerr = sl_game_start(p.tiles, p.width, p.height);
 	sl_free_map_parser(&p);
 	if (gerr == SL_GERR_MLX)
-		return (ft_fmt_err("Cannot initialize MiniLibX\n"), 1);
+		return (ft_fmt_err("MiniLibX Error\n"), 1);
 	if (gerr == SL_GERR_IMAGE)
-		return (ft_fmt_err("An image could not be loaded.\n"), 1);
+		return (ft_fmt_err("Image Load Error\n"), 1);
 	return (0);
 }
