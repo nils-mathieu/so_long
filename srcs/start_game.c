@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 21:35:45 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 21:55:32 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ static t_gerr	init_game(t_game *g, t_map *map)
 			SL_GERR_MLX);
 	g->width = map->width;
 	g->height = map->height;
+	g->pressing_down = false;
+	g->pressing_left = false;
+	g->pressing_right = false;
+	g->pressing_up = false;
+	g->movement_input = (t_fvec){0.0, 0.0};
+	g->player_vel = (t_fvec){map->player.x, map->player.y};
 	g->player_pos = (t_fpos){map->player.x, map->player.y};
 	clock_gettime(1, &g->frame_last_instant);
 	return (SL_GERR_SUCCESS);

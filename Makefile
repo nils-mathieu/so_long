@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/15 21:37:02 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/15 22:07:48 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS		=				\
 	load_images.c			\
 	start_game.c			\
 	delta_time.c			\
-	hooks.c
+	hooks.c					\
+	move_player.c
 
 INCLUDES	=				\
 	.						\
@@ -73,14 +74,15 @@ fclean:
 re: fclean all
 
 .PHONY: bonus
-bonus: $(eval CFLAGS += -D SL_BONUS) $(NAME)
+bonus: CFLAGS += -D SL_BONUS
+bonus: $(NAME)
 
 # ============================================================================ #
 #                                    Recipes                                   #
 # ============================================================================ #
 
 $(NAME): $(LIBS) $(OBJ_FILES)
-	cc $(CLFAGS) $(OBJ_FILES) $(LIBS) -lXext -lX11 -o $(NAME)
+	cc $(CLFAGS) $(OBJ_FILES) $(LIBS) -lXext -lX11 -lm -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)

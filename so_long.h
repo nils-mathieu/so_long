@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 21:36:55 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 21:49:40 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ typedef struct s_float_position
 	float	x;
 	float	y;
 }	t_fpos;
+
+// A vector.
+typedef struct s_float_vector
+{
+	float	x;
+	float	y;
+}	t_fvec;
 
 /// A discrete position within the game world.
 typedef struct s_uint32_position
@@ -171,6 +178,8 @@ typedef struct s_game
 	bool		pressing_down;
 	bool		pressing_right;
 	bool		pressing_left;
+	t_fvec		movement_input;
+	t_fvec		player_vel;
 	t_fpos		player_pos;
 }	t_game;
 
@@ -212,5 +221,9 @@ int		sl_key_press_hook(unsigned long keysym, t_game *game);
 // Handle the player's key presses. This is called by MLX when the user presses
 // a key.
 int		sl_key_release_hook(unsigned long keysym, t_game *game);
+
+// Properly move the player within the game world, preventing them from
+// going through walls.
+void	sl_move_player(t_game *game);
 
 #endif
