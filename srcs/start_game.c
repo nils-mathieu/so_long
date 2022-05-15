@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 19:11:20 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 21:35:45 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ static void	destroy_images(t_game *g)
 		mlx_destroy_image(g->mlx, g->images[i++]);
 }
 
-static t_gerr	init_game(t_game *g, t_tile *tiles, uint32_t w, uint32_t h)
+static t_gerr	init_game(t_game *g, t_map *map)
 {
-	(void)tiles;
 	g->mlx = mlx_init();
 	if (!g->mlx)
 		return (SL_GERR_MLX);
@@ -39,8 +38,9 @@ static t_gerr	init_game(t_game *g, t_tile *tiles, uint32_t w, uint32_t h)
 			destroy_images(g),
 			mlx_destroy_display(g->mlx), free(g->mlx),
 			SL_GERR_MLX);
-	g->width = w;
-	g->height = h;
+	g->width = map->width;
+	g->height = map->height;
+	g->player_pos = (t_fpos){map->player.x, map->player.y};
 	clock_gettime(1, &g->frame_last_instant);
 	return (SL_GERR_SUCCESS);
 }
@@ -53,18 +53,18 @@ static void	deinit_game(t_game *game)
 	free(game->mlx);
 }
 
-t_gerr	sl_game_start(t_tile *tiles, uint32_t width, uint32_t height)
+t_gerr	sl_game_start(t_map *map)
 {
 	t_game	game;
 	t_gerr	err;
 
-	err = init_game(&game, tiles, width, height);
+	err = init_game(&game, map);
 	if (err != SL_GERR_SUCCESS)
 		return (err);
 	mlx_hook(game.win, 17, 0, sl_destroy_hook, &game);
 	mlx_hook(game.win, 2, 1 << 0, sl_key_press_hook, &game);
 	mlx_hook(game.win, 3, 1 << 1, sl_key_release_hook, &game);
-	mlx_loop_hook(game.mlx, sl_game_loop, &game);
+	mlx_loop_hook(game.mlx, sl_loop_hook, &game);
 	mlx_loop(game.mlx);
 	deinit_game(&game);
 	return (SL_GERR_SUCCESS);

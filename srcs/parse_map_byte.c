@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 17:07:19 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/14 01:16:57 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 20:07:09 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,59 +14,62 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static bool	grow(t_map_parser *p)
+static bool	grow(t_upos **data, size_t *cap)
 {
-	t_tile	*new;
+	t_upos	*new;
 
-	new = ft_alloc_array(p->cap + 4, 2 * sizeof(t_map_parser));
+	new = ft_alloc_array(*cap + 4, 2 * sizeof(t_map_parser));
 	if (!new)
 		return (false);
-	if (p->cap != 0)
+	if (*cap != 0)
 	{
-		ft_mem_copy(new, p->tiles, p->cap * sizeof(t_map_parser));
-		free(p->tiles);
+		ft_mem_copy(new, *data, *cap * sizeof(t_map_parser));
+		free(*data);
 	}
-	p->tiles = new;
-	p->cap = (p->cap + 4) * 2;
+	*data = new;
+	*cap = (*cap + 4) * 2;
 	return (true);
 }
 
 static void	new_line(t_map_parser *p)
 {
-	if (p->height == 0)
-		p->width = p->line_len;
-	else if (p->width != p->line_len)
+	if (p->map.height == 0)
+		p->map.width = p->line_len;
+	else if (p->map.width != p->line_len)
 		p->is_rectangle = false;
-	p->height++;
+	p->map.height++;
 	p->line_len = 0;
 }
 
-static void	push_and_add(t_map_parser *p, t_tile tile, uint32_t *count)
+static bool	push_and_add(t_upos **data, size_t *cap, size_t *len, t_upos pos)
 {
-	p->tiles[p->width * p->height + p->line_len++] = tile;
-	(*count)++;
+	if (*len == *cap && !grow(data, cap))
+		return (false);
+	(*data)[*len] = pos;
+	(*len)++;
+	return (true);
 }
 
 bool	sl_parse_byte(uint8_t byte, t_map_parser *p)
 {
 	if (byte == '\n')
 		return (new_line(p), true);
-	if (p->height * p->width + p->line_len == p->cap && !grow(p))
-		return (false);
 	if (byte == '0')
-		p->tiles[p->width * p->height + p->line_len++] = SL_TILE_FLOOR;
+		return (p->line_len++, true);
 	else if (byte == '1')
-		p->tiles[p->width * p->height + p->line_len++] = SL_TILE_WALL;
+		return (push_and_add(&p->map.walls, &p->walls_cap, &p->map.wall_count,
+				(t_upos){p->line_len++, p->map.height}));
 	else if (byte == 'C')
-		push_and_add(p, SL_TILE_COIN, &p->coins);
+		return (push_and_add(&p->map.coins, &p->coins_cap, &p->map.coin_count,
+				(t_upos){p->line_len++, p->map.height}));
 	else if (byte == 'E')
-		push_and_add(p, SL_TILE_EXIT, &p->exits);
+		return (p->map.exit = (t_upos){p->line_len++, p->map.height},
+				p->exits++, true);
 	else if (byte == 'P')
-		push_and_add(p, SL_TILE_PLAYER, &p->players);
-	else
-	{
-		p->contains_invalid_character = true;
-		p->invalid_character = byte;
-	}
+		return (p->map.player = (t_upos){p->line_len++, p->map.height},
+				p->players++, true);
+	p->contains_invalid_character = true;
+	p->invalid_character = byte;
+	p->line_len++;
 	return (true);
 }

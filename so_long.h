@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 19:11:16 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 21:36:55 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,24 @@ typedef void			*t_img;
 typedef struct timespec	t_instant;
 
 // ========================================================================== //
+//                                 	  Math                                    //
+// ========================================================================== //
+
+// A position within the game world.
+typedef struct s_float_position
+{
+	float	x;
+	float	y;
+}	t_fpos;
+
+/// A discrete position within the game world.
+typedef struct s_uint32_position
+{
+	uint32_t	x;
+	uint32_t	y;
+}	t_upos;
+
+// ========================================================================== //
 //                                 	Parsing                                   //
 // ========================================================================== //
 
@@ -70,23 +88,35 @@ typedef enum e_parsing_error
 	SL_PERR_INVALID_MAP,
 }	t_perr;
 
+// A fully parsed map.
+typedef struct s_map
+{
+	uint32_t	width;
+	uint32_t	height;
+
+	t_upos		player;
+	t_upos		exit;
+
+	size_t		coin_count;
+	t_upos		*coins;
+	size_t		wall_count;
+	t_upos		*walls;
+}	t_map;
+
 // Stores the state required when reading a map.
 typedef struct s_map_parser
 {
 	uint32_t	players;
-	uint32_t	coins;
 	uint32_t	exits;
 	bool		is_rectangle;
 	bool		is_enclosed;
 	bool		contains_invalid_character;
 	char		invalid_character;
 
-	uint32_t	width;
-	uint32_t	height;
-
-	uint32_t	line_len;
-	size_t		cap;
-	t_tile		*tiles;
+	size_t		line_len;
+	size_t		coins_cap;
+	size_t		walls_cap;
+	t_map		map;
 }	t_map_parser;
 
 // Parses a map defined in the provided file descriptor.
@@ -136,6 +166,12 @@ typedef struct s_game
 
 	t_instant	frame_last_instant;
 	float		delta_time;
+
+	bool		pressing_up;
+	bool		pressing_down;
+	bool		pressing_right;
+	bool		pressing_left;
+	t_fpos		player_pos;
 }	t_game;
 
 // An error that might occur during the game's execution.
@@ -152,7 +188,7 @@ bool	sl_load_images(t_mlx mlx, t_img *images);
 // Starts the game for the provided *valid* map.
 //
 // This function will only return once the game instance is closed.
-t_gerr	sl_game_start(t_tile *tiles, uint32_t width, uint32_t height);
+t_gerr	sl_game_start(t_map *map);
 
 // Computes the amout of time since `prev`, in seconds.
 //
@@ -163,7 +199,7 @@ float	sl_delta_time(t_instant *prev);
 // of MiniLibX.
 //
 // This includes updating the game world and drawing the next frame.
-int		sl_game_loop(t_game *game);
+int		sl_loop_hook(t_game *game);
 
 // Stops the MiniLibX event loop. This is called by MLX when the users wants
 // the window to be closed.

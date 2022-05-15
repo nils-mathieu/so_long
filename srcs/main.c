@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:20:48 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 17:30:45 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 19:27:58 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 		return (sl_free_map_parser(&p), ft_fmt_err("Out Of Memory\n"), 1);
 	if (perr == SL_PERR_INVALID_MAP)
 		return (sl_print_map_error(&p), sl_free_map_parser(&p), 1);
-	gerr = sl_game_start(p.tiles, p.width, p.height);
+	gerr = sl_game_start(&p.map);
 	sl_free_map_parser(&p);
 	if (gerr == SL_GERR_MLX)
 		return (ft_fmt_err("MiniLibX Error\n"), 1);
