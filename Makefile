@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/15 18:46:51 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/15 18:49:49 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS		=				\
 	load_images.c			\
 	start_game.c			\
 	game_loop.c				\
-	delta_time.c
+	delta_time.c			\
+	hooks.c
 
 INCLUDES	=				\
 	.						\

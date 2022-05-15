@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 18:37:16 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 19:03:14 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ t_gerr	sl_game_start(t_tile *tiles, uint32_t width, uint32_t height)
 	err = init_game(&game, tiles, width, height);
 	if (err != SL_GERR_SUCCESS)
 		return (err);
+	mlx_hook(game.win, 17, 0, sl_destroy_hook, &game);
+	mlx_hook(game.win, 2, 1 << 0, sl_key_press_hook, &game);
+	mlx_hook(game.win, 3, 1 << 1, sl_key_release_hook, &game);
 	mlx_loop_hook(game.mlx, sl_game_loop, &game);
 	mlx_loop(game.mlx);
 	deinit_game(&game);

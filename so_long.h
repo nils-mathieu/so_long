@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 18:48:34 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 18:57:07 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,9 +181,22 @@ t_gerr	sl_game_start(t_tile *tiles, uint32_t width, uint32_t height);
 // `prev` is updated to the current instant.
 float	sl_delta_time(t_instant *prev);
 
-// Advances the game by one frame.
+// Advances the game by one frame. This function is called by the event loop
+// of MiniLibX.
 //
 // This includes updating the game world and drawing the next frame.
 int		sl_game_loop(t_game *game);
+
+// Stops the MiniLibX event loop. This is called by MLX when the users wants
+// the window to be closed.
+int		sl_destroy_hook(t_game *game);
+
+// Handle the player's key presses. This is called by MLX when the user presses
+// a key.
+int		sl_key_press_hook(unsigned long keysym, t_game *game);
+
+// Handle the player's key presses. This is called by MLX when the user presses
+// a key.
+int		sl_key_release_hook(unsigned long keysym, t_game *game);
 
 #endif
