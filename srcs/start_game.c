@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 19:03:14 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 19:11:20 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ static t_gerr	init_game(t_game *g, t_tile *tiles, uint32_t w, uint32_t h)
 			SL_GERR_MLX);
 	g->width = w;
 	g->height = h;
-	g->sprites_cap = 0;
-	g->sprites_len = 0;
 	clock_gettime(1, &g->frame_last_instant);
 	return (SL_GERR_SUCCESS);
 }

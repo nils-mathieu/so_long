@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 18:57:07 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/15 19:11:16 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,6 @@ typedef void			*t_img;
 
 // A simle type alias for the `struct timeval` type defined in `time.h`.
 typedef struct timespec	t_instant;
-
-// ========================================================================== //
-//                                   Math                                     //
-// ========================================================================== //
-
-// A discrete position within the game world.
-typedef struct s_pos
-{
-	uint32_t	x;
-	uint32_t	y;
-}	t_pos;
 
 // ========================================================================== //
 //                                 	Parsing                                   //
@@ -124,13 +113,6 @@ void	sl_print_map_error(t_map_parser *p);
 //                                Game State                                  //
 // ========================================================================== //
 
-// A image associated to a position within the game world.
-typedef struct s_sprite
-{
-	t_img	img;
-	t_pos	*pos;
-}	t_sprite;
-
 // Identifies an image loaded for a `t_game`.
 //
 // Those values can be used as indices for the `image` field.
@@ -151,10 +133,6 @@ typedef struct s_game
 
 	uint32_t	width;
 	uint32_t	height;
-
-	size_t		sprites_len;
-	size_t		sprites_cap;
-	t_sprite	*sprites;
 
 	t_instant	frame_last_instant;
 	float		delta_time;
