@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 00:55:20 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 14:21:29 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,20 @@
 # define TARGET_DELTA 0016000000
 
 // The force applied on the player when a key is pressed.
-# define PLAYER_ACCELERATION_FORCE 60000.0
+# define PLAYER_ACCELERATION_FORCE 40000.0
 // The coef applied to the velocity to determine how quickly the player should
 // stop when they are doing nothing.
-# define PLAYER_DRAG_AMOUNT 0.0005
+# define PLAYER_DRAG_AMOUNT 0.001
+
+// The size of the player.
+# define PLAYER_COL_R 0.1
+// The X coordinate of the player's collider, relative to its center.
+# define PLAYER_COL_X 0.0
+// The Y coordinate of the player's collider, relative to its center.
+# define PLAYER_COL_Y 0.0
+
+// The bounciness of walls.
+# define BOUNCE_AMOUNT 0.6
 
 // The width of the window.
 # define WIDTH 1280
@@ -70,6 +80,9 @@ typedef struct s_float_position
 	float	x;
 	float	y;
 }	t_fpos;
+
+// Computes the squared distance between `a` and `b`.
+float	sl_sqdist(t_fpos a, t_fpos b);
 
 // A vector.
 typedef struct s_float_vector
@@ -222,6 +235,9 @@ typedef struct s_game
 
 	uint64_t	frame_last_instant;
 	float		delta_time;
+
+	size_t		wall_count;
+	t_upos		*walls;
 
 	bool		pressing_up;
 	bool		pressing_down;
