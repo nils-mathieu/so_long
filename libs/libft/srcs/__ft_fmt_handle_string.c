@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   __ft_fmt_handle_char.c                             :+:      :+:    :+:   */
+/*   __ft_fmt_handle_string.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 19:30:43 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 18:12:39 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/16 18:10:19 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/16 18:20:54 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "__libft_internal.h"
-#include <stdio.h>
+#include "libft.h"
 
-bool	__ft_fmt_handle_char(t_writer w, va_list args)
+bool	__ft_fmt_handle_string(t_writer w, va_list args)
 {
-	char	c;
+	const char	*s;
 
-	c = (char)va_arg(args, int);
-	return (w.write(w.self, &c, 1));
+	s = va_arg(args, const char *);
+	return (w.write(w.self, (void *)s, ft_str_len(s)));
 }
 
-bool	__ft_fmt_handle_debug_char(t_writer w, va_list args)
+static bool	debug_char(t_writer w, char c)
 {
-	char	c;
-
-	c = (char)va_arg(args, int);
 	if (c == '\n')
 		return (w.write(w.self, "\\n", 2));
 	else if (c == '\0')
@@ -42,4 +39,18 @@ bool	__ft_fmt_handle_debug_char(t_writer w, va_list args)
 		return (w.write(w.self, "\\?", 2));
 	else
 		return (w.write(w.self, &c, 1));
+}
+
+bool	__ft_fmt_handle_debug_string(t_writer w, va_list args)
+{
+	const char	*s;
+
+	s = va_arg(args, const char *);
+	while (*s)
+	{
+		if (!debug_char(w, *s))
+			return (false);
+		s++;
+	}
+	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:00 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 20:00:42 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:49:05 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,14 +212,20 @@ bool		ft_fmt_write_va(t_writer writer, const char *format, va_list args);
 // instance.
 bool		ft_fmt_write(t_writer writer, const char *format, ...);
 
-// Formats the provided string and writes the provided file descriptor.
+// Formats the provided string and writes it to the provided file descriptor.
 bool		ft_fmt_fd(int fd, const char *format, ...);
+
+// Formats the provided string and writes it to provided file descriptor.
+bool		ft_fmt_fd_va(int fd, const char *format, va_list args);
 
 // Formats the provided string and writes to the standard output.
 bool		ft_fmt(const char *format, ...);
 
 // Formats the provided string and writes to the standard error.
 bool		ft_fmt_err(const char *format, ...);
+
+/// Writes something on the standard error (only on `DEBUG` builds).
+bool		ft_dbg(const char *format, ...);
 
 // ========================================================================== //
 //                                Allocations                                 //
@@ -233,6 +239,6 @@ void		*ft_alloc_array(size_t count, size_t size);
 // ========================================================================== //
 
 // Makes an assertion. Aborts the process if it is false.
-void		ft_assert(bool	assertion, const char *msg);
+void		ft_assert(bool	assertion, const char *msg, ...);
 
 #endif

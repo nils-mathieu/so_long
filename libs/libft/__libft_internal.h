@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   __libft_fmt.h                                      :+:      :+:    :+:   */
+/*   __libft_internal.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:13:41 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 23:26:28 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:10:10 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __LIBFT_FMT_H
-# define __LIBFT_FMT_H
+#ifndef __LIBFT_INTERNAL_H
+# define __LIBFT_INTERNAL_H
 
 # include "libft.h"
 
@@ -29,5 +29,9 @@ bool	__ft_fmt_handle_u32(t_writer w, va_list args);
 bool	__ft_fmt_handle_i32(t_writer w, va_list args);
 bool	__ft_fmt_handle_char(t_writer w, va_list args);
 bool	__ft_fmt_handle_debug_char(t_writer w, va_list args);
+bool	__ft_fmt_handle_debug_string(t_writer w, va_list args);
+bool	__ft_fmt_handle_string(t_writer w, va_list args);
+bool	__ft_fmt_handle_int(t_writer w, va_list args);
+bool	__ft_fmt_handle_bool(t_writer w, va_list args);
 
 #endif

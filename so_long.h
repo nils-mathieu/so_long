@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 14:21:29 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:18:57 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@
 // ========================================================================== //
 
 // The minim amount of time between each frame. This should be measured in
-// nanoseconds.
-# define TARGET_DELTA 0016000000
+// microseconds.
+# ifndef SL_BONUS
+#  define DEFAULT_DELTA 0.001
+# endif
 
 // The force applied on the player when a key is pressed.
-# define PLAYER_ACCELERATION_FORCE 40000.0
+# define PLAYER_ACCELERATION_FORCE 40.0
 // The coef applied to the velocity to determine how quickly the player should
 // stop when they are doing nothing.
-# define PLAYER_DRAG_AMOUNT 0.001
+# define PLAYER_DRAG_AMOUNT 0.99
 
 // The size of the player.
 # define PLAYER_COL_R 0.1
@@ -82,7 +84,7 @@ typedef struct s_float_position
 }	t_fpos;
 
 // Computes the squared distance between `a` and `b`.
-float	sl_sqdist(t_fpos a, t_fpos b);
+float		sl_sqdist(t_fpos a, t_fpos b);
 
 // A vector.
 typedef struct s_float_vector
@@ -112,29 +114,15 @@ typedef struct s_rectangle
 // The RGBA - Value transmutation expects a little endian system.
 typedef struct s_color
 {
-	union
-	{
-		uint8_t	b;
-		uint8_t	g;
-		uint8_t	r;
-		uint8_t	a;
-	};
-	uint32_t	val;
+	uint8_t	a;
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
 }	t_rgba;
 
 // ========================================================================== //
 //                                 	Parsing                                   //
 // ========================================================================== //
-
-// A tile that may be defined in a map file.
-typedef enum e_tile
-{
-	SL_TILE_FLOOR,
-	SL_TILE_WALL,
-	SL_TILE_COIN,
-	SL_TILE_EXIT,
-	SL_TILE_PLAYER,
-}	t_tile;
 
 // A collection of error that might occur whilst parsing a map.
 typedef enum e_parsing_error
@@ -201,7 +189,7 @@ void		sl_print_map_error(t_map_parser *p);
 // ========================================================================== //
 
 // The number of images that have to be loaded within a `t_game` instance.
-# define IMAGE_COUNT 3
+# define IMAGE_COUNT 4
 
 // Identifies an image loaded for a `t_game`.
 //
@@ -211,6 +199,7 @@ typedef enum e_game_image
 	SL_GIMG_PLAYER,
 	SL_GIMG_EXIT,
 	SL_GIMG_COIN,
+	SL_GING_WALL,
 }	t_gimg;
 
 // Represents a game canvas.
@@ -264,7 +253,7 @@ bool		sl_load_images(t_mlx mlx, t_imgi *images);
 // This function will only return once the game instance is closed.
 t_gerr		sl_game_start(t_map *map);
 
-// Ges the current timestamp, in nanoseconds.
+// Ges the current timestamp, in microseconds.
 uint64_t	sl_get_current_timestamp(void);
 
 // Computes the amout of time since `prev`, in seconds.
@@ -308,6 +297,6 @@ bool		sl_create_image(t_mlx mlx, uint32_t w, uint32_t h, t_imgi *result);
 bool		sl_load_image(t_mlx mlx, const char *s, t_imgi *result);
 
 // Puts a portion of `src` into `dst`.
-void		sl_put_image(t_imgi *dst_img, t_upos dst, t_imgi *src_img, t_rect src);
+void		sl_put_image(t_imgi *dimg, t_upos dst, t_imgi *simg, t_rect src);
 
 #endif

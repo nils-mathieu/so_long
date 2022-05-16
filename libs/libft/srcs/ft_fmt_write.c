@@ -6,12 +6,12 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 17:52:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 19:21:19 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:45:00 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "__libft_fmt.h"
+#include "__libft_internal.h"
 
 bool	ft_fmt_write(t_writer writer, const char *format, ...)
 {

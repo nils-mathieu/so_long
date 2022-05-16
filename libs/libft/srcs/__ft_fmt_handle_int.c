@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_image.c                                        :+:      :+:    :+:   */
+/*   __ft_fmt_handle_int.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 22:34:28 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 17:30:25 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/16 18:14:29 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/16 18:21:08 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
 #include "libft.h"
+#include "__libft_internal.h"
 
-void	sl_put_image(t_imgi *dst_img, t_upos dst, t_imgi *src_img, t_rect src)
+bool	__ft_fmt_handle_int(t_writer w, va_list args)
 {
-	size_t	x;
-	size_t	y;
-	t_rgba	c;
+	char	buf[11];
+	char	*start;
+	bool	neg;
+	int		i;
 
-	y = 0;
-	while (y < src.height)
+	i = va_arg(args, int);
+	if (i == INT_MIN)
+		return (w.write(w.self, "-2147483648", 11));
+	neg = false;
+	if (i < 0)
 	{
-		x = 0;
-		while (x < src.width)
-		{
-			c = *(t_rgba *)(src_img->addr + src_img->line_len * (src.y + y)
-					+ 4 * (src.x + x));
-			if (c.a != 0)
-				*(t_rgba *)(dst_img->addr + dst_img->line_len
-						* (dst.y + y) + 4 * (dst.x + x)) = c;
-			x++;
-		}
-		y++;
+		i = -i;
+		neg = true;
 	}
+	start = ft_uint_to_str(i, (t_str){"0123456789", 10}, buf + 11);
+	if (neg)
+		*(--start) = '-';
+	return (w.write(w.self, start, 11 - (start - buf)));
 }

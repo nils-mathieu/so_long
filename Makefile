@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/16 13:35:22 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/16 17:26:51 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS		:=				\
 	delta_time.c			\
 	hooks.c					\
 	move_player.c			\
-	render.c				\
+	render_game.c			\
 	put_image.c				\
 	load_image.c			\
 	fpos_utils.c
@@ -50,10 +50,10 @@ HEADERS :=			\
 SRC_FILES = $(addprefix $(SRCS_DIR)/,$(SRCS))
 OBJ_FILES = $(patsubst %.c,$(OBJS_DIR)/%.o,$(SRCS))
 
-ifdef RELEASE
-	CFLAGS += -O3 -flto
-else
+ifdef DEBUG
 	CFLAGS += -g3 -D DEBUG
+else
+	CFLAGS += -O3
 endif
 
 INCLUDE_FLAGS = $(addprefix -I , $(INCLUDES))

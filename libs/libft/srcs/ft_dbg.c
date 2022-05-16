@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_image.c                                        :+:      :+:    :+:   */
+/*   ft_dbg.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 22:34:28 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 17:30:25 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/16 16:49:52 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/16 16:52:15 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
 #include "libft.h"
+#include <unistd.h>
 
-void	sl_put_image(t_imgi *dst_img, t_upos dst, t_imgi *src_img, t_rect src)
+#ifdef DEBUG
+
+bool	ft_dbg(const char *format, ...)
 {
-	size_t	x;
-	size_t	y;
-	t_rgba	c;
+	va_list	args;
 
-	y = 0;
-	while (y < src.height)
-	{
-		x = 0;
-		while (x < src.width)
-		{
-			c = *(t_rgba *)(src_img->addr + src_img->line_len * (src.y + y)
-					+ 4 * (src.x + x));
-			if (c.a != 0)
-				*(t_rgba *)(dst_img->addr + dst_img->line_len
-						* (dst.y + y) + 4 * (dst.x + x)) = c;
-			x++;
-		}
-		y++;
-	}
+	va_start(args, format);
+	if (!ft_fmt_fd_va(STDERR_FILENO, format, args))
+		return (va_end(args), false);
+	va_end(args);
+	return (true);
 }
+
+#else
+
+bool	ft_dbg(const char *format, ...)
+{
+	(void)format;
+	return (true);
+}
+
+#endif

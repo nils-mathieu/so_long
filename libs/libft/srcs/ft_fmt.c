@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 19:43:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 20:18:07 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:48:10 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	fd_write(void *self, void *data, size_t count)
 	return (ft_write_all(*(int *)self, data, count));
 }
 
-static inline bool	ft_fmt_fd_va(int fd, const char *format, va_list args)
+bool	ft_fmt_fd_va(int fd, const char *format, va_list args)
 {
 	return (ft_fmt_write_va((t_writer){&fd, fd_write}, format, args));
 }

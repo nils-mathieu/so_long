@@ -6,22 +6,26 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:22:08 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/13 23:57:41 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:10:43 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "__libft_fmt.h"
+#include "__libft_internal.h"
 #include <stdio.h>
 
-#define FORMAT_HANDLER_COUNT 4
+#define FORMAT_HANDLER_COUNT 8
 
 static inline t_fmt_handler	*fmt_handler(void)
 {
 	static t_fmt_handler	handlers[FORMAT_HANDLER_COUNT] = {
 		(t_fmt_handler){(t_str){"u32", 3}, __ft_fmt_handle_u32},
 		(t_fmt_handler){(t_str){"i32", 3}, __ft_fmt_handle_i32},
+		(t_fmt_handler){(t_str){"i", 1}, __ft_fmt_handle_int},
+		(t_fmt_handler){(t_str){"s?", 2}, __ft_fmt_handle_debug_string},
+		(t_fmt_handler){(t_str){"s", 1}, __ft_fmt_handle_string},
 		(t_fmt_handler){(t_str){"c?", 2}, __ft_fmt_handle_debug_char},
 		(t_fmt_handler){(t_str){"c", 1}, __ft_fmt_handle_char},
+		(t_fmt_handler){(t_str){"b", 1}, __ft_fmt_handle_bool},
 	};
 
 	return (handlers);

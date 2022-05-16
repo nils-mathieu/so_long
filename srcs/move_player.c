@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 14:53:23 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/16 17:53:26 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ inline static bool	collides_with_wall(t_fpos wall, t_fpos pos)
 
 static void	bounce(t_upos *walls, size_t n, t_fpos p, t_fvec *vel)
 {
+	return ;
 	while (n)
 	{
 		if (collides_with_wall((t_fpos){(float)walls->x, (float)walls->y}, p))
@@ -50,6 +51,6 @@ void	sl_move_player(t_game *game)
 	bounce(game->walls, game->wall_count, game->player_pos, &game->player_vel);
 	game->player_pos.x += game->player_vel.x * game->delta_time;
 	game->player_pos.y += game->player_vel.y * game->delta_time;
-	game->player_vel.x -= game->player_vel.x * PLAYER_DRAG_AMOUNT;
-	game->player_vel.y -= game->player_vel.y * PLAYER_DRAG_AMOUNT;
+	game->player_vel.x *= PLAYER_DRAG_AMOUNT;
+	game->player_vel.y *= PLAYER_DRAG_AMOUNT;
 }

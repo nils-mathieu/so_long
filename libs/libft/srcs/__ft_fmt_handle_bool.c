@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   __ft_fmt_handle_bool.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 22:22:58 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 01:01:31 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/16 18:25:20 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/16 19:11:39 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
-#include "mlx.h"
 #include "libft.h"
-#include <stdio.h>
+#include "__libft_internal.h"
 
-void	sl_render_game(t_game *game)
+bool	__ft_fmt_handle_bool(t_writer w, va_list args)
 {
-	ft_mem_set(game->canvas.addr, 0, HEIGHT * game->canvas.line_len);
-	sl_put_image(&game->canvas, (t_upos){(uint32_t)(game->player_pos.x / 32.0), (uint32_t)(game->player_pos.y / 32.0)}, &game->images[SL_GIMG_PLAYER], (t_rect){0, 0, 32, 32});
-	mlx_put_image_to_window(game->mlx, game->win, game->canvas.image, 0, 0);
+	bool	b;
+
+	b = (bool)va_arg(args, int);
+	if (b)
+		return (w.write(w.self, "true", 4));
+	else
+		return (w.write(w.self, "false", 5));
 }
