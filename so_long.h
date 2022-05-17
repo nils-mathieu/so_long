@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 17:37:04 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:59:21 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define PLAYER_ACCELERATION_FORCE 60.0f
 // The coef applied to the velocity to determine how quickly the player should
 // stop when they are doing nothing.
-# define PLAYER_DRAG_AMOUNT 0.99f
+# define PLAYER_DRAG_AMOUNT 0.96f
 
 // The width of the player's collider.
 # define PLAYER_COL_W 0.5f
@@ -40,7 +40,7 @@
 # define BOUNCE_AMOUNT 3.0f
 
 // The maximum speed the player is allowed to have.
-# define MAX_VELOCITY 25.0
+# define MAX_VELOCITY 20.0
 // The amount of room given to the physics engine.
 # define PHYSICS_ROOM 1.001
 
