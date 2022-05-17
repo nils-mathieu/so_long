@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 23:06:36 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 19:14:30 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 13:58:57 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ inline static bool	fill_addr(t_imgi *result)
 			&bpp,
 			(int *)&result->line_len,
 			&endian);
-	ft_dbg("{i} bits per pixel | big endian: {b}\n", bpp, endian);
+	ft_dbg("{i} bits per pixel, big endian: {b}\n", bpp, endian);
 	return (result->addr && bpp == 32 && endian == 0);
 }
 

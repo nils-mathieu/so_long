@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 17:53:26 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:02:45 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,65 @@
 #include <math.h>
 
 // Determines whether the player collides with the given wall.
-inline static bool	collides_with_wall(t_fpos wall, t_fpos pos)
+inline static bool	collides(t_fpos wall, t_fpos pos)
 {
-	t_fpos	closest_point;
+	bool	up;
+	bool	left;
+	bool	right;
+	bool	down;
 
-	closest_point.x = fmaxf(wall.x, fminf(pos.x + PLAYER_COL_X, wall.x + 1.0));
-	closest_point.y = fmaxf(wall.y, fminf(pos.y + PLAYER_COL_Y, wall.y + 1.0));
-	return (sl_sqdist(closest_point, pos) <= PLAYER_COL_R * PLAYER_COL_R);
+	up = pos.y + PLAYER_COL_H * 0.5f < wall.y;
+	left = pos.x + PLAYER_COL_W * 0.5f < wall.x;
+	right = pos.x - PLAYER_COL_W * 0.5f > wall.x + 1.0f;
+	down = pos.y - PLAYER_COL_H * 0.5f > wall.y + 1.0f;
+	return (!up && !left && !right && !down);
 }
 
-static void	bounce(t_upos *walls, size_t n, t_fpos p, t_fvec *vel)
+static t_fvec	compute_disp(t_fvec vel, t_fpos wall, t_fpos p)
 {
-	return ;
-	while (n)
+	t_fvec	disp;
+
+	if (vel.x < 0.0f)
+		disp.x = (wall.x + 1.0) - (p.x - PLAYER_COL_W * 0.5f);
+	else
+		disp.x = wall.x - (p.x + PLAYER_COL_W * 0.5f);
+	if (vel.y < 0.0f)
+		disp.y = (wall.y + 1.0) - (p.y - PLAYER_COL_H * 0.5f);
+	else
+		disp.y = wall.y - (p.y + PLAYER_COL_H * 0.5f);
+	if (fabsf(disp.x) < fabsf(disp.y))
+		disp.y = 0.0;
+	else
+		disp.x = 0.0;
+	return (disp);
+}
+
+static void	bounce(t_game *g)
+{
+	t_fpos	wall;
+	t_fvec	eff_vel;
+	t_fvec	disp;
+	size_t	i;
+
+	eff_vel.x = g->player_vel.x * g->delta_time;
+	eff_vel.y = g->player_vel.y * g->delta_time;
+	g->player_pos.x += eff_vel.x;
+	g->player_pos.y += eff_vel.y;
+	i = 0;
+	while (i < g->wall_count)
 	{
-		if (collides_with_wall((t_fpos){(float)walls->x, (float)walls->y}, p))
+		wall = (t_fpos){(float)g->walls[i].x, (float)g->walls[i].y};
+		if (collides(wall, g->player_pos))
 		{
-			if (vel->x > vel->y)
-				vel->x = -vel->x * BOUNCE_AMOUNT;
+			disp = compute_disp(eff_vel, wall, g->player_pos);
+			g->player_pos.x += disp.x * 1.0001;
+			g->player_pos.y += disp.y * 1.0001;
+			if (disp.x == 0.0)
+				g->player_vel.y = -g->player_vel.y * BOUNCE_AMOUNT;
 			else
-				vel->y = -vel->y * BOUNCE_AMOUNT;
+				g->player_vel.x = -g->player_vel.x * BOUNCE_AMOUNT;
 		}
-		n--;
-		walls++;
+		i++;
 	}
 }
 
@@ -48,9 +84,7 @@ void	sl_move_player(t_game *game)
 	acc.y = game->movement_input.y * PLAYER_ACCELERATION_FORCE;
 	game->player_vel.x += acc.x * game->delta_time;
 	game->player_vel.y += acc.y * game->delta_time;
-	bounce(game->walls, game->wall_count, game->player_pos, &game->player_vel);
-	game->player_pos.x += game->player_vel.x * game->delta_time;
-	game->player_pos.y += game->player_vel.y * game->delta_time;
+	bounce(game);
 	game->player_vel.x *= PLAYER_DRAG_AMOUNT;
 	game->player_vel.y *= PLAYER_DRAG_AMOUNT;
 }

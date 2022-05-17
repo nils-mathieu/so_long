@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 19:18:57 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:06:12 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,22 @@
 // The minim amount of time between each frame. This should be measured in
 // microseconds.
 # ifndef SL_BONUS
-#  define DEFAULT_DELTA 0.001
+#  define DEFAULT_DELTA 0.001f
 # endif
 
 // The force applied on the player when a key is pressed.
-# define PLAYER_ACCELERATION_FORCE 40.0
+# define PLAYER_ACCELERATION_FORCE 40.0f
 // The coef applied to the velocity to determine how quickly the player should
 // stop when they are doing nothing.
-# define PLAYER_DRAG_AMOUNT 0.99
+# define PLAYER_DRAG_AMOUNT 0.99f
 
-// The size of the player.
-# define PLAYER_COL_R 0.1
-// The X coordinate of the player's collider, relative to its center.
-# define PLAYER_COL_X 0.0
-// The Y coordinate of the player's collider, relative to its center.
-# define PLAYER_COL_Y 0.0
+// The width of the player's collider.
+# define PLAYER_COL_W 0.5f
+// The height of the player's collider.
+# define PLAYER_COL_H 0.5f
 
 // The bounciness of walls.
-# define BOUNCE_AMOUNT 0.6
+# define BOUNCE_AMOUNT 1.2f
 
 // The width of the window.
 # define WIDTH 1280

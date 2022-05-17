@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/16 17:26:51 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/17 14:23:15 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,11 +89,11 @@ bonus: $(NAME)
 # ============================================================================ #
 
 $(NAME): $(LIBS) $(OBJ_FILES)
-	cc $(CFLAGS) $(OBJ_FILES) $(LIBS) -lXext -lX11 -lm -o $(NAME)
+	clang $(CFLAGS) $(OBJ_FILES) $(LIBS) -lXext -lX11 -lm -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADERS)
 	@mkdir -vp $(dir $@)
-	cc $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+	clang $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 libs/minilibx/libmlx.a:	
 	make -C libs/minilibx do_configure
