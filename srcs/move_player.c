@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 16:22:12 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:33:33 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,50 @@ static t_fvec	compute_disp(t_fvec vel, t_fpos wall, t_fpos p)
 	return (disp);
 }
 
+#include <stdio.h>
 static void	bounce(t_game *g)
 {
 	t_fpos	wall;
-	t_fvec	eff_vel;
+	t_fvec	max_disp;
 	t_fvec	disp;
 	size_t	i;
 
 	g->player_vel = sl_clamp_vec(g->player_vel, MAX_VELOCITY);
-	eff_vel.x = g->player_vel.x * g->delta_time;
-	eff_vel.y = g->player_vel.y * g->delta_time;
-	g->player_pos.x += eff_vel.x;
-	g->player_pos.y += eff_vel.y;
+	g->player_pos.x += g->player_vel.x * g->delta_time;
+	g->player_pos.y += g->player_vel.y * g->delta_time;
 	i = 0;
+	max_disp.x = 0.0;
+	max_disp.y = 0.0;
 	while (i < g->wall_count)
 	{
 		wall = (t_fpos){(float)g->walls[i].x, (float)g->walls[i].y};
 		if (collides(wall, g->player_pos))
 		{
-			disp = compute_disp(eff_vel, wall, g->player_pos);
-			g->player_pos.x += disp.x * 1.0001;
-			g->player_pos.y += disp.y * 1.0001;
-			if (disp.x == 0.0)
-				g->player_vel.y = -g->player_vel.y * BOUNCE_AMOUNT;
-			else
-				g->player_vel.x = -g->player_vel.x * BOUNCE_AMOUNT;
+			disp = compute_disp(g->player_vel, wall, g->player_pos);
+			if (fabsf(disp.y) > max_disp.y)
+				max_disp.y = disp.y;
+			if (fabsf(disp.x) > max_disp.x)
+				max_disp.x = disp.x;
 		}
 		i++;
+	}
+	g->player_pos.x += max_disp.x * PHYSICS_ROOM;
+	g->player_pos.y += max_disp.y * PHYSICS_ROOM;
+	if (fabsf(max_disp.x) < fabsf(max_disp.y) - 0.001)
+	{
+		g->player_vel.y = -g->player_vel.y;
+		if (g->player_vel.y < 0.0)
+			g->player_vel.y -= BOUNCE_AMOUNT;
+		else
+			g->player_vel.y += BOUNCE_AMOUNT;
+	}
+	else if (fabsf(max_disp.x) > fabsf(max_disp.y) + 0.001)
+	{
+		g->player_vel.x = -g->player_vel.x;
+		if (g->player_vel.x < 0.0)
+			g->player_vel.x -= BOUNCE_AMOUNT;
+		else
+			g->player_vel.x += BOUNCE_AMOUNT;
 	}
 }
 
