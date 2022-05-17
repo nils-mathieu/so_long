@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 20:56:58 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 22:57:17 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ static t_gerr	init_game(t_game *g, t_map *map)
 	g->width = map->width;
 	g->height = map->height;
 	g->player_pos = (t_fpos){(float)map->player.x, (float)map->player.y};
+	g->camera_max = (t_fpos){1.0/0.0, 1.0/0.0};
+	g->camera_min = (t_fpos){-1.0/0.0, -1.0/0.0};
+	g->camera_pos = g->player_pos;
 	g->frame_last_instant = sl_get_current_timestamp();
 	g->walls = upos_to_fpos_array(map->walls, map->wall_count);
 	g->wall_count = map->wall_count;

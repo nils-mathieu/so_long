@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:35:24 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 18:08:26 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:06:30 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,9 @@ t_fvec	sl_clamp_vec(t_fvec a, float m)
 		a.y *= len;
 	}
 	return (a);
+}
+
+float	sl_lerp(float a, float b, float t)
+{
+	return (a + t * (b - a));
 }

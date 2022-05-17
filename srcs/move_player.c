@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 19:22:00 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 22:26:42 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ inline static bool	collides(t_fpos wall, t_fpos pos)
 	bool	right;
 	bool	down;
 
-	up = pos.y + PLAYER_COL_H * 0.5f < wall.y;
-	left = pos.x + PLAYER_COL_W * 0.5f < wall.x;
-	right = pos.x - PLAYER_COL_W * 0.5f > wall.x + 1.0f;
-	down = pos.y - PLAYER_COL_H * 0.5f > wall.y + 1.0f;
+	up = pos.y + PLAYER_COL_H * 0.5f < wall.y - 0.5f;
+	left = pos.x + PLAYER_COL_W * 0.5f < wall.x - 0.5f;
+	right = pos.x - PLAYER_COL_W * 0.5f > wall.x + 0.5f;
+	down = pos.y - PLAYER_COL_H * 0.5f > wall.y + 0.5f;
 	return (!up && !left && !right && !down);
 }
 
@@ -33,13 +33,13 @@ static t_fvec	compute_dis(t_fvec vel, t_fpos wall, t_fpos p)
 	t_fvec	disp;
 
 	if (vel.x < 0.0f)
-		disp.x = (wall.x + 1.0) - (p.x - PLAYER_COL_W * 0.5f);
+		disp.x = (wall.x + 0.5f) - (p.x - PLAYER_COL_W * 0.5f);
 	else
-		disp.x = wall.x - (p.x + PLAYER_COL_W * 0.5f);
+		disp.x = wall.x - 0.5f - (p.x + PLAYER_COL_W * 0.5f);
 	if (vel.y < 0.0f)
-		disp.y = (wall.y + 1.0) - (p.y - PLAYER_COL_H * 0.5f);
+		disp.y = (wall.y + 0.5f) - (p.y - PLAYER_COL_H * 0.5f);
 	else
-		disp.y = wall.y - (p.y + PLAYER_COL_H * 0.5f);
+		disp.y = wall.y - 0.5f - (p.y + PLAYER_COL_H * 0.5f);
 	if (fabsf(disp.x) < fabsf(disp.y))
 		disp.y = 0.0;
 	else

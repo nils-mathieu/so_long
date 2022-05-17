@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 21:07:09 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:05:28 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define PLAYER_ACCELERATION_FORCE 60.0f
 // The coef applied to the velocity to determine how quickly the player should
 // stop when they are doing nothing.
-# define PLAYER_DRAG_AMOUNT 0.96f
+# define PLAYER_DRAG_AMOUNT 0.97f
 
 // The width of the player's collider.
 # define PLAYER_COL_W 0.5f
@@ -51,6 +51,12 @@
 
 // The size of the collider of the exit portal.
 # define EXIT_COL_R 1.0f
+
+// The number of pixels each unit of the game world takes.
+# define PIXELS_PER_UNIT 24.0f
+
+// The speed of the camera.
+# define CAMERA_SPEED 0.1f
 
 // The width of the window.
 # define WIDTH 1280
@@ -83,6 +89,9 @@ typedef void			*t_img;
 // ========================================================================== //
 //                                 	  Math                                    //
 // ========================================================================== //
+
+// Linearly interpolates between `a` and `b`.
+float	sl_lerp(float a, float b, float t);
 
 // A position within the game world.
 typedef struct s_float_position
@@ -243,6 +252,10 @@ typedef struct s_game
 	size_t		rem_coins;
 	t_fpos		*coins;
 
+	t_fpos		camera_min;
+	t_fpos		camera_pos;
+	t_fpos		camera_max;
+
 	t_fpos		exit;
 
 	bool		pressing_up;
@@ -309,6 +322,24 @@ void		sl_collect_coins(t_game *game);
 // If the player has finished and is on the finish line, the game ends.
 void		sl_finish(t_game *game);
 
+// Returns the position of the camera.
+t_fpos		sl_camera_pos(t_game *game);
+
+// Renders the player.
+void		sl_render_player(t_fpos camera, t_game *game);
+
+// Renders coins on the screen.
+void		sl_render_coins(t_fpos camera, t_game *game);
+
+// Renders the final portal.
+void		sl_render_portal(t_fpos camera, t_game *game);
+
+// Renders the walls.
+void		sl_render_walls(t_fpos camera, t_game *game);
+
+// Updates the position of the camera.
+void		sl_update_camera(t_game *game);
+
 // ========================================================================== //
 //                                Rendering                                   //
 // ========================================================================== //
@@ -319,7 +350,12 @@ bool		sl_create_image(t_mlx mlx, uint32_t w, uint32_t h, t_imgi *result);
 // Loads a new image from a file in the XPM format.
 bool		sl_load_image(t_mlx mlx, const char *s, t_imgi *result);
 
-// Puts a portion of `src` into `dst`.
-void		sl_put_image(t_imgi *dimg, t_upos dst, t_imgi *simg, t_rect src);
+// Converts a position from world-space to screen-space.
+t_upos		sl_pos_to_screen(t_fpos camera, t_fpos pos);
+
+// Puts a portion of `src` into the canvas.
+//
+// If part of the image would be outside of the canvas, it is not drawn.
+void		sl_put_image(t_game *game, t_upos dst, t_imgi *simg, t_rect src);
 
 #endif

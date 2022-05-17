@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_game.c                                      :+:      :+:    :+:   */
+/*   render_coins.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 22:22:58 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 22:18:40 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/17 21:39:40 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/17 22:16:58 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "mlx.h"
-#include "libft.h"
-#include <stdio.h>
 
-void	sl_render_game(t_game *game)
+void	sl_render_coins(t_fpos camera, t_game *game)
 {
-	t_fpos	camera;
+	size_t	i;
+	t_upos	pos;
 
-	camera = sl_camera_pos(game);
-	ft_mem_set(game->canvas.addr, 0, HEIGHT * game->canvas.line_len);
-	sl_render_coins(camera, game);
-	sl_render_portal(camera, game);
-	sl_render_player(camera, game);
-	sl_render_walls(camera, game);
-	mlx_put_image_to_window(game->mlx, game->win, game->canvas.image, 0, 0);
-	mlx_do_sync(game->mlx);
+	i = 0;
+	while (i < game->rem_coins)
+	{
+		pos = sl_pos_to_screen(camera, game->coins[i]);
+		pos.x -= 10;
+		pos.y -= 10;
+		sl_put_image(
+			game, pos, &game->images[SL_GIMG_COIN],
+			(t_rect){0, 0, 20, 20});
+		i++;
+	}
 }
