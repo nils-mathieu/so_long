@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:41:19 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 16:59:43 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:39:11 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ float	sl_delta_time(uint64_t *prev)
 		delta = now - *prev;
 	}
 	*prev = now;
-	return ((float)((double)delta / 1e9));
+	return ((float)((double)TARGET_DELTA / 1e9));
 }
 
 #else

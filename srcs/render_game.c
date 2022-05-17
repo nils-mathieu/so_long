@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:22:58 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 16:33:20 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:48:04 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	sl_render_game(t_game *game)
 	i = 0;
 	while (i < game->wall_count)
 	{
-		i++;
 		sl_put_image(&game->canvas, (t_upos){game->walls[i].x * 24, game->walls[i].y * 24}, &game->images[SL_GING_WALL], (t_rect){0,0,24,24});
+		i++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->canvas.image, 0, 0);
 	char s[64];

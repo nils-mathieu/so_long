@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 17:35:00 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:37:04 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,9 @@ typedef struct s_game
 
 	size_t		wall_count;
 	t_upos		*walls;
+
+	size_t		count_count;
+	t_upos		*coins;
 
 	bool		pressing_up;
 	bool		pressing_down;

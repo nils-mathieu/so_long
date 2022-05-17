@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 17:07:19 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 20:07:09 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:43:50 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	grow(t_upos **data, size_t *cap)
 {
 	t_upos	*new;
 
-	new = ft_alloc_array(*cap + 4, 2 * sizeof(t_map_parser));
+	new = ft_alloc_array(*cap + 2, 2 * sizeof(t_map_parser));
 	if (!new)
 		return (false);
 	if (*cap != 0)
@@ -27,7 +27,7 @@ static bool	grow(t_upos **data, size_t *cap)
 		free(*data);
 	}
 	*data = new;
-	*cap = (*cap + 4) * 2;
+	*cap = (*cap + 2) * 2;
 	return (true);
 }
 
