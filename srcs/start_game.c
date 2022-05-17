@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 18:33:26 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:52:36 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ static t_gerr	init_game(t_game *g, t_map *map)
 	g->frame_last_instant = sl_get_current_timestamp();
 	g->walls = map->walls;
 	g->wall_count = map->wall_count;
-	g->coins_count = map->coin_count;
+	g->rem_coins = map->coin_count;
 	g->max_coins = map->coin_count;
 	g->coins = map->coins;
+	g->exit = map->exit;
 	return (SL_GERR_SUCCESS);
 }
 

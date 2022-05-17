@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 18:36:57 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:49:47 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@
 
 // The size of the collider of coins.
 # define COIN_COL_R 0.8f
+
+// The size of the collider of the exit portal.
+# define EXIT_COL_R 1.0f
 
 // The width of the window.
 # define WIDTH 1280
@@ -235,8 +238,10 @@ typedef struct s_game
 	t_upos		*walls;
 
 	size_t		max_coins;
-	size_t		coins_count;
+	size_t		rem_coins;
 	t_upos		*coins;
+
+	t_upos		exit;
 
 	bool		pressing_up;
 	bool		pressing_down;
@@ -298,6 +303,9 @@ void		sl_render_game(t_game *game);
 
 // Detects whether the player can collect any coin.
 void		sl_collect_coins(t_game *game);
+
+// If the player has finished and is on the finish line, the game ends.
+void		sl_finish(t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //

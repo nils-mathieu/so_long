@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   collect_coins.c                                    :+:      :+:    :+:   */
+/*   finish.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 18:26:36 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 18:52:02 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/17 18:41:31 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/17 18:52:43 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include "mlx.h"
 
-void	sl_collect_coins(t_game *game)
+void	sl_finish(t_game *game)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < game->rem_coins)
+	if (game->rem_coins != 0)
+		return ;
+	if (sl_sqdist((t_fpos){(float)game->exit.x, (float)game->exit.y},
+		game->player_pos) <= EXIT_COL_R * EXIT_COL_R)
 	{
-		if (sl_sqdist(
-			(t_fpos){(float)game->coins[i].x, (float)game->coins[i].y},
-			game->player_pos) <= COIN_COL_R * COIN_COL_R)
-		{
-			game->coins[i] = game->coins[game->rem_coins - 1];
-			game->rem_coins--;
-		}
-		else
-			i++;
+		mlx_loop_end(game->mlx);
 	}
 }

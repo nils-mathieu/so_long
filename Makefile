@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/17 18:26:33 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/17 18:41:23 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRCS		:=				\
 	put_image.c				\
 	load_image.c			\
 	math_utils.c			\
-	collect_coins.c
+	collect_coins.c			\
+	finish.c
 
 INCLUDES	:=				\
 	.						\
