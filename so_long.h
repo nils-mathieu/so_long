@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 18:49:47 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:05:04 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,13 +235,13 @@ typedef struct s_game
 	float		delta_time;
 
 	size_t		wall_count;
-	t_upos		*walls;
+	t_fpos		*walls;
 
 	size_t		max_coins;
 	size_t		rem_coins;
-	t_upos		*coins;
+	t_fpos		*coins;
 
-	t_upos		exit;
+	t_fpos		exit;
 
 	bool		pressing_up;
 	bool		pressing_down;

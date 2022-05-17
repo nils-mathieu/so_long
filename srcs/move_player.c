@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 18:03:06 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:22:00 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ static t_fvec	compute_dis(t_fvec vel, t_fpos wall, t_fpos p)
 	return (disp);
 }
 
-static t_fvec	compute_disp(t_fvec vel, t_upos *walls, size_t n, t_fpos p)
+static t_fvec	compute_disp(t_fvec vel, t_fpos *walls, size_t n, t_fpos p)
 {
 	t_fvec	max_disp;
-	t_fpos	wall;
 	t_fvec	disp;
 	size_t	i;
 
@@ -59,10 +58,9 @@ static t_fvec	compute_disp(t_fvec vel, t_upos *walls, size_t n, t_fpos p)
 	i = 0;
 	while (i < n)
 	{
-		wall = (t_fpos){(float)walls[i].x, (float)walls[i].y};
-		if (collides(wall, p))
+		if (collides(walls[i], p))
 		{
-			disp = compute_dis(vel, wall, p);
+			disp = compute_dis(vel, walls[i], p);
 			if (fabsf(disp.y) > max_disp.y)
 				max_disp.y = disp.y;
 			if (fabsf(disp.x) > max_disp.x)

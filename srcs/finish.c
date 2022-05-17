@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:41:31 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 18:52:43 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:23:52 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sl_finish(t_game *game)
 {
 	if (game->rem_coins != 0)
 		return ;
-	if (sl_sqdist((t_fpos){(float)game->exit.x, (float)game->exit.y},
+	if (sl_sqdist(game->exit,
 		game->player_pos) <= EXIT_COL_R * EXIT_COL_R)
 	{
 		mlx_loop_end(game->mlx);
