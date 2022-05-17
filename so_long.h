@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 01:22:32 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:26:16 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,9 +250,6 @@ typedef struct s_game
 	size_t		rem_coins;
 	t_fpos		*coins;
 
-	t_fpos		camera_min;
-	t_fpos		camera_pos;
-	t_fpos		camera_max;
 
 	t_fpos		exit;
 
@@ -262,6 +259,7 @@ typedef struct s_game
 	bool		pressing_left;
 	float		recoil_duration;
 	t_fvec		movement_input;
+	t_fpos		camera_pos;
 	t_fvec		player_vel;
 	t_fpos		player_pos;
 }	t_game;
