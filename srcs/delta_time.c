@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:41:19 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 17:59:53 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:39:03 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ float	sl_delta_time(uint64_t *prev)
 	uint64_t	delta;
 	uint64_t	now;
 
-	now = sl_get_current_timestamp();
-	delta = now - *prev;
+	delta = 0;
+	while (delta < TARGET_DELTA)
+	{
+		now = sl_get_current_timestamp();
+		delta = now - *prev;
+	}
 	*prev = now;
 	return ((float)((double)delta / 1e9));
 }
@@ -46,7 +50,7 @@ uint64_t	sl_get_current_timestamp(void)
 float	sl_delta_time(uint64_t *prev)
 {
 	(void)prev;
-	return (DEFAULT_DELTA);
+	return ((float)((double)TARGET_DELTA / 1e9));
 }
 
 #endif

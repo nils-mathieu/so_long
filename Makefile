@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/17 14:23:15 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/17 16:12:52 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRCS		:=				\
 	render_game.c			\
 	put_image.c				\
 	load_image.c			\
-	fpos_utils.c
+	math_utils.c
 
 INCLUDES	:=				\
 	.						\

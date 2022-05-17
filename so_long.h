@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 16:06:12 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:41:20 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@
 //                               Game Rules                                   //
 // ========================================================================== //
 
-// The minim amount of time between each frame. This should be measured in
-// microseconds.
-# ifndef SL_BONUS
-#  define DEFAULT_DELTA 0.001f
-# endif
+// The target amount of time between two frames, in nanoseconds.
+# define TARGET_DELTA 16666667
 
 // The force applied on the player when a key is pressed.
 # define PLAYER_ACCELERATION_FORCE 40.0f
@@ -41,6 +38,9 @@
 
 // The bounciness of walls.
 # define BOUNCE_AMOUNT 1.2f
+
+// The maximum speed the player is allowed to have.
+# define MAX_VELOCITY 30.0
 
 // The width of the window.
 # define WIDTH 1280
@@ -90,6 +90,9 @@ typedef struct s_float_vector
 	float	x;
 	float	y;
 }	t_fvec;
+
+// Clamps the length of the provided vector between `0.0` and `max`.
+t_fvec	sl_clamp_vec(t_fvec vec, float max);
 
 /// A discrete position within the game world.
 typedef struct s_uint32_position

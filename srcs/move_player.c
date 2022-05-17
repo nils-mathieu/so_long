@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 16:02:45 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:22:12 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	bounce(t_game *g)
 	t_fvec	disp;
 	size_t	i;
 
+	g->player_vel = sl_clamp_vec(g->player_vel, MAX_VELOCITY);
 	eff_vel.x = g->player_vel.x * g->delta_time;
 	eff_vel.y = g->player_vel.y * g->delta_time;
 	g->player_pos.x += eff_vel.x;
