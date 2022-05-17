@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/17 16:12:52 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/17 18:26:33 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRCS		:=				\
 	render_game.c			\
 	put_image.c				\
 	load_image.c			\
-	math_utils.c
+	math_utils.c			\
+	collect_coins.c
 
 INCLUDES	:=				\
 	.						\
@@ -95,7 +96,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADERS)
 	@mkdir -vp $(dir $@)
 	clang $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-libs/minilibx/libmlx.a:	
+libs/minilibx/libmlx.a:
 	make -C libs/minilibx do_configure
 
 libs/libft/libft.a:

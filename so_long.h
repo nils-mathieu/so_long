@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 17:59:21 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/17 18:36:57 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@
 # define BOUNCE_AMOUNT 3.0f
 
 // The maximum speed the player is allowed to have.
-# define MAX_VELOCITY 20.0
+# define MAX_VELOCITY 20.0f
 // The amount of room given to the physics engine.
-# define PHYSICS_ROOM 1.001
+# define PHYSICS_ROOM 1.001f
+
+// The size of the collider of coins.
+# define COIN_COL_R 0.8f
 
 // The width of the window.
 # define WIDTH 1280
@@ -231,7 +234,8 @@ typedef struct s_game
 	size_t		wall_count;
 	t_upos		*walls;
 
-	size_t		count_count;
+	size_t		max_coins;
+	size_t		coins_count;
 	t_upos		*coins;
 
 	bool		pressing_up;
@@ -291,6 +295,9 @@ void		sl_move_player(t_game *game);
 
 // Renders the curremt game state on the screen.
 void		sl_render_game(t_game *game);
+
+// Detects whether the player can collect any coin.
+void		sl_collect_coins(t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //
