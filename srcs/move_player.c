@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 22:26:42 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:22:24 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static t_fvec	compute_disp(t_fvec vel, t_fpos *walls, size_t n, t_fpos p)
 	return (max_disp);
 }
 
+#include <stdio.h>
 static void	bounce(t_game *g)
 {
 	t_fvec	disp;
 
-	g->player_vel = sl_clamp_vec(g->player_vel, MAX_VELOCITY);
 	g->player_pos.x += g->player_vel.x * g->delta_time;
 	g->player_pos.y += g->player_vel.y * g->delta_time;
 	disp = compute_disp(g->player_vel, g->walls, g->wall_count, g->player_pos);
@@ -83,19 +83,19 @@ static void	bounce(t_game *g)
 	g->player_pos.y += disp.y * PHYSICS_ROOM;
 	if (fabsf(disp.x) < fabsf(disp.y) - 0.001)
 	{
-		g->player_vel.y = -g->player_vel.y;
 		if (g->player_vel.y < 0.0)
-			g->player_vel.y -= BOUNCE_AMOUNT;
+			g->player_vel.y = BOUNCE_AMOUNT;
 		else
-			g->player_vel.y += BOUNCE_AMOUNT;
+			g->player_vel.y = -BOUNCE_AMOUNT;
+		g->recoil_duration = RECOIL_DURATION;
 	}
 	else if (fabsf(disp.x) > fabsf(disp.y) + 0.001)
 	{
-		g->player_vel.x = -g->player_vel.x;
 		if (g->player_vel.x < 0.0)
-			g->player_vel.x -= BOUNCE_AMOUNT;
+			g->player_vel.x = BOUNCE_AMOUNT;
 		else
-			g->player_vel.x += BOUNCE_AMOUNT;
+			g->player_vel.x = -BOUNCE_AMOUNT;
+		g->recoil_duration = RECOIL_DURATION;
 	}
 }
 
@@ -103,8 +103,13 @@ void	sl_move_player(t_game *game)
 {
 	t_fvec	acc;
 
-	acc.x = game->movement_input.x * PLAYER_ACCELERATION_FORCE;
-	acc.y = game->movement_input.y * PLAYER_ACCELERATION_FORCE;
+	if (game->recoil_duration <= 0.0f)
+	{
+		acc.x = game->movement_input.x * PLAYER_ACCELERATION_FORCE;
+		acc.y = game->movement_input.y * PLAYER_ACCELERATION_FORCE;
+	}
+	else
+		game->recoil_duration -= game->delta_time;
 	game->player_vel.x += acc.x * game->delta_time;
 	game->player_vel.y += acc.y * game->delta_time;
 	bounce(game);

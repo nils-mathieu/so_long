@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 01:05:28 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:22:32 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,16 @@
 # define PLAYER_DRAG_AMOUNT 0.97f
 
 // The width of the player's collider.
-# define PLAYER_COL_W 0.5f
+# define PLAYER_COL_W 0.6f
 // The height of the player's collider.
-# define PLAYER_COL_H 0.5f
+# define PLAYER_COL_H 0.6f
 
 // The bounciness of walls.
-# define BOUNCE_AMOUNT 3.0f
+# define BOUNCE_AMOUNT 10.0f
+// The amount of time the player is unable to control the ship once it have
+// bounced against a wall.
+# define RECOIL_DURATION 0.3f
 
-// The maximum speed the player is allowed to have.
-# define MAX_VELOCITY 20.0f
 // The amount of room given to the physics engine.
 # define PHYSICS_ROOM 1.001f
 
@@ -109,9 +110,6 @@ typedef struct s_float_vector
 	float	x;
 	float	y;
 }	t_fvec;
-
-// Clamps the length of the provided vector between `0.0` and `max`.
-t_fvec	sl_clamp_vec(t_fvec vec, float max);
 
 /// A discrete position within the game world.
 typedef struct s_uint32_position
@@ -262,6 +260,7 @@ typedef struct s_game
 	bool		pressing_down;
 	bool		pressing_right;
 	bool		pressing_left;
+	float		recoil_duration;
 	t_fvec		movement_input;
 	t_fvec		player_vel;
 	t_fpos		player_pos;
