@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:49:51 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 22:58:06 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:36:31 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	sl_key_press_hook(unsigned long keysym, t_game *game)
 	else if (keysym == RIGHT_KEYSYM)
 		game->pressing_right = true;
 	recompute_movement_input(game);
+	sl_update_player_dir(game);
 	return (0);
 }
 
@@ -76,6 +77,7 @@ int	sl_key_release_hook(unsigned long keysym, t_game *game)
 	else if (keysym == RIGHT_KEYSYM)
 		game->pressing_right = false;
 	recompute_movement_input(game);
+	sl_update_player_dir(game);
 	return (0);
 }
 
@@ -86,6 +88,7 @@ int	sl_loop_hook(t_game *game)
 	sl_update_camera(game);
 	sl_collect_coins(game);
 	sl_finish(game);
+	sl_animate_player(game);
 	sl_render_game(game);
 	return (0);
 }

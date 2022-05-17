@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/17 22:19:00 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/18 01:32:23 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ SRCS		:=				\
 	render_player.c			\
 	render_coins.c			\
 	render_portal.c			\
-	render_walls.c
+	render_walls.c			\
+	animate_player.c
 
 INCLUDES	:=				\
 	.						\

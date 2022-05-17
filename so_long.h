@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 01:26:16 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:45:15 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@
 
 // The speed of the camera.
 # define CAMERA_SPEED 0.1f
+
+// The speed at which the player is animated.
+# define PLAYER_ANIM_SPEED 0.1f
 
 // The width of the window.
 # define WIDTH 1280
@@ -262,6 +265,9 @@ typedef struct s_game
 	t_fpos		camera_pos;
 	t_fvec		player_vel;
 	t_fpos		player_pos;
+	size_t		player_dir;
+	float		next_player_anim_frame;
+	size_t		player_anim_frame;
 }	t_game;
 
 // An error that might occur during the game's execution.
@@ -336,6 +342,12 @@ void		sl_render_walls(t_fpos camera, t_game *game);
 
 // Updates the position of the camera.
 void		sl_update_camera(t_game *game);
+
+// Updates the player's direction.
+void		sl_update_player_dir(t_game *game);
+
+// Animates the player.
+void		sl_animate_player(t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //
