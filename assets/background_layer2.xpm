@@ -1,5 +1,5 @@
 /* XPM */
-static char * background_layer2_xpm[] = {
+static char * background_layer2[] = {
 "512 512 9812 3",
 "   	c #1C0D48",
 ".  	c #1B0D46",
