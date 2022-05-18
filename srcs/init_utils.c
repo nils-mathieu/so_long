@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:15:49 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 02:31:30 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 02:54:27 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static t_coin	*create_coin_array(t_upos *pos, size_t n)
+static t_coin	*create_coin_array(t_game *game, t_upos *pos, size_t n)
 {
 	t_coin	*res;
 
@@ -26,8 +26,9 @@ static t_coin	*create_coin_array(t_upos *pos, size_t n)
 		n--;
 		res[n].pos.x = (float)pos[n].x;
 		res[n].pos.y = (float)pos[n].y;
-		res[n].frame = 0;
-		res[n].next_frame = COINS_ANIM_SPEED;
+		res[n].frame = sl_random(game) % 8;
+		res[n].next_frame = COINS_ANIM_SPEED *
+			(float)(uint8_t)sl_random(game) / 255.0f;
 	}
 	return (res);
 }
@@ -59,7 +60,7 @@ bool	sl_init_game(t_game *g, t_map *map)
 	if (!g->walls)
 		return (false);
 	g->wall_count = map->wall_count;
-	g->coins = create_coin_array(map->coins, map->coin_count);
+	g->coins = create_coin_array(g, map->coins, map->coin_count);
 	if (!g->coins)
 		return (free(g->walls), false);
 	g->rem_coins = map->coin_count;

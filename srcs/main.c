@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:20:48 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 22:41:25 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 02:52:34 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,9 @@ int	main(int argc, char **argv)
 		return (ft_fmt_err("MiniLibX Error\n"), 1);
 	if (gerr == SL_GERR_IMAGE)
 		return (ft_fmt_err("Image Load Error\n"), 1);
+	if (gerr == SL_GERR_OOM)
+		return (ft_fmt_err("Out Of Memory\n"), 1);
+	if (gerr == SL_GERR_RNG)
+		return (ft_fmt_err("Can't read /dev/urandom\n"), 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 02:27:06 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 02:46:36 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,8 @@ typedef struct s_game
 	uint32_t	width;
 	uint32_t	height;
 
+	uint64_t	rng_state[2];
+
 	uint64_t	frame_last_instant;
 	float		delta_time;
 
@@ -294,6 +296,7 @@ typedef enum e_game_error
 	SL_GERR_MLX,
 	SL_GERR_IMAGE,
 	SL_GERR_OOM,
+	SL_GERR_RNG,
 }	t_gerr;
 
 // Loads `IMAGE_COUNT` images into `images`.
@@ -373,6 +376,9 @@ bool		sl_init_game(t_game *game, t_map *map);
 
 // Animates coins.
 void		sl_animate_coins(t_game *game);
+
+// Generates a random number.
+uint64_t	sl_random(t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //

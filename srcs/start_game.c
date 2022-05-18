@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 02:20:46 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 02:54:34 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,20 @@
 #include "libft.h"
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
+#include <fcntl.h>
+
+static bool	init_rng(t_game *g)
+{
+	int	fd;
+
+	fd = open("/dev/urandom", O_RDONLY);
+	if (fd < 0)
+		return (false);
+	if (read(fd, g->rng_state, 2 * sizeof(uint64_t)) != 2 * sizeof(uint64_t))
+		return (close(fd), false);
+	close(fd);
+	return (true);
+}
 
 static void	destroy_images(t_game *g)
 {
@@ -28,6 +41,8 @@ static void	destroy_images(t_game *g)
 
 static t_gerr	init_game(t_game *g, t_map *map)
 {
+	if (!init_rng(g))
+		return (SL_GERR_RNG);
 	g->mlx = mlx_init();
 	if (!g->mlx)
 		return (SL_GERR_MLX);
