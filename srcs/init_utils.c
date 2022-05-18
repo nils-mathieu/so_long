@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:15:49 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 02:54:27 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:46:23 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,6 @@ static t_coin	*create_coin_array(t_game *game, t_upos *pos, size_t n)
 	return (res);
 }
 
-static t_wall	*create_wall_array(t_upos *pos, size_t n)
-{
-	t_wall	*res;
-
-	res = ft_alloc_array(n, sizeof(t_wall));
-	if (!res)
-		return (NULL);
-	while (n)
-	{
-		n--;
-		res[n].pos.x = (float)pos[n].x;
-		res[n].pos.y = (float)pos[n].y;
-	}
-	return (res);
-}
-
 bool	sl_init_game(t_game *g, t_map *map)
 {
 	g->width = map->width;
@@ -56,7 +40,7 @@ bool	sl_init_game(t_game *g, t_map *map)
 	g->player_pos = (t_fpos){(float)map->player.x, (float)map->player.y};
 	g->camera_pos = g->player_pos;
 	g->frame_last_instant = sl_get_current_timestamp();
-	g->walls = create_wall_array(map->walls, map->wall_count);
+	g->walls = sl_create_wall_array(map->walls, map->wall_count);
 	if (!g->walls)
 		return (false);
 	g->wall_count = map->wall_count;

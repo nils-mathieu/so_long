@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 03:06:04 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:50:43 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define EXIT_COL_R 1.0f
 
 // The number of pixels each unit of the game world takes.
-# define PIXELS_PER_UNIT 24.0f
+# define PIXELS_PER_UNIT 32.0f
 
 // The speed of the camera.
 # define CAMERA_SPEED 0.1f
@@ -216,10 +216,36 @@ void		sl_print_map_error(t_map_parser *p);
 // The number of images that have to be loaded within a `t_game` instance.
 # define IMAGE_COUNT 4
 
+// A possible wall tile.
+typedef enum e_wall_tile
+{
+	SL_WALL_TOP_LEFT,
+	SL_WALL_TOP,
+	SL_WALL_TOP_RIGHT,
+	SL_WALL_RIGHT,
+	SL_WALL_BOT_RIGHT,
+	SL_WALL_BOT,
+	SL_WALL_BOT_LEFT,
+	SL_WALL_LEFT,
+	SL_WALL_CENTER,
+	SL_WALL_THIN_LEFT,
+	SL_WALL_THIN_H,
+	SL_WALL_THIN_RIGHT,
+	SL_WALL_THIN_TOP,
+	SL_WALL_THIN_V,
+	SL_WALL_THIN_BOT,
+	SL_WALL_INNER_BOT_RIGHT,
+	SL_WALL_INNER_BOT_LEFT,
+	SL_WALL_INNER_TOP_LEFT,
+	SL_WALL_INNER_TOP_RIGHT,
+	SL_WALL_THIN,
+}	t_wall_tile;
+
 // Stores the state of a wall.
 typedef struct s_wall_state
 {
-	t_fpos	pos;
+	t_fpos		pos;
+	t_wall_tile	tile;
 }	t_wall;
 
 // Stores the state of a coin.
@@ -386,6 +412,43 @@ void		sl_animate_exit(t_game *game);
 
 // Generates a random number.
 uint64_t	sl_random(t_game *game);
+
+// The request of a tile.
+typedef enum e_tile_scheme_request
+{
+	SL_TSREQ_REQUIRED,
+	SL_TSREQ_FORBIDDEN,
+	SL_TSREQ_IGNORED,
+}	t_tscheme_req;
+
+// Describes whether a specific tile should be placed at a certain position.
+typedef struct s_tile_scheme
+{
+	union {
+		struct {
+			t_tscheme_req	top_left;
+			t_tscheme_req	top;
+			t_tscheme_req	top_right;
+			t_tscheme_req	right;
+			t_tscheme_req	bot_right;
+			t_tscheme_req	bot;
+			t_tscheme_req	bot_left;
+			t_tscheme_req	left;
+		};
+		t_tscheme_req		arr[8];
+	};
+}	t_tscheme;
+
+// Builds a a `t_wall` array from the provided position collection.
+t_wall		*sl_create_wall_array(t_upos *pos, size_t n);
+
+// Determines whether the provided array contains the value `pos`.
+//
+// The array must've been previously sorted using `sl_upos_array_sort`.
+bool		sl_upos_array_contains(t_upos pos, t_upos *arr, size_t n);
+
+// Sorts the provided array of positions.
+void		sl_upos_array_sort(t_upos *arr, size_t n);
 
 // ========================================================================== //
 //                                Rendering                                   //
