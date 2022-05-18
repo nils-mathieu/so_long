@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 21:12:52 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 01:26:41 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 02:00:55 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	sl_update_camera(t_game *game)
 {
 	game->camera_pos.x = sl_lerp(
-		game->camera_pos.x, game->player_pos.x, CAMERA_SPEED);
+			game->camera_pos.x, game->player_pos.x, CAMERA_SPEED);
 	game->camera_pos.y = sl_lerp(
-		game->camera_pos.y, game->player_pos.y, CAMERA_SPEED);
+			game->camera_pos.y, game->player_pos.y, CAMERA_SPEED);
 }
 
 t_fpos	sl_camera_pos(t_game *game)

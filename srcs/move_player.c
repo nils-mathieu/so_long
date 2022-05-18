@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 01:22:24 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 01:57:59 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static t_fvec	compute_disp(t_fvec vel, t_fpos *walls, size_t n, t_fpos p)
 	return (max_disp);
 }
 
-#include <stdio.h>
 static void	bounce(t_game *g)
 {
 	t_fvec	disp;
