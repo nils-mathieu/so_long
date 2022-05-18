@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 01:26:21 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 02:20:46 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-
-static t_fpos	*upos_to_fpos_array(t_upos *p, size_t n)
-{
-	while (n)
-	{
-		n--;
-		((t_fpos *)p)[n].x = (float)p[n].x;
-		((t_fpos *)p)[n].y = (float)p[n].y;
-	}
-	return ((t_fpos *)p);
-}
 
 static void	destroy_images(t_game *g)
 {
@@ -51,23 +40,18 @@ static t_gerr	init_game(t_game *g, t_map *map)
 			mlx_destroy_display(g->mlx), free(g->mlx),
 			SL_GERR_MLX);
 	if (!sl_create_image(g->mlx, WIDTH, HEIGHT, &g->canvas))
-		return (mlx_destroy_display(g->mlx), free(g->mlx), false);
-	g->width = map->width;
-	g->height = map->height;
-	g->player_pos = (t_fpos){(float)map->player.x, (float)map->player.y};
-	g->camera_pos = g->player_pos;
-	g->frame_last_instant = sl_get_current_timestamp();
-	g->walls = upos_to_fpos_array(map->walls, map->wall_count);
-	g->wall_count = map->wall_count;
-	g->rem_coins = map->coin_count;
-	g->max_coins = map->coin_count;
-	g->coins = upos_to_fpos_array(map->coins, map->coin_count);
-	g->exit = (t_fpos){(float)map->exit.x, (float)map->exit.y};
+		return (destroy_images(g), mlx_destroy_window(g->mlx, g->win),
+			mlx_destroy_display(g->mlx), free(g->mlx), SL_GERR_MLX);
+	if (!sl_init_game(g, map))
+		return (mlx_destroy_image(g->mlx, g->canvas.image), destroy_images(g),
+			mlx_destroy_window(g->mlx, g->win),
+			mlx_destroy_display(g->mlx), free(g->mlx), SL_GERR_OOM);
 	return (SL_GERR_SUCCESS);
 }
 
 static void	deinit_game(t_game *game)
 {
+	free(game->coins);
 	destroy_images(game);
 	mlx_destroy_image(game->mlx, game->canvas.image);
 	mlx_destroy_window(game->mlx, game->win);

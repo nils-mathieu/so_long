@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 21:39:40 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 22:16:58 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 02:15:00 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sl_render_coins(t_fpos camera, t_game *game)
 	i = 0;
 	while (i < game->rem_coins)
 	{
-		pos = sl_pos_to_screen(camera, game->coins[i]);
+		pos = sl_pos_to_screen(camera, game->coins[i].pos);
 		pos.x -= 10;
 		pos.y -= 10;
 		sl_put_image(

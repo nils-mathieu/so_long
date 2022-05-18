@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:26:36 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 01:57:47 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 02:04:38 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sl_collect_coins(t_game *game)
 	i = 0;
 	while (i < game->rem_coins)
 	{
-		if (sl_sqdist(game->coins[i],
+		if (sl_sqdist(game->coins[i].pos,
 				game->player_pos) <= COIN_COL_R * COIN_COL_R)
 		{
 			game->coins[i] = game->coins[game->rem_coins - 1];

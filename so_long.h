@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 01:45:15 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 02:27:06 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@
 
 // The speed at which the player is animated.
 # define PLAYER_ANIM_SPEED 0.1f
+// The speed at which coins are animated.
+# define COINS_ANIM_SPEED 0.2f
 
 // The width of the window.
 # define WIDTH 1280
@@ -212,6 +214,21 @@ void		sl_print_map_error(t_map_parser *p);
 // The number of images that have to be loaded within a `t_game` instance.
 # define IMAGE_COUNT 4
 
+// Stores the state of a wall.
+typedef struct s_wall_state
+{
+	t_fpos	pos;
+}	t_wall;
+
+// Stores the state of a coin.
+typedef struct s_coin_state
+{
+	t_fpos	pos;
+
+	size_t	frame;
+	float	next_frame;
+}	t_coin;
+
 // Identifies an image loaded for a `t_game`.
 //
 // Those values can be used as indices for the `image` field.
@@ -247,11 +264,11 @@ typedef struct s_game
 	float		delta_time;
 
 	size_t		wall_count;
-	t_fpos		*walls;
+	t_wall		*walls;
 
 	size_t		max_coins;
 	size_t		rem_coins;
-	t_fpos		*coins;
+	t_coin		*coins;
 
 
 	t_fpos		exit;
@@ -276,6 +293,7 @@ typedef enum e_game_error
 	SL_GERR_SUCCESS,
 	SL_GERR_MLX,
 	SL_GERR_IMAGE,
+	SL_GERR_OOM,
 }	t_gerr;
 
 // Loads `IMAGE_COUNT` images into `images`.
@@ -348,6 +366,13 @@ void		sl_update_player_dir(t_game *game);
 
 // Animates the player.
 void		sl_animate_player(t_game *game);
+
+// Initializes the fields of a `game` instance that are directly related to
+// a `map`.
+bool		sl_init_game(t_game *game, t_map *map);
+
+// Animates coins.
+void		sl_animate_coins(t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //
