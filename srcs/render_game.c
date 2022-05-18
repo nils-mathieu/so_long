@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:22:58 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 22:18:40 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:40:34 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sl_render_game(t_game *game)
 	t_fpos	camera;
 
 	camera = sl_camera_pos(game);
-	ft_mem_set(game->canvas.addr, 0, HEIGHT * game->canvas.line_len);
+	sl_put_image(game, (t_rect){0, 0, WIDTH, HEIGHT}, &game->images[SL_GIMG_BACKGROUND], (t_rect){0, 0, 512, 512});
 	sl_render_coins(camera, game);
 	sl_render_portal(camera, game);
 	sl_render_player(camera, game);

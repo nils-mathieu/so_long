@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 09:32:03 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 18:39:12 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:03:28 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static const char	**pathes(void)
 		"assets/spaceship.xpm",
 		"assets/spaceportal.xpm",
 		"assets/spacecoin.xpm",
-		"assets/spacewalls.xpm"
+		"assets/spacewalls.xpm",
+		"assets/background.xpm",
 	};
 
 	return (pathes);

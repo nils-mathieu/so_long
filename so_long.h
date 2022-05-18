@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 13:50:43 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:30:09 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@
 // The speed at which coins are animated.
 # define COINS_ANIM_SPEED 0.2f
 // The speed at which the portal is animated.
-# define EXIT_ANIM_SPEED 0.1f
+# define EXIT_ANIM_SPEED 0.05f
 
 // The width of the window.
 # define WIDTH 1280
@@ -213,9 +213,6 @@ void		sl_print_map_error(t_map_parser *p);
 //                                Game State                                  //
 // ========================================================================== //
 
-// The number of images that have to be loaded within a `t_game` instance.
-# define IMAGE_COUNT 4
-
 // A possible wall tile.
 typedef enum e_wall_tile
 {
@@ -257,6 +254,9 @@ typedef struct s_coin_state
 	float	next_frame;
 }	t_coin;
 
+// The number of images that have to be loaded within a `t_game` instance.
+# define IMAGE_COUNT 5
+
 // Identifies an image loaded for a `t_game`.
 //
 // Those values can be used as indices for the `image` field.
@@ -265,7 +265,8 @@ typedef enum e_game_image
 	SL_GIMG_PLAYER,
 	SL_GIMG_EXIT,
 	SL_GIMG_COIN,
-	SL_GING_WALL,
+	SL_GIMG_WALL,
+	SL_GIMG_BACKGROUND,
 }	t_gimg;
 
 // Represents a game canvas.
@@ -463,9 +464,11 @@ bool		sl_load_image(t_mlx mlx, const char *s, t_imgi *result);
 // Converts a position from world-space to screen-space.
 t_upos		sl_pos_to_screen(t_fpos camera, t_fpos pos);
 
-// Puts a portion of `src` into the canvas.
+// Puts a portion of `src` onto the canvas.
 //
-// If part of the image would be outside of the canvas, it is not drawn.
-void		sl_put_image(t_game *game, t_upos dst, t_imgi *simg, t_rect src);
+// If part of the image would be outside of the canvas, it is not drawn. If
+// the destination rectangle is larger than the source rectangle, the source
+// is repeated.
+void		sl_put_image(t_game *game, t_rect dst, t_imgi *simg, t_rect src);
 
 #endif
