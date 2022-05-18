@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_coins.c                                     :+:      :+:    :+:   */
+/*   animate_coins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 21:39:40 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 02:33:03 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/18 02:32:12 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/18 02:41:24 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	sl_render_coins(t_fpos camera, t_game *game)
+void	sl_animate_coins(t_game *game)
 {
 	size_t	i;
-	t_upos	pos;
 
 	i = 0;
 	while (i < game->rem_coins)
 	{
-		pos = sl_pos_to_screen(camera, game->coins[i].pos);
-		pos.x -= 10;
-		pos.y -= 10;
-		sl_put_image(
-			game, pos, &game->images[SL_GIMG_COIN],
-			(t_rect){20 * game->coins[i].frame, 0, 20, 20});
+		if (game->coins[i].next_frame <= 0.0f)
+		{
+			game->coins[i].frame++;
+			if (game->coins[i].frame == 8)
+				game->coins[i].frame = 0;
+			game->coins[i].next_frame = COINS_ANIM_SPEED;
+		}
+		else
+			game->coins[i].next_frame -= game->delta_time;
 		i++;
 	}
 }
