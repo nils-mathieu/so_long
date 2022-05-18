@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 15:30:09 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:35:07 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@
 // The speed at which the player is animated.
 # define PLAYER_ANIM_SPEED 0.1f
 // The speed at which coins are animated.
-# define COINS_ANIM_SPEED 0.2f
+# define COINS_ANIM_SPEED 0.04f
 // The speed at which the portal is animated.
-# define EXIT_ANIM_SPEED 0.05f
+# define EXIT_ANIM_SPEED 0.03f
 
 // The width of the window.
 # define WIDTH 1280
@@ -128,10 +128,10 @@ typedef struct s_uint32_position
 /// A discrete rectangle.
 typedef struct s_rectangle
 {
-	uint32_t	x;
-	uint32_t	y;
-	uint32_t	width;
-	uint32_t	height;
+	int32_t	x;
+	int32_t	y;
+	int32_t	width;
+	int32_t	height;
 }	t_rect;
 
 // A color, encoded as an RGBA array of `uint8_t`s.
@@ -451,6 +451,9 @@ bool		sl_upos_array_contains(t_upos pos, t_upos *arr, size_t n);
 // Sorts the provided array of positions.
 void		sl_upos_array_sort(t_upos *arr, size_t n);
 
+// Renders the background.
+void		sl_render_background(t_fpos camera, t_game *game);
+
 // ========================================================================== //
 //                                Rendering                                   //
 // ========================================================================== //
@@ -470,5 +473,8 @@ t_upos		sl_pos_to_screen(t_fpos camera, t_fpos pos);
 // the destination rectangle is larger than the source rectangle, the source
 // is repeated.
 void		sl_put_image(t_game *game, t_rect dst, t_imgi *simg, t_rect src);
+
+// Just like `sl_put_image` but uses additive blending.
+void		sl_add_image(t_game *game, t_rect dst, t_imgi *simg, t_rect src);
 
 #endif

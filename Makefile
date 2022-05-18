@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/18 13:05:19 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/18 15:41:50 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SRCS		:=				\
 	rng.c					\
 	animate_exit.c			\
 	init_walls.c			\
-	upos_array.c
+	upos_array.c			\
+	render_background.c
 
 INCLUDES	:=				\
 	.						\
