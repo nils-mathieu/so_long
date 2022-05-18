@@ -6,18 +6,28 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 15:42:28 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 17:50:05 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:25:34 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void		sl_render_background(t_fpos camera, t_game *game)
+static void	paralax_bg(t_fpos camera, t_game *game, float amount)
 {
-	(void)camera;
-	sl_put_image(
+	sl_add_image(
 		game,
 		(t_rect){0, 0, WIDTH, HEIGHT},
 		&game->images[SL_GIMG_BACKGROUND],
-		(t_srect){0, 0, 512, 512, 0, 0});
+		(t_srect){0, 0, 512, 512,
+			camera.x * amount * PIXELS_PER_UNIT, camera.y * amount * PIXELS_PER_UNIT});
+}
+
+void		sl_render_background(t_fpos camera, t_game *game)
+{
+	 sl_put_image(
+	 	game,
+	 	(t_rect){0, 0, WIDTH, HEIGHT},
+	 	&game->images[SL_GIMG_BACKGROUND_LAYER_2],
+	 	(t_srect){0, 0, 512, 512, camera.x * 0.02F * PIXELS_PER_UNIT, camera.y * 0.02f * PIXELS_PER_UNIT});
+	paralax_bg(camera, game, 0.1);
 }

@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 15:33:42 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:21:53 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static t_gerr	init_game(t_game *g, t_map *map)
 static void	deinit_game(t_game *game)
 {
 	free(game->coins);
+	free(game->walls);
 	destroy_images(game);
 	mlx_destroy_image(game->mlx, game->canvas.image);
 	mlx_destroy_window(game->mlx, game->win);

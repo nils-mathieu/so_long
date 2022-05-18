@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:34:28 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 17:49:55 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:22:02 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,9 @@ void	sl_put_image(t_game *game, t_rect dst, t_imgi *src_img, t_srect src)
 
 inline static void	add_colors(t_rgba *a, t_rgba b)
 {
-	t_rgba	r;
-
-	r = (t_rgba){0xff, 0xff, 0xff, 0xff};
-	if (b.r > UINT8_MAX - a->r)
-		r.r = b.r + a->r;
-	if (b.g > UINT8_MAX - a->g)
-		r.g = b.g + a->g;
-	if (b.r > UINT8_MAX - a->r)
-		r.b = b.b + a->b;
-	*a = r;
+	a->r = a->r / 2 + b.r / 2;
+	a->g = a->g / 2 + b.g / 2;
+	a->b = a->b / 2 + b.b / 2;
 }
 
 void	sl_add_image(t_game *game, t_rect dst, t_imgi *simg, t_srect src)
@@ -76,7 +69,8 @@ void	sl_add_image(t_game *game, t_rect dst, t_imgi *simg, t_srect src)
 	int32_t	y;
 	t_rgba	c;
 
-	// clamp_to_window(&dst, &src);
+	clamp_one_d(&dst.x, &dst.width, &src.x, WIDTH);
+	clamp_one_d(&dst.y, &dst.height, &src.y, HEIGHT);
 	y = 0;
 	while (y < dst.height)
 	{
@@ -85,11 +79,11 @@ void	sl_add_image(t_game *game, t_rect dst, t_imgi *simg, t_srect src)
 		{
 			c = *(t_rgba *)(
 					simg->addr
-					+ simg->line_len * (src.y + y % src.height)
-					+ 4 * (src.x + x % src.width));
+					+ simg->line_len * (src.y + (src.uv_y + y) % src.height)
+					+ 4 * (src.x + (src.uv_x + x) % src.width));
 			if (c.a != 0)
 				add_colors((t_rgba *)(game->canvas.addr + game->canvas.line_len
-					* (dst.y + y) + 4 * (dst.x + x)), c);
+						* (dst.y + y) + 4 * (dst.x + x)), c);
 			x++;
 		}
 		y++;

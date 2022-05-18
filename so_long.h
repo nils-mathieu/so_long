@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 17:49:21 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:28:51 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ typedef struct s_color
 	uint8_t	a;
 	uint8_t	r;
 	uint8_t	g;
-	uint8_t	b;
+	uint8_t	b;dd
 }	t_rgba;
 
 // ========================================================================== //
@@ -266,7 +266,7 @@ typedef struct s_coin_state
 }	t_coin;
 
 // The number of images that have to be loaded within a `t_game` instance.
-# define IMAGE_COUNT 5
+# define IMAGE_COUNT 6
 
 // Identifies an image loaded for a `t_game`.
 //
@@ -278,6 +278,7 @@ typedef enum e_game_image
 	SL_GIMG_COIN,
 	SL_GIMG_WALL,
 	SL_GIMG_BACKGROUND,
+	SL_GIMG_BACKGROUND_LAYER_2,
 }	t_gimg;
 
 // Represents a game canvas.
