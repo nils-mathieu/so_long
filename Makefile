@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/18 02:51:53 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/18 03:05:36 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ SRCS		:=				\
 	animate_player.c		\
 	init_utils.c			\
 	animate_coins.c			\
-	rng.c
+	rng.c					\
+	animate_exit.c
 
 INCLUDES	:=				\
 	.						\

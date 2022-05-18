@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 02:46:36 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 03:06:04 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@
 # define PLAYER_ANIM_SPEED 0.1f
 // The speed at which coins are animated.
 # define COINS_ANIM_SPEED 0.2f
+// The speed at which the portal is animated.
+# define EXIT_ANIM_SPEED 0.1f
 
 // The width of the window.
 # define WIDTH 1280
@@ -274,6 +276,8 @@ typedef struct s_game
 
 
 	t_fpos		exit;
+	size_t		exit_anim_frame;
+	float		next_exit_anim_frame;
 
 	bool		pressing_up;
 	bool		pressing_down;
@@ -376,6 +380,9 @@ bool		sl_init_game(t_game *game, t_map *map);
 
 // Animates coins.
 void		sl_animate_coins(t_game *game);
+
+// Animate the portal.
+void		sl_animate_exit(t_game *game);
 
 // Generates a random number.
 uint64_t	sl_random(t_game *game);

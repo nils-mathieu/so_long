@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:49:51 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 02:35:15 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 03:06:08 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	sl_loop_hook(t_game *game)
 	sl_finish(game);
 	sl_animate_player(game);
 	sl_animate_coins(game);
+	sl_animate_exit(game);
 	sl_render_game(game);
 	return (0);
 }
