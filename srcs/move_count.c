@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_player.c                                    :+:      :+:    :+:   */
+/*   move_count.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 21:14:16 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 20:00:13 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/18 20:03:07 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/18 20:12:08 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include <math.h>
+#include "libft.h"
 
-void	sl_render_player(t_fpos camera, t_game *g)
+void	sl_count_movements(t_game *game)
 {
-	t_upos	pos;
-
-	pos = sl_pos_to_screen(camera, g->player_pos);
-	pos.x -= 16;
-	pos.y -= 16;
-	sl_put_image(
-		g, (t_rect){pos.x, pos.y, 32, 32},
-		&g->images[SL_GIMG_PLAYER],
-		(t_srect){32 * g->player_anim_frame, 32 * g->player_dir, 32, 32, 0, 0});
+	if (game->rem_dist > 0.0)
+	{
+		game->rem_dist -= sqrtf(game->player_vel.x * game->player_vel.x
+			+ game->player_vel.y * game->player_vel.y) * game->delta_time;
+		return ;
+	}
+	game->move_count++;
+	game->rem_dist = 1.0f;
+	ft_fmt("Movements: {u32}\n", game->move_count);
 }

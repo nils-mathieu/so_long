@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/03 11:29:21 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/16 19:10:25 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/18 19:51:29 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,4 +93,4 @@ $(NAME): $(OBJ_FILES)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER)
 	mkdir -p $(dir $@)
-	cc $(CFLAGS) -I. -c $< -o $@
+	clang $(CFLAGS) -I. -c $< -o $@

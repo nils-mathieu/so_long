@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 18:28:51 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 20:09:17 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ typedef struct s_color
 	uint8_t	a;
 	uint8_t	r;
 	uint8_t	g;
-	uint8_t	b;dd
+	uint8_t	b;
 }	t_rgba;
 
 // ========================================================================== //
@@ -313,6 +313,8 @@ typedef struct s_game
 	size_t		rem_coins;
 	t_coin		*coins;
 
+	float		rem_dist;
+	uint32_t	move_count;
 
 	t_fpos		exit;
 	size_t		exit_anim_frame;
@@ -465,6 +467,9 @@ void		sl_upos_array_sort(t_upos *arr, size_t n);
 
 // Renders the background.
 void		sl_render_background(t_fpos camera, t_game *game);
+
+// Counts the number of tiles the player traveled.
+void		sl_count_movements(t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //

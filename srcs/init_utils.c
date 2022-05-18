@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:15:49 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 12:46:23 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:59:41 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ bool	sl_init_game(t_game *g, t_map *map)
 	g->rem_coins = map->coin_count;
 	g->max_coins = map->coin_count;
 	g->exit = (t_fpos){(float)map->exit.x, (float)map->exit.y};
+	g->rem_dist = 1.0f;
 	return (true);
 }
