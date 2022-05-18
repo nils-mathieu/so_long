@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 16:35:07 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:49:21 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,17 @@ typedef struct s_rectangle
 	int32_t	width;
 	int32_t	height;
 }	t_rect;
+
+// A rectangle used to reference a specific portion of an image.
+typedef struct s_sprite_rectangle
+{
+	int32_t	x;
+	int32_t	y;
+	int32_t	width;
+	int32_t	height;
+	int32_t	uv_x;
+	int32_t	uv_y;
+}	t_srect;
 
 // A color, encoded as an RGBA array of `uint8_t`s.
 //
@@ -472,9 +483,9 @@ t_upos		sl_pos_to_screen(t_fpos camera, t_fpos pos);
 // If part of the image would be outside of the canvas, it is not drawn. If
 // the destination rectangle is larger than the source rectangle, the source
 // is repeated.
-void		sl_put_image(t_game *game, t_rect dst, t_imgi *simg, t_rect src);
+void		sl_put_image(t_game *game, t_rect dst, t_imgi *simg, t_srect src);
 
 // Just like `sl_put_image` but uses additive blending.
-void		sl_add_image(t_game *game, t_rect dst, t_imgi *simg, t_rect src);
+void		sl_add_image(t_game *game, t_rect dst, t_imgi *simg, t_srect src);
 
 #endif

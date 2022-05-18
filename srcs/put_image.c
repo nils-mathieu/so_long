@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:34:28 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 16:34:18 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:49:55 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ static void	clamp_one_d(int32_t *x, int32_t *width, int32_t *src, int32_t bound)
 		*width = 0;
 }
 
-#include <stdio.h>
-void	sl_put_image(t_game *game, t_rect dst, t_imgi *src_img, t_rect src)
+void	sl_put_image(t_game *game, t_rect dst, t_imgi *src_img, t_srect src)
 {
 	int32_t	x;
 	int32_t	y;
@@ -38,7 +37,6 @@ void	sl_put_image(t_game *game, t_rect dst, t_imgi *src_img, t_rect src)
 
 	clamp_one_d(&dst.x, &dst.width, &src.x, WIDTH);
 	clamp_one_d(&dst.y, &dst.height, &src.y, HEIGHT);
-	printf("x: %d y: %d w: %d h: %d\n", dst.x, dst.y, dst.width,dst.height);
 	y = 0;
 	while (y < dst.height)
 	{
@@ -47,8 +45,8 @@ void	sl_put_image(t_game *game, t_rect dst, t_imgi *src_img, t_rect src)
 		{
 			c = *(t_rgba *)(
 					src_img->addr
-					+ src_img->line_len * (src.y + y % src.height)
-					+ 4 * (src.x + x % src.width));
+					+ src_img->line_len * (src.y + (src.uv_y + y) % src.height)
+					+ 4 * (src.x + (src.uv_x + x) % src.width));
 			if (c.a != 0)
 				*(t_rgba *)(game->canvas.addr + game->canvas.line_len
 						* (dst.y + y) + 4 * (dst.x + x)) = c;
@@ -72,7 +70,7 @@ inline static void	add_colors(t_rgba *a, t_rgba b)
 	*a = r;
 }
 
-void	sl_add_image(t_game *game, t_rect dst, t_imgi *simg, t_rect src)
+void	sl_add_image(t_game *game, t_rect dst, t_imgi *simg, t_srect src)
 {
 	int32_t	x;
 	int32_t	y;

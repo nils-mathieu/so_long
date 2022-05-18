@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 22:07:47 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 15:33:33 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:59:15 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	sl_render_walls(t_fpos camera, t_game *game)
 		sl_put_image(
 			game, (t_rect){pos.x, pos.y, 32, 32},
 			&game->images[SL_GIMG_WALL],
-			(t_rect){32 * game->walls[i].tile, 0, 32, 32});
+			(t_srect){32 * game->walls[i].tile, 0, 32, 32, 0, 0});
 		i++;
 	}
 }

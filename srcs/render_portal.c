@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 21:46:26 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 15:33:24 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:58:05 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void	sl_render_portal(t_fpos camera, t_game *game)
 	sl_put_image(
 		game, (t_rect){pos.x, pos.y, 100, 100},
 		&game->images[SL_GIMG_EXIT],
-		(t_rect){game->exit_anim_frame * 100, 0, 100, 100});
+		(t_srect){game->exit_anim_frame * 100, 0, 100, 100, 0, 0});
 }
