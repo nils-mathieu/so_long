@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 20:30:58 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:58:40 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define BOUNCE_AMOUNT 10.0f
 // The amount of time the player is unable to control the ship once it have
 // bounced against a wall.
-# define RECOIL_DURATION 0.3f
+# define RECOIL_DURATION 0.5f
 
 // The amount of room given to the physics engine.
 # define PHYSICS_ROOM 1.001f
