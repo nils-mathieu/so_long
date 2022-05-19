@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:00 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/16 16:49:05 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:59:48 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ int			ft_str_cmp(const char *a, const char *b);
 // is not in `s`, `NULL` is returned.
 const char	*ft_str_find(const char *s, char c);
 
+// Returns a pointer to the first character `c`, starting from the end of `s`.
+// If the character isn't found, `NULL` is returned.
+const char	*ft_str_rfind(const char *s, char c);
+
 // Determines whether `needle` can be found at the start of `s`.
 bool		ft_str_starts_with(const char *s, const char *needle);
 
@@ -75,22 +79,32 @@ bool		ft_str_starts_with(const char *s, const char *needle);
 //                                   Format                                   //
 // ========================================================================== //
 
-// Converts the begining of the provided string into an `uint32_t`.
+// The following function all have the same behaviour:
 //
-// On success, this function returns a pointer to the first character that
-// wasn't parsed. On overflow, `NULL` is returned and `result` is left
-// unspecified.
-const char	*ft_str_to_uint32(const char *s, uint32_t *result);
+// They convert the begining of the string they are provided into a specific
+// integer type (specified in their name).
+//
+// On error (overflow), those functions return `NULL`. On success, a pointer to
+// the first non-parsed character is returned.
 
-// Converts the begining of the provided string into an `int32_t`.
-//
-// This function accepts a leading `+` or `-` to indicate the sign of the
-// output number.
-//
-// On success, this function returns a pointer to the first character that
-// wasn't parsed. On overflow, `NULL` is returned and `result` is left
-// unspecified.
+const char	*ft_str_to_uint8(const char *s, uint8_t *result);
+const char	*ft_str_to_int8(const char *s, int8_t *result);
+const char	*ft_str_to_uint16(const char *s, uint16_t *result);
+const char	*ft_str_to_int16(const char *s, int16_t *result);
+const char	*ft_str_to_uint32(const char *s, uint32_t *result);
 const char	*ft_str_to_int32(const char *s, int32_t *result);
+const char	*ft_str_to_uint64(const char *s, uint64_t *result);
+const char	*ft_str_to_int64(const char *s, int64_t *result);
+const char	*ft_str_to_char(const char *s, char *result);
+const char	*ft_str_to_uchar(const char *s, unsigned char *result);
+const char	*ft_str_to_short(const char *s, short *result);
+const char	*ft_str_to_ushort(const char *s, unsigned short *result);
+const char	*ft_str_to_int(const char *s, int *result);
+const char	*ft_str_to_uint(const char *s, unsigned int *result);
+const char	*ft_str_to_long(const char *s, long *result);
+const char	*ft_str_to_ulong(const char *s, unsigned long *result);
+const char	*ft_str_to_llong(const char *s, long long *result);
+const char	*ft_str_to_ullong(const char *s, unsigned long long *result);
 
 // Writes `i` in the provided base. The number is written from the end of the
 // `buf_end` pointer. A pointer to the first character is returned.
