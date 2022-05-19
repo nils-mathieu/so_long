@@ -6,13 +6,13 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:57:38 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 16:11:21 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:04:43 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-size_t		sl_get_ship_anim(bool up, bool left, bool right, bool down)
+size_t	sl_get_ship_anim(bool up, bool left, bool right, bool down)
 {
 	if (up)
 	{

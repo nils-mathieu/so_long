@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 17:38:59 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:19:25 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -516,6 +516,9 @@ void		sl_render_enemies(t_fpos camera, t_game *game);
 
 // Computes the animation frame for a ship pressing the specified keys.
 size_t		sl_get_ship_anim(bool up, bool left, bool right, bool down);
+
+// Animates and update the sprites of enemies.
+void		sl_animate_enemies(t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //

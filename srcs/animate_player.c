@@ -19,8 +19,8 @@ void	sl_update_player_dir(t_game *game)
 	if (game->recoil_duration > 0.0f)
 		return ;
 	i = sl_get_ship_anim(
-		game->pressing_up, game->pressing_left,
-		game->pressing_right, game->pressing_down);
+			game->pressing_up, game->pressing_left,
+			game->pressing_right, game->pressing_down);
 	if (i != SIZE_MAX)
 		game->player_dir = i;
 }

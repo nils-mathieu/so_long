@@ -19,7 +19,7 @@ void	sl_count_movements(t_game *game)
 	if (game->rem_dist > 0.0)
 	{
 		game->rem_dist -= sqrtf(game->player_vel.x * game->player_vel.x
-			+ game->player_vel.y * game->player_vel.y) * game->delta_time;
+				+ game->player_vel.y * game->player_vel.y) * game->delta_time;
 		return ;
 	}
 	game->move_count++;

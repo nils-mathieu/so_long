@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 11:26:24 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 15:17:53 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:42:16 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,29 @@ static t_tscheme	compute_schm(t_upos p, t_upos *w, size_t n)
 	return (res);
 }
 
+static bool	is_suitable(t_tscheme scheme, t_tscheme target)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < 8)
+	{
+		if (target.arr[i] != SL_TSREQ_IGNORED
+			&& scheme.arr[i] == target.arr[i])
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 static t_wall_tile	compute_tile(t_upos p, t_upos *walls, size_t n)
 {
 	size_t		t;
-	size_t		i;
-	bool		err_found;
-	t_tscheme	scheme;
 
 	t = 0;
 	while (t < 20)
 	{
-		scheme = compute_schm(p, walls, n);
-		i = 0;
-		err_found = false;
-		while (i < 8)
-		{
-			if (schemes()[t].arr[i] != SL_TSREQ_IGNORED
-				&& scheme.arr[i] == schemes()[t].arr[i])
-			{
-				err_found = true;
-				break;
-			}
-			i++;
-		}
-		if (!err_found)
+		if (is_suitable(compute_schm(p, walls, n), schemes()[t]))
 			return (t);
 		t++;
 	}

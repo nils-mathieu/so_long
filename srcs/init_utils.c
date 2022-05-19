@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:15:49 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 17:17:39 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:05:12 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static t_coin	*create_coin_array(t_game *game, t_upos *pos, size_t n)
 		res[n].pos.x = (float)pos[n].x;
 		res[n].pos.y = (float)pos[n].y;
 		res[n].frame = sl_random(game) % 8;
-		res[n].next_frame = COINS_ANIM_SPEED *
-			(float)(uint8_t)sl_random(game) / 255.0f;
+		res[n].next_frame = COINS_ANIM_SPEED
+			* (float)(uint8_t)sl_random(game) / 255.0f;
 	}
 	return (res);
 }

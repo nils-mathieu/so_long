@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 11:50:41 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 14:50:27 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 18:30:06 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	sl_upos_array_sort(t_upos *arr, size_t n)
 	r = n - 1;
 	while (l < r)
 	{
-		if (key(arr[l]) < key(arr[l +  1]))
+		if (key(arr[l]) < key(arr[l + 1]))
 		{
 			swap(&arr[l + 1], &arr[r]);
 			r--;
