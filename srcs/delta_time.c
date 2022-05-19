@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:41:19 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/17 21:04:15 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 01:25:25 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ uint64_t	sl_get_current_timestamp(void)
 float	sl_delta_time(uint64_t *prev)
 {
 	(void)prev;
-	return ((float)((double)TARGET_DELTA / 1e9));
+	return (DELTA_TIME);
 }
 
 #endif
