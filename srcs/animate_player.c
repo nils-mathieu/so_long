@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 01:32:26 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 02:00:33 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:01:54 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,15 @@
 
 void	sl_update_player_dir(t_game *game)
 {
+	size_t	i;
+
 	if (game->recoil_duration > 0.0f)
 		return ;
-	if (game->pressing_up)
-	{
-		if (game->pressing_left)
-			game->player_dir = 7;
-		else if (game->pressing_right)
-			game->player_dir = 1;
-		else
-			game->player_dir = 0;
-	}
-	else if (game->pressing_down)
-	{
-		if (game->pressing_left)
-			game->player_dir = 5;
-		else if (game->pressing_right)
-			game->player_dir = 3;
-		else
-			game->player_dir = 4;
-	}
-	else if (game->pressing_left)
-		game->player_dir = 6;
-	else if (game->pressing_right)
-		game->player_dir = 2;
+	i = sl_get_ship_anim(
+		game->pressing_up, game->pressing_left,
+		game->pressing_right, game->pressing_down);
+	if (i != SIZE_MAX)
+		game->player_dir = i;
 }
 
 void	sl_animate_player(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 14:57:35 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:45:53 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,20 @@
 # define COINS_ANIM_SPEED 0.04f
 // The speed at which the portal is animated.
 # define EXIT_ANIM_SPEED 0.03f
+// The speed at which enemies are animated.
+# define ENEMY_ANIM_SPEED 0.015f
 
 // The amount of force applied on enemies.
 # define ENEMY_ACC_FORCE 25.0f
 // The amount of drag memory applied.
 # define ENEMY_DRAG_AMOUNT 0.99f
 // The amount of repulsion between enemies.
-# define ENEMY_REPULSION_AMOUNT 30.0f
+# define ENEMY_REPULSION_AMOUNT 40.0f
+// The distance at which enemies start to repulse each other.
+# define ENEMY_REPULSION_THRESHOLD 3.0f
+// Bellow this velocity, enemy look at the player. Above, they look where they
+// are going.
+# define ENEMY_DIRECTION_THESHOLD 20.0f
 
 // The width of the window.
 # define WIDTH 1280
@@ -306,6 +313,10 @@ typedef struct s_enemy
 {
 	t_fpos	pos;
 	t_fvec	vel;
+
+	size_t	dir;
+	size_t	anim_frame;
+	float	next_anim_frame;
 }	t_enemy;
 
 // Stores the state of the game.
@@ -501,6 +512,9 @@ void		sl_update_enemies(t_game *game);
 
 // Renders enemies on the screen.
 void		sl_render_enemies(t_fpos camera, t_game *game);
+
+// Computes the animation frame for a ship pressing the specified keys.
+size_t		sl_get_ship_anim(bool up, bool left, bool right, bool down);
 
 // ========================================================================== //
 //                                Rendering                                   //

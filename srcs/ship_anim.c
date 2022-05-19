@@ -1,32 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_enemies.c                                   :+:      :+:    :+:   */
+/*   ship_anim.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 13:39:20 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 16:10:09 by nmathieu         ###   ########.fr       */
+/*   Created: 2022/05/19 15:57:38 by nmathieu          #+#    #+#             */
+/*   Updated: 2022/05/19 16:11:21 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	sl_render_enemies(t_fpos camera, t_game *game)
+size_t		sl_get_ship_anim(bool up, bool left, bool right, bool down)
 {
-	size_t	i;
-	t_upos	pos;
-
-	i = 0;
-	while (i < game->enemy_count)
+	if (up)
 	{
-		pos = sl_pos_to_screen(camera, game->enemies[i].pos);
-		pos.x -= 16;
-		pos.y -= 16;
-		sl_put_image(
-			game, (t_rect){pos.x, pos.y, 32, 32},
-			&game->images[SL_GIMG_ENEMY],
-			(t_srect){0, 32 * game->enemies[i].dir, 32, 32, 0, 0});
-		i++;
+		if (left)
+			return (7);
+		else if (right)
+			return (1);
+		else
+			return (0);
 	}
+	else if (down)
+	{
+		if (left)
+			return (5);
+		else if (right)
+			return (3);
+		else
+			return (4);
+	}
+	else if (left)
+		return (6);
+	else if (right)
+		return (2);
+	else
+		return (SIZE_MAX);
 }

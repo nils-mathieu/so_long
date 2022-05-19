@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:15:49 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 14:00:42 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:06:02 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ static t_enemy	*create_enemy_array(t_game *game, t_upos *pos, size_t n)
 		res[n].pos.x = (float)pos[n].x;
 		res[n].pos.y = (float)pos[n].y;
 		res[n].vel = (t_fvec){0.0f, 0.0f};
+		res[n].dir = 0;
+		res[n].next_anim_frame = ENEMY_ANIM_SPEED
+			* (float)(uint8_t)sl_random(game) / 255.0f;
+		res[n].anim_frame = sl_random(game) % 3;
 	}
 	return (res);
 }

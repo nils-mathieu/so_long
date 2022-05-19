@@ -6,12 +6,14 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:13:45 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 14:30:50 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:43:24 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <math.h>
+
+#define ALPHA 0.4142
 
 inline static t_fvec	sl_enemy_force(size_t i, t_game *game)
 {
@@ -33,7 +35,7 @@ inline static t_fvec	sl_enemy_force(size_t i, t_game *game)
 		dir.x = game->enemies[i].pos.x - game->enemies[j].pos.x;
 		dir.y = game->enemies[i].pos.y - game->enemies[j].pos.y;
 		sqlen = dir.x * dir.x + dir.y * dir.y;
-		if (sqlen != 0.0)
+		if (sqlen > 0.0 && sqlen <= ENEMY_REPULSION_THRESHOLD)
 		{
 			len = sqrtf(sqlen);
 			dir.x /= len;
@@ -44,6 +46,40 @@ inline static t_fvec	sl_enemy_force(size_t i, t_game *game)
 		j++;
 	}
 	return (force);
+}
+
+#include <stdio.h>
+inline static void	animate(t_enemy *enemy, t_fvec dir)
+{
+	bool	up;
+	bool	left;
+	bool	down;
+	bool	right;
+	size_t	i;
+
+	if (dir.x < 0.0)
+	{
+		up = dir.y <= ALPHA * dir.x;
+		down = dir.y >= -ALPHA * dir.x;
+	}
+	else
+	{
+		up = dir.y <= -ALPHA * dir.x;
+		down = dir.y >= ALPHA * dir.x;
+	}
+	if (dir.y < 0.0)
+	{
+		left = dir.x <= ALPHA * dir.y;
+		right = dir.x >= -ALPHA * dir.y;
+	}
+	else
+	{
+		left = dir.x <= -ALPHA * dir.y;
+		right = dir.x >= ALPHA * dir.y;
+	}
+	i = sl_get_ship_anim(up, left, right, down);
+	if (i != SIZE_MAX)
+		enemy->dir = i;
 }
 
 void	sl_update_enemies(t_game *game)
@@ -71,8 +107,12 @@ void	sl_update_enemies(t_game *game)
 		game->enemies[i].vel.y += acc.y * game->delta_time;
 		game->enemies[i].pos.x += game->enemies[i].vel.x * game->delta_time;
 		game->enemies[i].pos.y += game->enemies[i].vel.y * game->delta_time;
-		game->enemies[i].pos.x *= ENEMY_DRAG_AMOUNT;
-		game->enemies[i].pos.y *= ENEMY_DRAG_AMOUNT;
+		game->enemies[i].vel.x *= ENEMY_DRAG_AMOUNT;
+		game->enemies[i].vel.y *= ENEMY_DRAG_AMOUNT;
+		if (game->enemies[i].vel.x * game->enemies[i].vel.x + game->enemies[i].vel.y * game->enemies[i].vel.y >= ENEMY_DIRECTION_THESHOLD * ENEMY_DIRECTION_THESHOLD)
+			animate(&game->enemies[i], game->enemies[i].vel);
+		else
+			animate(&game->enemies[i], dir);
 		i++;
 	}
 }

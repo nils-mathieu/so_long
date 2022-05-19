@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/19 14:48:34 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/19 16:50:45 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,8 @@ SRCS		:=				\
 	move_count.c			\
 	render_move_count.c		\
 	enemy_ai.c				\
-	render_enemies.c
+	render_enemies.c		\
+	ship_anim.c
 
 INCLUDES	:=				\
 	.						\
