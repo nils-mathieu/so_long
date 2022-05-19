@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 16:45:53 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:09:42 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,6 @@ typedef struct s_map
 	t_upos		*coins;
 	size_t		wall_count;
 	t_upos		*walls;
-	size_t		enemies_count;
-	t_upos		*enemies;
 }	t_map;
 
 // Stores the state required when reading a map.
@@ -213,7 +211,6 @@ typedef struct s_map_parser
 	size_t		line_len;
 	size_t		coins_cap;
 	size_t		walls_cap;
-	size_t		enemies_cap;
 	t_map		map;
 }	t_map_parser;
 

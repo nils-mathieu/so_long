@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:04:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 13:57:42 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:26:09 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	sl_free_map_parser(t_map_parser *p)
 		free(p->map.coins);
 	if (p->walls_cap != 0)
 		free(p->map.walls);
-	if (p->enemies_cap != 0)
-		free(p->map.enemies);
 }
 
 t_perr	sl_parse_map(int fd, t_map_parser *p)

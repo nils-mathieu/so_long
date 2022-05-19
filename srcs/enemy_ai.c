@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:13:45 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 16:43:24 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:09:15 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ void	sl_update_enemies(t_game *game)
 		game->enemies[i].pos.y += game->enemies[i].vel.y * game->delta_time;
 		game->enemies[i].vel.x *= ENEMY_DRAG_AMOUNT;
 		game->enemies[i].vel.y *= ENEMY_DRAG_AMOUNT;
-		if (game->enemies[i].vel.x * game->enemies[i].vel.x + game->enemies[i].vel.y * game->enemies[i].vel.y >= ENEMY_DIRECTION_THESHOLD * ENEMY_DIRECTION_THESHOLD)
+		if (game->enemies[i].vel.x * game->enemies[i].vel.x
+			+ game->enemies[i].vel.y * game->enemies[i].vel.y
+			>= ENEMY_DIRECTION_THESHOLD * ENEMY_DIRECTION_THESHOLD)
 			animate(&game->enemies[i], game->enemies[i].vel);
 		else
 			animate(&game->enemies[i], dir);

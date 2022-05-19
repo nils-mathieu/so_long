@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 17:07:19 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 14:00:04 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:09:34 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,6 @@ bool	sl_parse_byte(uint8_t byte, t_map_parser *p)
 	else if (byte == 'P')
 		return (p->map.player = (t_upos){p->line_len++, p->map.height},
 				p->players++, true);
-	else if (byte == 'X')
-		return (push_and_add(&p->map.enemies, &p->enemies_cap,
-			&p->map.enemies_count, (t_upos){p->line_len++, p->map.height}));
 	p->contains_invalid_character = true;
 	p->invalid_character = byte;
 	p->line_len++;
