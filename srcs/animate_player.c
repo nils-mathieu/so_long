@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 01:32:26 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 16:01:54 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 22:05:43 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,28 @@ void	sl_update_player_dir(t_game *game)
 		game->player_dir = i;
 }
 
+void	sl_animate_explosion(t_game *game)
+{
+	if (!game->explosion)
+		return ;
+	if (game->next_explosion_anim_frame <= 0.0)
+	{
+		game->explosion_anim_frame += 1;
+		game->next_explosion_anim_frame = EXPLOSION_ANIM_SPEED;
+		if (game->explosion_anim_frame == 5)
+			game->explosion = false;
+	}
+	game->next_explosion_anim_frame -= game->delta_time;
+}
+
 void	sl_animate_player(t_game *game)
 {
 	size_t	to_add;
 	size_t	stops_at;
 
-	if (game->pressing_down || game->pressing_up
-		|| game->pressing_left || game->pressing_right)
+	if (game->no_player)
+		return ;
+	if (game->pressing_down || game->pressing_up || game->pressing_left || game->pressing_right)
 	{
 		to_add = 1;
 		stops_at = 7;
@@ -49,6 +64,5 @@ void	sl_animate_player(t_game *game)
 			game->player_anim_frame += to_add;
 		game->next_player_anim_frame = PLAYER_ANIM_SPEED;
 	}
-	else
-		game->next_player_anim_frame -= game->delta_time;
+	game->next_player_anim_frame -= game->delta_time;
 }

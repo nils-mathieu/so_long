@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 13:28:55 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 20:26:58 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	sl_move_player(t_game *game)
 {
 	t_fvec	acc;
 
+	if (game->no_player)
+		return ;
 	if (game->recoil_duration <= 0.0f)
 	{
 		acc.x = game->movement_input.x * PLAYER_ACCELERATION_FORCE;

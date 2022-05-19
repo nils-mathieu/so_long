@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 20:03:07 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 20:12:08 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 20:30:14 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void	sl_count_movements(t_game *game)
 {
+	if (game->no_player)
+		return ;
 	if (game->rem_dist > 0.0)
 	{
 		game->rem_dist -= sqrtf(game->player_vel.x * game->player_vel.x

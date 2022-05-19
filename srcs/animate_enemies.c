@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:19:38 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 18:45:47 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 22:07:56 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ void	sl_animate_enemies(t_game *game)
 {
 	size_t	i;
 	size_t	anim;
+	float	invert;
 
+	invert = 1.0f;
+	if (game->no_player)
+		invert = -1.0f;
 	i = 0;
 	while (i < game->enemy_count)
 	{
@@ -54,8 +58,8 @@ void	sl_animate_enemies(t_game *game)
 			anim = get_enemy_anim(game->enemies[i].vel);
 		else
 			anim = get_enemy_anim((t_fvec){
-					game->player_pos.x - game->enemies[i].pos.x,
-					game->player_pos.y - game->enemies[i].pos.y});
+					game->player_pos.x - game->enemies[i].pos.x * invert,
+					game->player_pos.y - game->enemies[i].pos.y * invert});
 		if (anim != SIZE_MAX)
 			game->enemies[i].dir = anim;
 		i++;

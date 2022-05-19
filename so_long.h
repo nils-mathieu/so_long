@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 19:40:19 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 22:20:02 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@
 // Bellow this velocity, enemy look at the player. Above, they look where they
 // are going.
 # define ENEMY_DIRECTION_THESHOLD 20.0f
+// The size of enemies.
+# define ENEMY_DAMAGE_RANGE 1.0f
+
+// The speed at which the final explosion is animated.
+# define EXPLOSION_ANIM_SPEED 0.1f
 
 // The width of the window.
 # define WIDTH 1280
@@ -287,7 +292,7 @@ typedef struct s_coin_state
 }	t_coin;
 
 // The number of images that have to be loaded within a `t_game` instance.
-# define IMAGE_COUNT 8
+# define IMAGE_COUNT 9
 
 // Identifies an image loaded for a `t_game`.
 //
@@ -302,6 +307,7 @@ typedef enum e_game_image
 	SL_GIMG_BACKGROUND_LAYER_2,
 	SL_GIMG_NUMBERS,
 	SL_GIMG_ENEMY,
+	SL_GIMG_EXPLOSION,
 }	t_gimg;
 
 // Represents a game canvas.
@@ -357,6 +363,10 @@ typedef struct s_game
 	t_enemy		*enemies;
 	size_t		enemy_count;
 
+	bool		explosion;
+	uint32_t	explosion_anim_frame;
+	float		next_explosion_anim_frame;
+
 	bool		pressing_up;
 	bool		pressing_down;
 	bool		pressing_right;
@@ -369,6 +379,7 @@ typedef struct s_game
 	size_t		player_dir;
 	float		next_player_anim_frame;
 	size_t		player_anim_frame;
+	bool		no_player;
 }	t_game;
 
 // An error that might occur during the game's execution.
@@ -522,6 +533,9 @@ size_t		sl_get_ship_anim(bool up, bool left, bool right, bool down);
 
 // Animates and update the sprites of enemies.
 void		sl_animate_enemies(t_game *game);
+
+// Animates the final explosion.
+void		sl_animate_explosion(t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //

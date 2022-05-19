@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:13:45 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 18:42:46 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 22:07:53 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,26 @@ inline static void	update_enemy(t_game *game, t_enemy *enemy)
 	t_fvec	dir;
 	float	dist;
 	t_fvec	acc;
+	float	sqlen;
 
 	dir.x = game->player_pos.x - enemy->pos.x;
 	dir.y = game->player_pos.y - enemy->pos.y;
+	sqlen = dir.x * dir.x + dir.y * dir.y;
+	if (sqlen <= ENEMY_DAMAGE_RANGE * ENEMY_DAMAGE_RANGE)
+	{
+		game->no_player = true;
+		game->explosion = true;
+	}
 	if (dir.x != 0.0f || dir.y != 0.0f)
 	{
-		dist = sqrtf(dir.x * dir.x + dir.y * dir.y);
+		dist = sqrtf(sqlen);
 		dir.x /= dist;
 		dir.y /= dist;
+	}
+	if (game->no_player)
+	{
+		dir.x = -dir.x;
+		dir.y = -dir.y;
 	}
 	acc = sl_enemy_force(enemy, game);
 	acc.x += dir.x * ENEMY_ACC_FORCE;
