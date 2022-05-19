@@ -1,5 +1,5 @@
 /* XPM */
-static char * spacewalls_xpm[] = {
+static char *spacewalls[] = {
 "640 32 20 1",
 " 	c None",
 ".	c #2E3650",

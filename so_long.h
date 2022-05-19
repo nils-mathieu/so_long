@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 12:58:40 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:09:45 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@
 # define COINS_ANIM_SPEED 0.04f
 // The speed at which the portal is animated.
 # define EXIT_ANIM_SPEED 0.03f
+
+// The amount of force applied on enemies.
+# define ENEMY_ACC_FORCE 50.0f
+// The amount of drag memory applied.
+# define ENEMY_DRAG_AMOUNT 0.99f
 
 // The width of the window.
 # define WIDTH 1280
@@ -182,6 +187,8 @@ typedef struct s_map
 	t_upos		*coins;
 	size_t		wall_count;
 	t_upos		*walls;
+	size_t		enemies_count;
+	t_upos		*enemies;
 }	t_map;
 
 // Stores the state required when reading a map.
@@ -197,6 +204,7 @@ typedef struct s_map_parser
 	size_t		line_len;
 	size_t		coins_cap;
 	size_t		walls_cap;
+	size_t		enemies_cap;
 	t_map		map;
 }	t_map_parser;
 
@@ -266,7 +274,7 @@ typedef struct s_coin_state
 }	t_coin;
 
 // The number of images that have to be loaded within a `t_game` instance.
-# define IMAGE_COUNT 7
+# define IMAGE_COUNT 8
 
 // Identifies an image loaded for a `t_game`.
 //
@@ -280,6 +288,7 @@ typedef enum e_game_image
 	SL_GIMG_BACKGROUND,
 	SL_GIMG_BACKGROUND_LAYER_2,
 	SL_GIMG_NUMBERS,
+	SL_GIMG_ENEMY,
 }	t_gimg;
 
 // Represents a game canvas.
@@ -289,6 +298,13 @@ typedef struct s_image_and_address
 	uint8_t		*addr;
 	uint32_t	line_len;
 }	t_imgi;
+
+// The state of an enemy.
+typedef struct s_enemy
+{
+	t_fpos	pos;
+	t_fvec	vel;
+}	t_enemy;
 
 // Stores the state of the game.
 typedef struct s_game
@@ -320,6 +336,9 @@ typedef struct s_game
 	t_fpos		exit;
 	size_t		exit_anim_frame;
 	float		next_exit_anim_frame;
+
+	t_enemy		*enemies;
+	size_t		enemy_count;
 
 	bool		pressing_up;
 	bool		pressing_down;
@@ -474,6 +493,12 @@ void		sl_count_movements(t_game *game);
 
 // Renders the player's movement count.
 void		sl_render_move_count(t_game *game);
+
+// Updates every enemy on the screen.
+void		sl_update_enemies(t_game *game);
+
+// Renders enemies on the screen.
+void		sl_render_enemies(t_fpos camera, t_game *game);
 
 // ========================================================================== //
 //                                Rendering                                   //

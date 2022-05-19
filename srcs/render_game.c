@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:22:58 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 20:31:26 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:49:38 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	sl_render_game(t_game *game)
 	sl_render_background(camera, game);
 	sl_render_coins(camera, game);
 	sl_render_portal(camera, game);
+	sl_render_enemies(camera, game);
 	sl_render_player(camera, game);
 	sl_render_walls(camera, game);
 	sl_render_move_count(game);

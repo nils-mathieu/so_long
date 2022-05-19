@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:04:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/15 20:07:19 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:57:42 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	sl_free_map_parser(t_map_parser *p)
 		free(p->map.coins);
 	if (p->walls_cap != 0)
 		free(p->map.walls);
+	if (p->enemies_cap != 0)
+		free(p->map.enemies);
 }
 
 t_perr	sl_parse_map(int fd, t_map_parser *p)
@@ -74,8 +76,8 @@ t_perr	sl_parse_map(int fd, t_map_parser *p)
 	t_reader	reader;
 	t_rdres		res;
 
-	*p = (t_map_parser){0, 0, true, false, false, '\0', 0, 0, 0,
-		(t_map){0, 0, (t_upos){0, 0}, (t_upos){0, 0}, 0, NULL, 0, NULL}};
+	ft_mem_set(p, 0x00, sizeof(t_map_parser));
+	p->is_rectangle = true;
 	reader = (t_reader){fd, (t_buffer){buffer, 0, BUF_SIZE}, 0};
 	while (true)
 	{

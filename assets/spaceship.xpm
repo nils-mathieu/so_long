@@ -1,5 +1,5 @@
 /* XPM */
-static char * spaceship_xpm[] = {
+static char *spaceship[] = {
 "256 256 15 1",
 " 	c None",
 ".	c #FF3E5D",

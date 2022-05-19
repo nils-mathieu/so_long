@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 20:02:23 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 13:28:55 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ void	sl_move_player(t_game *game)
 		acc.y = game->movement_input.y * PLAYER_ACCELERATION_FORCE;
 	}
 	else
+	{
 		game->recoil_duration -= game->delta_time;
+		acc = (t_fvec){0.0f, 0.0f};
+	}
 	game->player_vel.x += acc.x * game->delta_time;
 	game->player_vel.y += acc.y * game->delta_time;
 	bounce(game);
