@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 09:32:03 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 22:19:32 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:19:41 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static const char	**pathes(void)
 		"assets/background_layer2.xpm",
 		"assets/numbers.xpm",
 		"assets/spaceenemy.xpm",
-		"assets/explosion.xpm"
+		"assets/explosion.xpm",
+		"assets/hexshield.xpm",
 	};
 
 	return (pathes);

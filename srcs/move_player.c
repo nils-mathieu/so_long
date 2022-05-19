@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 20:26:58 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:38:53 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ inline static bool	collides(t_fpos wall, t_fpos pos)
 	return (!up && !left && !right && !down);
 }
 
-static t_fvec	compute_dis(t_fvec vel, t_fpos wall, t_fpos p)
+static t_fvec	compute_disp_for(t_fvec vel, t_fpos wall, t_fpos p)
 {
 	t_fvec	disp;
 
@@ -60,7 +60,7 @@ static t_fvec	compute_disp(t_fvec vel, t_wall *walls, size_t n, t_fpos p)
 	{
 		if (collides(walls[i].pos, p))
 		{
-			disp = compute_dis(vel, walls[i].pos, p);
+			disp = compute_disp_for(vel, walls[i].pos, p);
 			if (fabsf(disp.y) > max_disp.y)
 				max_disp.y = disp.y;
 			if (fabsf(disp.x) > max_disp.x)
@@ -87,6 +87,9 @@ static void	bounce(t_game *g)
 		else
 			g->player_vel.y = -BOUNCE_AMOUNT;
 		g->recoil_duration = RECOIL_DURATION;
+		g->shield = true;
+		g->shield_anim_frame = 5;
+		g->next_shield_anim_frame = SHIELD_ANIM_SPEED;
 	}
 	else if (fabsf(disp.x) > fabsf(disp.y) + 0.001)
 	{
@@ -95,6 +98,9 @@ static void	bounce(t_game *g)
 		else
 			g->player_vel.x = -BOUNCE_AMOUNT;
 		g->recoil_duration = RECOIL_DURATION;
+		g->shield = true;
+		g->shield_anim_frame = 5;
+		g->next_shield_anim_frame = SHIELD_ANIM_SPEED;
 	}
 }
 

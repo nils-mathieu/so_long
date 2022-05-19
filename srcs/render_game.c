@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:22:58 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 14:37:02 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:27:48 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	sl_render_game(t_game *game)
 	sl_render_coins(camera, game);
 	sl_render_portal(camera, game);
 	sl_render_enemies(camera, game);
-	sl_render_player(camera, game);
 	sl_render_walls(camera, game);
+	sl_render_player(camera, game);
 	sl_render_move_count(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->canvas.image, 0, 0);
 }
