@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:13:45 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 22:07:53 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:51:07 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ inline static void	update_enemy(t_game *game, t_enemy *enemy)
 	dir.x = game->player_pos.x - enemy->pos.x;
 	dir.y = game->player_pos.y - enemy->pos.y;
 	sqlen = dir.x * dir.x + dir.y * dir.y;
-	if (sqlen <= ENEMY_DAMAGE_RANGE * ENEMY_DAMAGE_RANGE)
+	if (!game->no_player && sqlen <= ENEMY_DAMAGE_RANGE * ENEMY_DAMAGE_RANGE)
 	{
 		game->no_player = true;
 		game->explosion = true;
