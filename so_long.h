@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 23:33:32 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 01:20:18 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // The target amount of time between two frames, in nanoseconds.
 # define TARGET_DELTA 16666667
 // The maximum amout of time allowed between frames.
-# define MAX_DELTA_TIME 20000000
+# define MAX_DELTA_TIME 18000000
 
 // The force applied on the player when a key is pressed.
 # define PLAYER_ACCELERATION_FORCE 60.0f
