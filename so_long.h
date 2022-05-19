@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 17:09:42 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:38:59 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,12 @@
 // The amount of room given to the physics engine.
 # define PHYSICS_ROOM 1.001f
 
+// The distance at which coins are collected.
+# define COIN_COL_R 2.0f
 // The size of the collider of coins.
-# define COIN_COL_R 0.8f
+# define COIN_DISP_R 0.6f
+// The speed at which coins go to the player when they get close enough.
+# define COIN_SPEED 0.2f
 
 // The size of the collider of the exit portal.
 # define EXIT_COL_R 1.0f
