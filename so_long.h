@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 14:48:26 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:57:35 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@
 # define EXIT_ANIM_SPEED 0.03f
 
 // The amount of force applied on enemies.
-# define ENEMY_ACC_FORCE 50.0f
+# define ENEMY_ACC_FORCE 25.0f
 // The amount of drag memory applied.
 # define ENEMY_DRAG_AMOUNT 0.99f
 // The amount of repulsion between enemies.
-# define ENEMY_REPULSION_AMOUNT 40.0f
+# define ENEMY_REPULSION_AMOUNT 30.0f
 
 // The width of the window.
 # define WIDTH 1280
