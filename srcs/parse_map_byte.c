@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 17:07:19 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 17:09:34 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:39:09 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ bool	sl_parse_byte(uint8_t byte, t_map_parser *p)
 		return (push_and_add(&p->map.coins, &p->coins_cap, &p->map.coin_count,
 				(t_upos){p->line_len++, p->map.height}));
 	else if (byte == 'E')
-		return (p->map.exit = (t_upos){p->line_len++, p->map.height},
-				p->exits++, true);
+		return (push_and_add(&p->map.exits, &p->exits_cap, &p->map.exit_count,
+				(t_upos){p->line_len++, p->map.height}));
 	else if (byte == 'P')
-		return (p->map.player = (t_upos){p->line_len++, p->map.height},
-				p->players++, true);
+		return (push_and_add(&p->map.players, &p->players_cap,
+				&p->map.player_count, (t_upos){p->line_len++, p->map.height}));
 	p->contains_invalid_character = true;
 	p->invalid_character = byte;
 	p->line_len++;

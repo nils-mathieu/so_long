@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:15:49 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 18:05:12 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:40:49 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,19 @@ static t_coin	*create_coin_array(t_game *game, t_upos *pos, size_t n)
 	return (res);
 }
 
+inline static t_fpos	random_pos(t_game *game, t_upos *array, size_t n)
+{
+	t_upos	pos;
+
+	pos = array[sl_random(game) % n];
+	return (t_fpos){(float)pos.x, (float)pos.y};
+}
+
 bool	sl_init_game(t_game *g, t_map *map)
 {
 	g->width = map->width;
 	g->height = map->height;
-	g->player_pos = (t_fpos){(float)map->player.x, (float)map->player.y};
+	g->player_pos = random_pos(g, map->players, map->player_count);
 	g->camera_pos = g->player_pos;
 	g->frame_last_instant = sl_get_current_timestamp();
 	g->walls = sl_create_wall_array(map->walls, map->wall_count);
@@ -53,7 +61,7 @@ bool	sl_init_game(t_game *g, t_map *map)
 	g->enemy_count = 0;
 	g->rem_coins = map->coin_count;
 	g->max_coins = map->coin_count;
-	g->exit = (t_fpos){(float)map->exit.x, (float)map->exit.y};
+	g->exit = random_pos(g, map->exits, map->exit_count);
 	g->rem_dist = 1.0f;
 	return (true);
 }

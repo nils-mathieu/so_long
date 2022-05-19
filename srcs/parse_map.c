@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 16:04:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 17:26:09 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:41:13 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static bool	final_map_check(t_map_parser *p)
 	if (p->is_rectangle && p->map.width != 0 && p->map.height != 0)
 		p->is_enclosed = is_enclosed(p);
 	return (
-		p->is_enclosed && p->is_rectangle && p->players == 1
-		&& p->map.coin_count != 0 && p->exits == 1
+		p->is_enclosed && p->is_rectangle && p->map.exit_count >= 1
+		&& p->map.coin_count != 0 && p->map.player_count >= 1
 		&& !p->contains_invalid_character && p->map.width != 0
 		&& p->map.height != 0);
 }
@@ -65,6 +65,10 @@ void	sl_free_map_parser(t_map_parser *p)
 		free(p->map.coins);
 	if (p->walls_cap != 0)
 		free(p->map.walls);
+	if (p->exits_cap != 0)
+		free(p->map.exits);
+	if (p->players_cap != 0)
+		free(p->map.players);
 }
 
 t_perr	sl_parse_map(int fd, t_map_parser *p)

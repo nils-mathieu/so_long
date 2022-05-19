@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 18:19:25 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/19 19:40:19 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,20 +193,21 @@ typedef struct s_map
 	uint32_t	width;
 	uint32_t	height;
 
-	t_upos		player;
 	t_upos		exit;
 
 	size_t		coin_count;
 	t_upos		*coins;
 	size_t		wall_count;
 	t_upos		*walls;
+	size_t		player_count;
+	t_upos		*players;
+	size_t		exit_count;
+	t_upos		*exits;
 }	t_map;
 
 // Stores the state required when reading a map.
 typedef struct s_map_parser
 {
-	uint32_t	players;
-	uint32_t	exits;
 	bool		is_rectangle;
 	bool		is_enclosed;
 	bool		contains_invalid_character;
@@ -215,6 +216,8 @@ typedef struct s_map_parser
 	size_t		line_len;
 	size_t		coins_cap;
 	size_t		walls_cap;
+	size_t		players_cap;
+	size_t		exits_cap;
 	t_map		map;
 }	t_map_parser;
 
