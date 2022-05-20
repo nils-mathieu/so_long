@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 23:38:53 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:57:22 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ static void	bounce(t_game *g)
 {
 	t_fvec	disp;
 
-	g->player_pos.x += g->player_vel.x * g->delta_time;
-	g->player_pos.y += g->player_vel.y * g->delta_time;
+	g->player_pos.x += g->player_vel.x * DELTA_TIME;
+	g->player_pos.y += g->player_vel.y * DELTA_TIME;
 	disp = compute_disp(g->player_vel, g->walls, g->wall_count, g->player_pos);
 	g->player_pos.x += disp.x * PHYSICS_ROOM;
 	g->player_pos.y += disp.y * PHYSICS_ROOM;
@@ -117,11 +117,11 @@ void	sl_move_player(t_game *game)
 	}
 	else
 	{
-		game->recoil_duration -= game->delta_time;
+		game->recoil_duration -= DELTA_TIME;
 		acc = (t_fvec){0.0f, 0.0f};
 	}
-	game->player_vel.x += acc.x * game->delta_time;
-	game->player_vel.y += acc.y * game->delta_time;
+	game->player_vel.x += acc.x * DELTA_TIME;
+	game->player_vel.y += acc.y * DELTA_TIME;
 	bounce(game);
 	game->player_vel.x *= PLAYER_DRAG_AMOUNT;
 	game->player_vel.y *= PLAYER_DRAG_AMOUNT;

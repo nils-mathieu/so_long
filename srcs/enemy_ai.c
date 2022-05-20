@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:13:45 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 23:51:07 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:57:56 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ inline static void	update_enemy(t_game *game, t_enemy *enemy)
 	acc = sl_enemy_force(enemy, game);
 	acc.x += dir.x * ENEMY_ACC_FORCE;
 	acc.y += dir.y * ENEMY_ACC_FORCE;
-	enemy->vel.x += acc.x * game->delta_time;
-	enemy->vel.y += acc.y * game->delta_time;
-	enemy->pos.x += enemy->vel.x * game->delta_time;
-	enemy->pos.y += enemy->vel.y * game->delta_time;
+	enemy->vel.x += acc.x * DELTA_TIME;
+	enemy->vel.y += acc.y * DELTA_TIME;
+	enemy->pos.x += enemy->vel.x * DELTA_TIME;
+	enemy->pos.y += enemy->vel.y * DELTA_TIME;
 	enemy->vel.x *= ENEMY_DRAG_AMOUNT;
 	enemy->vel.y *= ENEMY_DRAG_AMOUNT;
 }

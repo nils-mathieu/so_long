@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 03:02:22 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 13:21:51 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:57:44 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void	sl_animate_exit(t_game *game)
 		game->next_exit_anim_frame = EXIT_ANIM_SPEED;
 	}
 	else
-		game->next_exit_anim_frame -= game->delta_time;
+		game->next_exit_anim_frame -= DELTA_TIME;
 }

@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 01:32:26 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 23:32:22 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:57:44 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sl_animate_explosion(t_game *game)
 		if (game->explosion_anim_frame == 5)
 			game->explosion = false;
 	}
-	game->next_explosion_anim_frame -= game->delta_time;
+	game->next_explosion_anim_frame -= DELTA_TIME;
 }
 
 #include <stdio.h>
@@ -51,7 +51,7 @@ void	sl_animate_shield(t_game *game)
 		if (game->shield_anim_frame == UINT32_MAX)
 			game->shield = false;
 	}
-	game->next_shield_anim_frame -= game->delta_time;
+	game->next_shield_anim_frame -= DELTA_TIME;
 }
 
 void	sl_animate_player(t_game *game)
@@ -79,5 +79,5 @@ void	sl_animate_player(t_game *game)
 			game->player_anim_frame += to_add;
 		game->next_player_anim_frame = PLAYER_ANIM_SPEED;
 	}
-	game->next_player_anim_frame -= game->delta_time;
+	game->next_player_anim_frame -= DELTA_TIME;
 }

@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:15:49 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 19:40:49 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:58:04 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ bool	sl_init_game(t_game *g, t_map *map)
 	g->height = map->height;
 	g->player_pos = random_pos(g, map->players, map->player_count);
 	g->camera_pos = g->player_pos;
-	g->frame_last_instant = sl_get_current_timestamp();
 	g->walls = sl_create_wall_array(map->walls, map->wall_count);
 	if (!g->walls)
 		return (false);

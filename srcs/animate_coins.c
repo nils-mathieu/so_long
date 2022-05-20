@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:32:12 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 02:41:24 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:57:44 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	sl_animate_coins(t_game *game)
 			game->coins[i].next_frame = COINS_ANIM_SPEED;
 		}
 		else
-			game->coins[i].next_frame -= game->delta_time;
+			game->coins[i].next_frame -= DELTA_TIME;
 		i++;
 	}
 }

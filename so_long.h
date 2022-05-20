@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 01:25:59 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:54:52 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,9 @@
 //                               Game Rules                                   //
 // ========================================================================== //
 
-// The target amount of time between two frames, in nanoseconds.
-# define TARGET_DELTA 16666667
-// The maximum amout of time allowed between frames.
-# define MAX_DELTA_TIME 18000000
 // When bonus are not being used, this delta time value will be returned by the
 // `sl_delta_time` function.
-# define DELTA_TIME 0.013f
+# define DELTA_TIME 0.01f
 
 // The force applied on the player when a key is pressed.
 # define PLAYER_ACCELERATION_FORCE 60.0f
@@ -349,9 +345,6 @@ typedef struct s_game
 
 	uint64_t	rng_state[2];
 
-	uint64_t	frame_last_instant;
-	float		delta_time;
-
 	size_t		wall_count;
 	t_wall		*walls;
 
@@ -409,14 +402,6 @@ bool		sl_load_images(t_mlx mlx, t_imgi *images);
 //
 // This function will only return once the game instance is closed.
 t_gerr		sl_game_start(t_map *map);
-
-// Ges the current timestamp, in microseconds.
-uint64_t	sl_get_current_timestamp(void);
-
-// Computes the amout of time since `prev`, in seconds.
-//
-// `prev` is updated to the current instant.
-float		sl_delta_time(uint64_t *prev);
 
 // Advances the game by one frame. This function is called by the event loop
 // of MiniLibX.

@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/19 18:44:31 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/20 16:54:17 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ SRCS		:=				\
 	print_map_error.c		\
 	load_images.c			\
 	start_game.c			\
-	delta_time.c			\
 	hooks.c					\
 	move_player.c			\
 	render_game.c			\
@@ -61,15 +60,14 @@ LIBS		:=				\
 	libs/libft/libft.a		\
 	libs/minilibx/libmlx.a
 
-HEADERS :=			\
+HEADERS :=					\
 	so_long.h
 
 # ============================================================================ #
 #                                 Intermediates                                #
 # ============================================================================ #
 
-SRC_FILES = $(addprefix $(SRCS_DIR)/,$(SRCS))
-OBJ_FILES = $(patsubst %.c,$(OBJS_DIR)/%.o,$(SRCS))
+OBJ_FILES := $(patsubst %.c,$(OBJS_DIR)/%.o,$(SRCS))
 
 ifdef DEBUG
 	CFLAGS += -g3 -D DEBUG
@@ -77,7 +75,7 @@ else
 	CFLAGS += -O3
 endif
 
-INCLUDE_FLAGS = $(addprefix -I , $(INCLUDES))
+INCLUDE_FLAGS := $(addprefix -I , $(INCLUDES))
 
 # ============================================================================ #
 #                                   Functions                                  #
@@ -102,13 +100,13 @@ fclean:
 re: fclean all
 
 .PHONY: bonus
-bonus: CFLAGS += -D SL_BONUS
 bonus: $(NAME)
 
 # ============================================================================ #
 #                                    Recipes                                   #
 # ============================================================================ #
 
+$(NAME): SRCS ?= $(BASE_SRCS)
 $(NAME): $(LIBS) $(OBJ_FILES)
 	clang $(CFLAGS) $(OBJ_FILES) $(LIBS) -lXext -lX11 -lm -o $(NAME)
 

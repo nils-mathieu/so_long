@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:49:51 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 23:17:30 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:55:10 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	sl_key_release_hook(unsigned long keysym, t_game *game)
 
 int	sl_loop_hook(t_game *game)
 {
-	game->delta_time = sl_delta_time(&game->frame_last_instant);
 	sl_move_player(game);
 	sl_update_enemies(game);
 	sl_count_movements(game);
