@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:15:49 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 16:58:04 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:06:15 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ inline static t_fpos	random_pos(t_game *game, t_upos *array, size_t n)
 	t_upos	pos;
 
 	pos = array[sl_random(game) % n];
-	return (t_fpos){(float)pos.x, (float)pos.y};
+	return ((t_fpos){(float)pos.x, (float)pos.y});
 }
 
 bool	sl_init_game(t_game *g, t_map *map)

@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 22:34:28 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/18 18:22:02 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:50:55 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ static void	clamp_one_d(int32_t *x, int32_t *width, int32_t *src, int32_t bound)
 		*width = 0;
 }
 
+inline static int32_t	mod_pos(int32_t i, int32_t m)
+{
+	return ((uint32_t)i % (uint32_t)m);
+}
+
 void	sl_put_image(t_game *game, t_rect dst, t_imgi *src_img, t_srect src)
 {
 	int32_t	x;
@@ -45,8 +50,9 @@ void	sl_put_image(t_game *game, t_rect dst, t_imgi *src_img, t_srect src)
 		{
 			c = *(t_rgba *)(
 					src_img->addr
-					+ src_img->line_len * (src.y + (src.uv_y + y) % src.height)
-					+ 4 * (src.x + (src.uv_x + x) % src.width));
+					+ src_img->line_len
+					* (src.y + mod_pos(src.uv_y + y, src.height))
+					+ 4 * (src.x + mod_pos(src.uv_x + x, src.width)));
 			if (c.a != 0)
 				*(t_rgba *)(game->canvas.addr + game->canvas.line_len
 						* (dst.y + y) + 4 * (dst.x + x)) = c;
@@ -79,8 +85,9 @@ void	sl_add_image(t_game *game, t_rect dst, t_imgi *simg, t_srect src)
 		{
 			c = *(t_rgba *)(
 					simg->addr
-					+ simg->line_len * (src.y + (src.uv_y + y) % src.height)
-					+ 4 * (src.x + (src.uv_x + x) % src.width));
+					+ simg->line_len
+					* (src.y + mod_pos(src.uv_y + y, src.height))
+					+ 4 * (src.x + mod_pos(src.uv_x + x, src.width)));
 			if (c.a != 0)
 				add_colors((t_rgba *)(game->canvas.addr + game->canvas.line_len
 						* (dst.y + y) + 4 * (dst.x + x)), c);

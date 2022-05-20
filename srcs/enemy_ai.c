@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:13:45 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 16:57:56 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:08:31 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,22 @@ inline static t_fvec	sl_enemy_force(t_enemy *enemy, t_game *game)
 	return (force);
 }
 
+inline static void	move_enemy(t_enemy *enemy, t_fvec dir, t_fvec acc)
+{
+	acc.x += dir.x * ENEMY_ACC_FORCE;
+	acc.y += dir.y * ENEMY_ACC_FORCE;
+	enemy->vel.x += acc.x * DELTA_TIME;
+	enemy->vel.y += acc.y * DELTA_TIME;
+	enemy->pos.x += enemy->vel.x * DELTA_TIME;
+	enemy->pos.y += enemy->vel.y * DELTA_TIME;
+	enemy->vel.x *= ENEMY_DRAG_AMOUNT;
+	enemy->vel.y *= ENEMY_DRAG_AMOUNT;
+}
+
 inline static void	update_enemy(t_game *game, t_enemy *enemy)
 {
 	t_fvec	dir;
 	float	dist;
-	t_fvec	acc;
 	float	sqlen;
 
 	dir.x = game->player_pos.x - enemy->pos.x;
@@ -66,15 +77,7 @@ inline static void	update_enemy(t_game *game, t_enemy *enemy)
 		dir.x = -dir.x;
 		dir.y = -dir.y;
 	}
-	acc = sl_enemy_force(enemy, game);
-	acc.x += dir.x * ENEMY_ACC_FORCE;
-	acc.y += dir.y * ENEMY_ACC_FORCE;
-	enemy->vel.x += acc.x * DELTA_TIME;
-	enemy->vel.y += acc.y * DELTA_TIME;
-	enemy->pos.x += enemy->vel.x * DELTA_TIME;
-	enemy->pos.y += enemy->vel.y * DELTA_TIME;
-	enemy->vel.x *= ENEMY_DRAG_AMOUNT;
-	enemy->vel.y *= ENEMY_DRAG_AMOUNT;
+	move_enemy(enemy, dir, sl_enemy_force(enemy, game));
 }
 
 void	sl_update_enemies(t_game *game)

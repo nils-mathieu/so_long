@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 01:32:26 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 16:57:44 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:00:39 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	sl_animate_explosion(t_game *game)
 	game->next_explosion_anim_frame -= DELTA_TIME;
 }
 
-#include <stdio.h>
 void	sl_animate_shield(t_game *game)
 {
 	if (!game->shield)
@@ -61,7 +60,8 @@ void	sl_animate_player(t_game *game)
 
 	if (game->no_player)
 		return ;
-	if (game->pressing_down || game->pressing_up || game->pressing_left || game->pressing_right)
+	if (game->pressing_down || game->pressing_up
+		|| game->pressing_left || game->pressing_right)
 	{
 		to_add = 1;
 		stops_at = 7;

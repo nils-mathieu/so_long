@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 20:24:36 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 23:14:39 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:04:32 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static size_t	render_number(t_game *g, uint32_t num, t_upos pos)
 			(t_srect){17 * (cur[i] - '0'), 0, 17, 27, 0, 0});
 		i++;
 	}
-	return i;
+	return (i);
 }
 
 void	sl_render_move_count(t_game *g)
@@ -40,9 +40,9 @@ void	sl_render_move_count(t_game *g)
 	count = 0;
 	count += render_number(g, g->enemy_count, (t_upos){10, 50});
 	sl_put_image(
-			g, (t_rect){10 + 17 * count++, 50, 17, 27},
-			&g->images[SL_GIMG_NUMBERS],
-			(t_srect){17 * 10, 0, 17, 27, 0, 0});
+		g, (t_rect){10 + 17 * count++, 50, 17, 27},
+		&g->images[SL_GIMG_NUMBERS],
+		(t_srect){17 * 10, 0, 17, 27, 0, 0});
 	render_number(g, g->enemy_count + g->rem_coins,
-			(t_upos){10 + 17 * count, 50});
+		(t_upos){10 + 17 * count, 50});
 }

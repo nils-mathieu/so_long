@@ -6,13 +6,13 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 21:14:16 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 23:39:36 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:59:17 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void render_explosion(t_upos pos, t_game *g)
+static void	render_explosion(t_upos pos, t_game *g)
 {
 	pos.x -= 22;
 	pos.y -= 22;
@@ -22,8 +22,7 @@ static void render_explosion(t_upos pos, t_game *g)
 		(t_srect){90 * g->explosion_anim_frame, 0, 90, 90, 0, 0});
 }
 
-#include <stdio.h>
-static void render_shield(t_upos pos, t_game *g)
+static void	render_shield(t_upos pos, t_game *g)
 {
 	pos.x -= 16;
 	pos.y -= 16;

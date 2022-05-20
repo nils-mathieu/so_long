@@ -6,27 +6,12 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 16:57:22 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:50:39 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <math.h>
-
-// Determines whether the player collides with the given wall.
-inline static bool	collides(t_fpos wall, t_fpos pos)
-{
-	bool	up;
-	bool	left;
-	bool	right;
-	bool	down;
-
-	up = pos.y + PLAYER_COL_H * 0.5f < wall.y - 0.5f;
-	left = pos.x + PLAYER_COL_W * 0.5f < wall.x - 0.5f;
-	right = pos.x - PLAYER_COL_W * 0.5f > wall.x + 0.5f;
-	down = pos.y - PLAYER_COL_H * 0.5f > wall.y + 0.5f;
-	return (!up && !left && !right && !down);
-}
 
 static t_fvec	compute_disp_for(t_fvec vel, t_fpos wall, t_fpos p)
 {
@@ -58,7 +43,11 @@ static t_fvec	compute_disp(t_fvec vel, t_wall *walls, size_t n, t_fpos p)
 	i = 0;
 	while (i < n)
 	{
-		if (collides(walls[i].pos, p))
+		if (
+			p.y + PLAYER_COL_H * 0.5f >= walls[i].pos.y - 0.5f
+			&& p.x + PLAYER_COL_W * 0.5f >= walls[i].pos.x - 0.5f
+			&& p.x - PLAYER_COL_W * 0.5f <= walls[i].pos.x + 0.5f
+			&& p.y - PLAYER_COL_H * 0.5f <= walls[i].pos.y + 0.5f)
 		{
 			disp = compute_disp_for(vel, walls[i].pos, p);
 			if (fabsf(disp.y) > max_disp.y)
@@ -69,6 +58,14 @@ static t_fvec	compute_disp(t_fvec vel, t_wall *walls, size_t n, t_fpos p)
 		i++;
 	}
 	return (max_disp);
+}
+
+static void	bounce_event(t_game *game)
+{
+	game->recoil_duration = RECOIL_DURATION;
+	game->shield = true;
+	game->shield_anim_frame = 5;
+	game->next_shield_anim_frame = SHIELD_ANIM_SPEED;
 }
 
 static void	bounce(t_game *g)
@@ -86,10 +83,7 @@ static void	bounce(t_game *g)
 			g->player_vel.y = BOUNCE_AMOUNT;
 		else
 			g->player_vel.y = -BOUNCE_AMOUNT;
-		g->recoil_duration = RECOIL_DURATION;
-		g->shield = true;
-		g->shield_anim_frame = 5;
-		g->next_shield_anim_frame = SHIELD_ANIM_SPEED;
+		bounce_event(g);
 	}
 	else if (fabsf(disp.x) > fabsf(disp.y) + 0.001)
 	{
@@ -97,10 +91,7 @@ static void	bounce(t_game *g)
 			g->player_vel.x = BOUNCE_AMOUNT;
 		else
 			g->player_vel.x = -BOUNCE_AMOUNT;
-		g->recoil_duration = RECOIL_DURATION;
-		g->shield = true;
-		g->shield_anim_frame = 5;
-		g->next_shield_anim_frame = SHIELD_ANIM_SPEED;
+		bounce_event(g);
 	}
 }
 
