@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/25 12:11:38 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/25 12:14:27 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,52 +16,57 @@ CFLAGS		:= -Wall -Wextra -Werror
 SRCS_DIR	:= srcs
 OBJS_DIR	:= objs
 
-SRCS		:=				\
-	main.c					\
-	parse_map_byte.c		\
-	parse_map.c				\
-	print_map_error.c		\
-	load_images.c			\
-	start_game.c			\
-	hooks.c					\
-	move_player.c			\
-	render_game.c			\
-	put_image.c				\
-	load_image.c			\
-	math_utils.c			\
-	collect_coins.c			\
-	finish.c				\
-	camera.c				\
-	render_player.c			\
-	render_coins.c			\
-	render_portal.c			\
-	render_walls.c			\
-	animate_player.c		\
-	init_game.c				\
-	animate_coins.c			\
-	rng.c					\
-	animate_exit.c			\
-	init_walls.c			\
-	upos_array.c			\
-	render_background.c		\
-	move_count.c			\
-	render_move_count.c		\
-	enemy_ai.c				\
-	render_enemies.c		\
-	ship_anim.c				\
+define SRCS :=
+	main.c
+	parse_map_byte.c
+	parse_map.c
+	print_map_error.c
+	load_images.c
+	start_game.c
+	hooks.c
+	move_player.c
+	render_game.c
+	put_image.c
+	load_image.c
+	math_utils.c
+	collect_coins.c
+	finish.c
+	camera.c
+	render_player.c
+	render_coins.c
+	render_portal.c
+	render_walls.c
+	animate_player.c
+	init_game.c
+	animate_coins.c
+	rng.c
+	animate_exit.c
+	init_walls.c
+	upos_array.c
+	render_background.c
+	move_count.c
+	render_move_count.c
+	enemy_ai.c
+	render_enemies.c
+	ship_anim.c
 	animate_enemies.c
+endef
+SRCS := $(strip $(SRCS))
 
-INCLUDES	:=				\
-	.						\
-	libs/minilibx			\
+define INCLUDES	:=
+	.
+	libs/minilibx
 	libs/libft
+endef
+INCLUDES := $(strip $(INCLUDES))
 
-LIBS		:=				\
-	libs/libft/libft.a		\
+define LIBS :=
+	libs/libft/libft.a
 	libs/minilibx/libmlx.a
+endef
+LIBS := $(strip $(LIBS))
 
-HEADERS :=					\
-	so_long.h
+HEADER := so_long.h
 
 # ============================================================================ #
 #                                 Intermediates                                #
@@ -106,11 +111,10 @@ bonus: $(NAME)
 #                                    Recipes                                   #
 # ============================================================================ #
 
-$(NAME): SRCS ?= $(BASE_SRCS)
 $(NAME): $(LIBS) $(OBJ_FILES)
 	clang $(CFLAGS) $(OBJ_FILES) $(LIBS) -lXext -lX11 -lm -o $(NAME)
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADERS)
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER)
 	@mkdir -vp $(dir $@)
 	clang $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
