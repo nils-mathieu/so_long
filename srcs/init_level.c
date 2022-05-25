@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
+/*   init_level.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 02:15:49 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:11:22 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:51:02 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,32 @@ inline static t_fpos	random_pos(t_game *game, t_upos *array, size_t n)
 	return ((t_fpos){(float)pos.x, (float)pos.y});
 }
 
-bool	sl_init_game(t_game *g, t_map *map)
+bool	sl_init_level(t_game *g, t_map *map)
 {
-	g->width = map->width;
-	g->height = map->height;
-	g->player_pos = random_pos(g, map->players, map->player_count);
-	g->camera_pos = g->player_pos;
-	g->walls = sl_create_wall_array(map->walls, map->wall_count);
-	if (!g->walls)
+	ft_mem_set(&g->lvl, 0x00, sizeof(t_level));
+	g->lvl.player_pos = random_pos(g, map->players, map->player_count);
+	g->lvl.camera = g->lvl.player_pos;
+	g->lvl.walls = sl_create_wall_array(map->walls, map->wall_count);
+	if (!g->lvl.walls)
 		return (false);
-	g->wall_count = map->wall_count;
-	g->coins = create_coin_array(g, map->coins, map->coin_count);
-	if (!g->coins)
-		return (free(g->walls), false);
-	g->enemies = ft_alloc_array(map->coin_count, sizeof(t_enemy));
-	if (!g->enemies)
-		return (free(g->walls), free(g->coins), false);
-	g->enemy_count = 0;
-	g->rem_coins = map->coin_count;
-	g->max_coins = map->coin_count;
-	g->exit = random_pos(g, map->exits, map->exit_count);
-	g->rem_dist = 1.0f;
+	g->lvl.wall_count = map->wall_count;
+	g->lvl.coins = create_coin_array(g, map->coins, map->coin_count);
+	if (!g->lvl.coins)
+		return (free(g->lvl.walls), false);
+	g->lvl.enemies = ft_alloc_array(map->coin_count, sizeof(t_enemy));
+	if (!g->lvl.enemies)
+		return (free(g->lvl.walls), free(g->lvl.coins), false);
+	g->lvl.enemy_count = 0;
+	g->lvl.rem_coins = map->coin_count;
+	g->lvl.max_coins = map->coin_count;
+	g->lvl.exit = random_pos(g, map->exits, map->exit_count);
+	g->lvl.rem_dist = 1.0f;
 	return (true);
+}
+
+void	sl_deinit_level(t_level *level)
+{
+	free(level->walls);
+	free(level->coins);
+	free(level->enemies);
 }

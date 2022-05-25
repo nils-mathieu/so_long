@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 20:03:07 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 16:57:44 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:52:42 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@
 
 void	sl_count_movements(t_game *game)
 {
-	if (game->no_player)
+	if (game->lvl.no_player)
 		return ;
-	if (game->rem_dist > 0.0)
+	if (game->lvl.rem_dist > 0.0)
 	{
-		game->rem_dist -= sqrtf(game->player_vel.x * game->player_vel.x
-				+ game->player_vel.y * game->player_vel.y) * DELTA_TIME;
+		game->lvl.rem_dist -= sqrtf(game->lvl.player_vel.x
+				* game->lvl.player_vel.x
+				+ game->lvl.player_vel.y * game->lvl.player_vel.y)
+				* DELTA_TIME;
 		return ;
 	}
-	game->move_count++;
-	game->rem_dist = 1.0f;
-	ft_fmt("Movements: {u32}\n", game->move_count);
+	game->lvl.move_count++;
+	game->lvl.rem_dist = 1.0f;
 }

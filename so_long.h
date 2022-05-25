@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 17:47:20 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:48:36 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,20 +331,9 @@ typedef struct s_enemy
 	float	next_anim_frame;
 }	t_enemy;
 
-// Stores the state of the game.
-typedef struct s_game
+// Stores the stuff that changes between maps.
+typedef struct s_level
 {
-	t_mlx		mlx;
-	t_win		win;
-
-	t_imgi		images[IMAGE_COUNT];
-	t_imgi		canvas;
-
-	uint32_t	width;
-	uint32_t	height;
-
-	uint64_t	rng_state[2];
-
 	size_t		wall_count;
 	t_wall		*walls;
 
@@ -370,19 +359,34 @@ typedef struct s_game
 	uint32_t	shield_anim_frame;
 	float		next_shield_anim_frame;
 
+	t_fpos		camera;
+
 	bool		pressing_up;
 	bool		pressing_down;
 	bool		pressing_right;
 	bool		pressing_left;
 	float		recoil_duration;
 	t_fvec		movement_input;
-	t_fpos		camera_pos;
 	t_fvec		player_vel;
 	t_fpos		player_pos;
 	size_t		player_dir;
 	float		next_player_anim_frame;
 	size_t		player_anim_frame;
 	bool		no_player;
+}	t_level;
+
+// Stores the state of the game.
+typedef struct s_game
+{
+	t_mlx		mlx;
+	t_win		win;
+
+	t_imgi		images[IMAGE_COUNT];
+	t_imgi		canvas;
+
+	uint64_t	rng_state[2];
+
+	t_level		lvl;
 }	t_game;
 
 // An error that might occur during the game's execution.
@@ -434,20 +438,17 @@ void		sl_collect_coins(t_game *game);
 // If the player has finished and is on the finish line, the game ends.
 void		sl_finish(t_game *game);
 
-// Returns the position of the camera.
-t_fpos		sl_camera_pos(t_game *game);
-
 // Renders the player.
-void		sl_render_player(t_fpos camera, t_game *game);
+void		sl_render_player(t_game *game);
 
 // Renders coins on the screen.
-void		sl_render_coins(t_fpos camera, t_game *game);
+void		sl_render_coins(t_game *game);
 
 // Renders the final portal.
-void		sl_render_portal(t_fpos camera, t_game *game);
+void		sl_render_portal(t_game *game);
 
 // Renders the walls.
-void		sl_render_walls(t_fpos camera, t_game *game);
+void		sl_render_walls(t_game *game);
 
 // Updates the position of the camera.
 void		sl_update_camera(t_game *game);
@@ -458,9 +459,14 @@ void		sl_update_player_dir(t_game *game);
 // Animates the player.
 void		sl_animate_player(t_game *game);
 
-// Initializes the fields of a `game` instance that are directly related to
-// a `map`.
-bool		sl_init_game(t_game *game, t_map *map);
+// Initializes the fields of a `t_level` instance of a `t_game` using the
+// provided map.
+//
+// The other fields of `game` are expected to be properly initialized.
+bool		sl_init_level(t_game *game, t_map *map);
+
+// Frees the resources allocated for a `t_level` instance.
+void		sl_deinit_level(t_level *level);
 
 // Animates coins.
 void		sl_animate_coins(t_game *game);
@@ -509,7 +515,7 @@ bool		sl_upos_array_contains(t_upos pos, t_upos *arr, size_t n);
 void		sl_upos_array_sort(t_upos *arr, size_t n);
 
 // Renders the background.
-void		sl_render_background(t_fpos camera, t_game *game);
+void		sl_render_background(t_game *game);
 
 // Counts the number of tiles the player traveled.
 void		sl_count_movements(t_game *game);
@@ -521,7 +527,7 @@ void		sl_render_move_count(t_game *game);
 void		sl_update_enemies(t_game *game);
 
 // Renders enemies on the screen.
-void		sl_render_enemies(t_fpos camera, t_game *game);
+void		sl_render_enemies(t_game *game);
 
 // Computes the animation frame for a ship pressing the specified keys.
 size_t		sl_get_ship_anim(bool up, bool left, bool right, bool down);
@@ -546,7 +552,7 @@ bool		sl_create_image(t_mlx mlx, uint32_t w, uint32_t h, t_imgi *result);
 bool		sl_load_image(t_mlx mlx, const char *s, t_imgi *result);
 
 // Converts a position from world-space to screen-space.
-t_upos		sl_pos_to_screen(t_fpos camera, t_fpos pos);
+t_upos		sl_pos_to_screen(t_game *game, t_fpos pos);
 
 // Puts a portion of `src` onto the canvas.
 //

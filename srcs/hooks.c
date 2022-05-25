@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:49:51 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 16:55:10 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:33:34 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,35 @@ static void	recompute_movement_input(t_game *game)
 {
 	float	inv_len;
 
-	game->movement_input = (t_fvec){0.0, 0.0};
-	if (game->pressing_up)
-		game->movement_input.y -= 1.0;
-	if (game->pressing_left)
-		game->movement_input.x -= 1.0;
-	if (game->pressing_down)
-		game->movement_input.y += 1.0;
-	if (game->pressing_right)
-		game->movement_input.x += 1.0;
-	if (game->movement_input.x != 0.0 || game->movement_input.y != 0.0)
+	game->lvl.movement_input = (t_fvec){0.0, 0.0};
+	if (game->lvl.pressing_up)
+		game->lvl.movement_input.y -= 1.0;
+	if (game->lvl.pressing_left)
+		game->lvl.movement_input.x -= 1.0;
+	if (game->lvl.pressing_down)
+		game->lvl.movement_input.y += 1.0;
+	if (game->lvl.pressing_right)
+		game->lvl.movement_input.x += 1.0;
+	if (game->lvl.movement_input.x != 0.0 || game->lvl.movement_input.y != 0.0)
 	{
 		inv_len = 1.0 / sqrtf(
-				game->movement_input.x * game->movement_input.x
-				+ game->movement_input.y * game->movement_input.y);
-		game->movement_input.x *= inv_len;
-		game->movement_input.y *= inv_len;
+				game->lvl.movement_input.x * game->lvl.movement_input.x
+				+ game->lvl.movement_input.y * game->lvl.movement_input.y);
+		game->lvl.movement_input.x *= inv_len;
+		game->lvl.movement_input.y *= inv_len;
 	}
 }
 
 int	sl_key_press_hook(unsigned long keysym, t_game *game)
 {
 	if (keysym == UP_KEYSYM)
-		game->pressing_up = true;
+		game->lvl.pressing_up = true;
 	else if (keysym == LEFT_KEYSYM)
-		game->pressing_left = true;
+		game->lvl.pressing_left = true;
 	else if (keysym == DOWN_KEYSYM)
-		game->pressing_down = true;
+		game->lvl.pressing_down = true;
 	else if (keysym == RIGHT_KEYSYM)
-		game->pressing_right = true;
+		game->lvl.pressing_right = true;
 	recompute_movement_input(game);
 	sl_update_player_dir(game);
 	return (0);
@@ -69,13 +69,13 @@ int	sl_key_release_hook(unsigned long keysym, t_game *game)
 	if (keysym == ESCAPE_KEYSYM)
 		return (mlx_loop_end(game->mlx));
 	else if (keysym == UP_KEYSYM)
-		game->pressing_up = false;
+		game->lvl.pressing_up = false;
 	else if (keysym == LEFT_KEYSYM)
-		game->pressing_left = false;
+		game->lvl.pressing_left = false;
 	else if (keysym == DOWN_KEYSYM)
-		game->pressing_down = false;
+		game->lvl.pressing_down = false;
 	else if (keysym == RIGHT_KEYSYM)
-		game->pressing_right = false;
+		game->lvl.pressing_right = false;
 	recompute_movement_input(game);
 	sl_update_player_dir(game);
 	return (0);

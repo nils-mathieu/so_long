@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 20:24:36 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 17:04:32 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:46:28 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	sl_render_move_count(t_game *g)
 {
 	size_t	count;
 
-	render_number(g, g->move_count, (t_upos){10, 10});
+	render_number(g, g->lvl.move_count, (t_upos){10, 10});
 	count = 0;
-	count += render_number(g, g->enemy_count, (t_upos){10, 50});
+	count += render_number(g, g->lvl.enemy_count, (t_upos){10, 50});
 	sl_put_image(
 		g, (t_rect){10 + 17 * count++, 50, 17, 27},
 		&g->images[SL_GIMG_NUMBERS],
 		(t_srect){17 * 10, 0, 17, 27, 0, 0});
-	render_number(g, g->enemy_count + g->rem_coins,
+	render_number(g, g->lvl.enemy_count + g->lvl.rem_coins,
 		(t_upos){10 + 17 * count, 50});
 }

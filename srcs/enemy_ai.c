@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:13:45 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/20 17:08:31 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:51:58 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ inline static t_fvec	sl_enemy_force(t_enemy *enemy, t_game *game)
 
 	force = (t_fvec){0.0f, 0.0f};
 	j = SIZE_MAX;
-	while (++j < game->enemy_count)
+	while (++j < game->lvl.enemy_count)
 	{
-		dir.x = enemy->pos.x - game->enemies[j].pos.x;
-		dir.y = enemy->pos.y - game->enemies[j].pos.y;
+		dir.x = enemy->pos.x - game->lvl.enemies[j].pos.x;
+		dir.y = enemy->pos.y - game->lvl.enemies[j].pos.y;
 		sqlen = dir.x * dir.x + dir.y * dir.y;
 		if (sqlen > 0.0 && sqlen <= ENEMY_REPULSION_THRESHOLD)
 		{
@@ -58,13 +58,13 @@ inline static void	update_enemy(t_game *game, t_enemy *enemy)
 	float	dist;
 	float	sqlen;
 
-	dir.x = game->player_pos.x - enemy->pos.x;
-	dir.y = game->player_pos.y - enemy->pos.y;
+	dir.x = game->lvl.player_pos.x - enemy->pos.x;
+	dir.y = game->lvl.player_pos.y - enemy->pos.y;
 	sqlen = dir.x * dir.x + dir.y * dir.y;
-	if (!game->no_player && sqlen <= ENEMY_DAMAGE_RANGE * ENEMY_DAMAGE_RANGE)
+	if (!game->lvl.no_player && sqlen <= ENEMY_DAMAGE_RANGE * ENEMY_DAMAGE_RANGE)
 	{
-		game->no_player = true;
-		game->explosion = true;
+		game->lvl.no_player = true;
+		game->lvl.explosion = true;
 	}
 	if (dir.x != 0.0f || dir.y != 0.0f)
 	{
@@ -72,7 +72,7 @@ inline static void	update_enemy(t_game *game, t_enemy *enemy)
 		dir.x /= dist;
 		dir.y /= dist;
 	}
-	if (game->no_player)
+	if (game->lvl.no_player)
 	{
 		dir.x = -dir.x;
 		dir.y = -dir.y;
@@ -85,9 +85,9 @@ void	sl_update_enemies(t_game *game)
 	size_t	i;
 
 	i = 0;
-	while (i < game->enemy_count)
+	while (i < game->lvl.enemy_count)
 	{
-		update_enemy(game, &game->enemies[i]);
+		update_enemy(game, &game->lvl.enemies[i]);
 		i++;
 	}
 }

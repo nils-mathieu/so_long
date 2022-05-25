@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 17:45:36 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:28:02 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static t_gerr	init_game(t_game *g, t_map *map)
 	if (!sl_create_image(g->mlx, WIDTH, HEIGHT, &g->canvas))
 		return (destroy_images(g), mlx_destroy_window(g->mlx, g->win),
 			mlx_destroy_display(g->mlx), free(g->mlx), SL_GERR_MLX);
-	if (!sl_init_game(g, map))
+	if (!sl_init_level(g, map))
 		return (mlx_destroy_image(g->mlx, g->canvas.image), destroy_images(g),
 			mlx_destroy_window(g->mlx, g->win),
 			mlx_destroy_display(g->mlx), free(g->mlx), SL_GERR_OOM);
@@ -66,9 +66,7 @@ static t_gerr	init_game(t_game *g, t_map *map)
 
 static void	deinit_game(t_game *game)
 {
-	free(game->coins);
-	free(game->walls);
-	free(game->enemies);
+	sl_deinit_level(&game->lvl);
 	destroy_images(game);
 	mlx_destroy_image(game->mlx, game->canvas.image);
 	mlx_destroy_window(game->mlx, game->win);

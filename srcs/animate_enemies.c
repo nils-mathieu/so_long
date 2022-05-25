@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:19:38 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 22:07:56 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/25 12:52:11 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,24 @@ void	sl_animate_enemies(t_game *game)
 {
 	size_t	i;
 	size_t	anim;
-	float	invert;
+	float	inv;
 
-	invert = 1.0f;
-	if (game->no_player)
-		invert = -1.0f;
+	inv = 1.0f;
+	if (game->lvl.no_player)
+		inv = -1.0f;
 	i = 0;
-	while (i < game->enemy_count)
+	while (i < game->lvl.enemy_count)
 	{
-		if (game->enemies[i].vel.x * game->enemies[i].vel.x
-			+ game->enemies[i].vel.y * game->enemies[i].vel.y
+		if (game->lvl.enemies[i].vel.x * game->lvl.enemies[i].vel.x
+			+ game->lvl.enemies[i].vel.y * game->lvl.enemies[i].vel.y
 			>= ENEMY_DIRECTION_THESHOLD * ENEMY_DIRECTION_THESHOLD)
-			anim = get_enemy_anim(game->enemies[i].vel);
+			anim = get_enemy_anim(game->lvl.enemies[i].vel);
 		else
 			anim = get_enemy_anim((t_fvec){
-					game->player_pos.x - game->enemies[i].pos.x * invert,
-					game->player_pos.y - game->enemies[i].pos.y * invert});
+					game->lvl.player_pos.x - game->lvl.enemies[i].pos.x * inv,
+					game->lvl.player_pos.y - game->lvl.enemies[i].pos.y * inv});
 		if (anim != SIZE_MAX)
-			game->enemies[i].dir = anim;
+			game->lvl.enemies[i].dir = anim;
 		i++;
 	}
 }
