@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 01:32:26 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:50:02 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:32:38 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	sl_animate_player(t_game *game)
 	size_t	to_add;
 	size_t	stops_at;
 
-	if (game->lvl.no_player)
+	if (game->lvl.game_state != SL_GS_PLAYING)
 		return ;
 	if (game->lvl.pressing_down || game->lvl.pressing_up
 		|| game->lvl.pressing_left || game->lvl.pressing_right)

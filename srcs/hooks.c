@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:49:51 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:33:34 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:49:47 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #define LEFT_KEYSYM 97
 #define RIGHT_KEYSYM 100
 #define ESCAPE_KEYSYM 65307
+#define SPACE_KEYSYM 32
 
 int	sl_destroy_hook(t_game *game)
 {
@@ -76,6 +77,23 @@ int	sl_key_release_hook(unsigned long keysym, t_game *game)
 		game->lvl.pressing_down = false;
 	else if (keysym == RIGHT_KEYSYM)
 		game->lvl.pressing_right = false;
+	else if (keysym == SPACE_KEYSYM)
+	{
+		if (game->lvl.game_state == SL_GS_WON)
+		{
+			if (game->cur_map == game->map_count - 1)
+				return (mlx_loop_end(game->mlx));
+			sl_deinit_level(&game->lvl);
+			game->cur_map++;
+			sl_init_level(game, &game->maps[game->cur_map]);
+		}
+		else if (game->lvl.game_state == SL_GS_LOST)
+		{
+			sl_deinit_level(&game->lvl);
+			sl_init_level(game, &game->maps[game->cur_map]);
+		}
+		return (0);
+	}
 	recompute_movement_input(game);
 	sl_update_player_dir(game);
 	return (0);

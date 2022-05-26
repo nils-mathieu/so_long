@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 21:14:16 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:49:54 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:32:24 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	sl_render_player(t_game *g)
 	pos = sl_pos_to_screen(g, g->lvl.player_pos);
 	if (g->lvl.explosion)
 		render_explosion(pos, g);
-	if (g->lvl.no_player)
+	if (g->lvl.game_state != SL_GS_PLAYING)
 		return ;
 	pos.x -= 16;
 	pos.y -= 16;

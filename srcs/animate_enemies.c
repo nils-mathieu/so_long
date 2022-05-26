@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 18:19:38 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:52:11 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:36:25 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	sl_animate_enemies(t_game *game)
 {
 	size_t	i;
 	size_t	anim;
-	float	inv;
+	float	k;
 
-	inv = 1.0f;
-	if (game->lvl.no_player)
-		inv = -1.0f;
+	k = 1.0f;
+	if (game->lvl.game_state != SL_GS_PLAYING)
+		k = -1.0f;
 	i = 0;
 	while (i < game->lvl.enemy_count)
 	{
@@ -58,8 +58,8 @@ void	sl_animate_enemies(t_game *game)
 			anim = get_enemy_anim(game->lvl.enemies[i].vel);
 		else
 			anim = get_enemy_anim((t_fvec){
-					game->lvl.player_pos.x - game->lvl.enemies[i].pos.x * inv,
-					game->lvl.player_pos.y - game->lvl.enemies[i].pos.y * inv});
+					(game->lvl.player_pos.x - game->lvl.enemies[i].pos.x) * k,
+					(game->lvl.player_pos.y - game->lvl.enemies[i].pos.y) * k});
 		if (anim != SIZE_MAX)
 			game->lvl.enemies[i].dir = anim;
 		i++;

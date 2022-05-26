@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 20:03:07 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:52:42 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:33:13 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	sl_count_movements(t_game *game)
 {
-	if (game->lvl.no_player)
+	if (game->lvl.game_state != SL_GS_PLAYING)
 		return ;
 	if (game->lvl.rem_dist > 0.0)
 	{

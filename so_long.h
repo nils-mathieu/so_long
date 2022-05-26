@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/26 15:25:07 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:31:17 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,6 +337,14 @@ typedef struct s_enemy
 	float	next_anim_frame;
 }	t_enemy;
 
+// The current state of the game.
+typedef enum e_game_state
+{
+	SL_GS_PLAYING,
+	SL_GS_WON,
+	SL_GS_LOST,
+}	t_gstate;
+
 // Stores the stuff that changes between maps.
 typedef struct s_level
 {
@@ -378,7 +386,8 @@ typedef struct s_level
 	size_t		player_dir;
 	float		next_player_anim_frame;
 	size_t		player_anim_frame;
-	bool		no_player;
+
+	t_gstate	game_state;
 }	t_level;
 
 // Stores the state of the game.

@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:39:34 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:42:55 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:31:51 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	sl_move_player(t_game *game)
 {
 	t_fvec	acc;
 
-	if (game->lvl.no_player)
+	if (game->lvl.game_state != SL_GS_PLAYING)
 		return ;
 	if (game->lvl.recoil_duration <= 0.0f)
 	{

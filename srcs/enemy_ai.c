@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:13:45 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:51:58 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:34:17 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ inline static void	update_enemy(t_game *game, t_enemy *enemy)
 	dir.x = game->lvl.player_pos.x - enemy->pos.x;
 	dir.y = game->lvl.player_pos.y - enemy->pos.y;
 	sqlen = dir.x * dir.x + dir.y * dir.y;
-	if (!game->lvl.no_player && sqlen <= ENEMY_DAMAGE_RANGE * ENEMY_DAMAGE_RANGE)
+	if (game->lvl.game_state == SL_GS_PLAYING && sqlen <= ENEMY_DAMAGE_RANGE * ENEMY_DAMAGE_RANGE)
 	{
-		game->lvl.no_player = true;
+		game->lvl.game_state = SL_GS_LOST;
 		game->lvl.explosion = true;
 	}
 	if (dir.x != 0.0f || dir.y != 0.0f)
@@ -72,7 +72,7 @@ inline static void	update_enemy(t_game *game, t_enemy *enemy)
 		dir.x /= dist;
 		dir.y /= dist;
 	}
-	if (game->lvl.no_player)
+	if (game->lvl.game_state != SL_GS_PLAYING)
 	{
 		dir.x = -dir.x;
 		dir.y = -dir.y;
