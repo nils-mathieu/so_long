@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 08:29:15 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:28:02 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:21:05 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	destroy_images(t_game *g)
 		mlx_destroy_image(g->mlx, g->images[i++].image);
 }
 
-static t_gerr	init_game(t_game *g, t_map *map)
+static t_gerr	init_game(t_game *g, t_map *maps, size_t map_count)
 {
 	if (!init_rng(g))
 		return (SL_GERR_RNG);
@@ -57,10 +57,13 @@ static t_gerr	init_game(t_game *g, t_map *map)
 	if (!sl_create_image(g->mlx, WIDTH, HEIGHT, &g->canvas))
 		return (destroy_images(g), mlx_destroy_window(g->mlx, g->win),
 			mlx_destroy_display(g->mlx), free(g->mlx), SL_GERR_MLX);
-	if (!sl_init_level(g, map))
+	if (!sl_init_level(g, &maps[0]))
 		return (mlx_destroy_image(g->mlx, g->canvas.image), destroy_images(g),
 			mlx_destroy_window(g->mlx, g->win),
 			mlx_destroy_display(g->mlx), free(g->mlx), SL_GERR_OOM);
+	g->maps = maps;
+	g->cur_map = 0;
+	g->map_count = map_count;
 	return (SL_GERR_SUCCESS);
 }
 
@@ -74,13 +77,13 @@ static void	deinit_game(t_game *game)
 	free(game->mlx);
 }
 
-t_gerr	sl_game_start(t_map *map)
+t_gerr	sl_game_start(t_map *maps, size_t map_count)
 {
 	t_game	game;
 	t_gerr	err;
 
 	ft_mem_set(&game, 0, sizeof(t_game));
-	err = init_game(&game, map);
+	err = init_game(&game, maps, map_count);
 	if (err != SL_GERR_SUCCESS)
 		return (err);
 	mlx_hook(game.win, 17, 0, sl_destroy_hook, &game);

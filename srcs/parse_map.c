@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                        :+:      :+:    :+:   */
+/*   parse_map->c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -24,54 +24,54 @@ static bool	is_enclosed(t_map_parser *p)
 
 	count = 0;
 	i = 0;
-	while (i < p->map.wall_count)
+	while (i < p->map->wall_count)
 	{
-		if (p->map.walls[i].x == 0
-			|| p->map.walls[i].x == p->map.width - 1
-			|| p->map.walls[i].y == 0
-			|| p->map.walls[i].y == p->map.height - 1)
+		if (p->map->walls[i].x == 0
+			|| p->map->walls[i].x == p->map->width - 1
+			|| p->map->walls[i].y == 0
+			|| p->map->walls[i].y == p->map->height - 1)
 			count++;
 		i++;
 	}
-	return (count == (p->map.width - 1) * 2 + (p->map.height - 1) * 2);
+	return (count == (p->map->width - 1) * 2 + (p->map->height - 1) * 2);
 }
 
 // Determines whether the provided parser references a valid map or not,
 // checking whether it is properly enclosed on its way.
 static bool	final_map_check(t_map_parser *p)
 {
-	if (p->is_rectangle && p->map.width != 0 && p->map.height != 0)
+	if (p->is_rectangle && p->map->width != 0 && p->map->height != 0)
 		p->is_enclosed = is_enclosed(p);
 	return (
-		p->is_enclosed && p->is_rectangle && p->map.exit_count >= 1
-		&& p->map.coin_count != 0 && p->map.player_count >= 1
-		&& !p->contains_invalid_character && p->map.width != 0
-		&& p->map.height != 0);
+		p->is_enclosed && p->is_rectangle && p->map->exit_count >= 1
+		&& p->map->coin_count != 0 && p->map->player_count >= 1
+		&& !p->contains_invalid_character && p->map->width != 0
+		&& p->map->height != 0);
 }
 
 static void	new_line(t_map_parser *p)
 {
-	if (p->map.height == 0)
-		p->map.width = p->line_len;
-	else if (p->map.width != p->line_len)
+	if (p->map->height == 0)
+		p->map->width = p->line_len;
+	else if (p->map->width != p->line_len)
 		p->is_rectangle = false;
-	p->map.height++;
+	p->map->height++;
 	p->line_len = 0;
 }
 
 void	sl_free_map_parser(t_map_parser *p)
 {
 	if (p->coins_cap != 0)
-		free(p->map.coins);
+		free(p->map->coins);
 	if (p->walls_cap != 0)
-		free(p->map.walls);
+		free(p->map->walls);
 	if (p->exits_cap != 0)
-		free(p->map.exits);
+		free(p->map->exits);
 	if (p->players_cap != 0)
-		free(p->map.players);
+		free(p->map->players);
 }
 
-t_perr	sl_parse_map(int fd, t_map_parser *p)
+t_perr	sl_parse_map(int fd, t_map_parser *p, t_map *map)
 {
 	uint8_t		buffer[BUF_SIZE];
 	uint8_t		byte;
@@ -80,6 +80,7 @@ t_perr	sl_parse_map(int fd, t_map_parser *p)
 
 	ft_mem_set(p, 0x00, sizeof(t_map_parser));
 	p->is_rectangle = true;
+	p->map = map;
 	reader = (t_reader){fd, (t_buffer){buffer, 0, BUF_SIZE}, 0};
 	while (true)
 	{

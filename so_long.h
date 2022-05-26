@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 14:28:33 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/25 12:48:36 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:25:07 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ typedef struct s_map_parser
 	size_t		walls_cap;
 	size_t		players_cap;
 	size_t		exits_cap;
-	t_map		map;
+	t_map		*map;
 }	t_map_parser;
 
 // Parses a map defined in the provided file descriptor.
@@ -232,7 +232,7 @@ typedef struct s_map_parser
 // Whatever happens, once this function has returned, the initialized
 // `t_map_parser` instance should be freed using the `sl_free_map_parser`
 // function.
-t_perr		sl_parse_map(int fd, t_map_parser *p);
+t_perr		sl_parse_map(int fd, t_map_parser *p, t_map *map);
 
 // Parses a single byte for a map.
 //
@@ -246,6 +246,12 @@ void		sl_free_map_parser(t_map_parser *p);
 // Prints to the standard error an error describing why the provided map was
 // rejected.
 void		sl_print_map_error(t_map_parser *p);
+
+// Loads a collection of maps.
+t_map		*sl_load_maps(const char *const *files, size_t len);
+
+// Frees the provided maps.
+void		sl_free_maps(t_map *maps, size_t len);
 
 // ========================================================================== //
 //                                Game State                                  //
@@ -381,6 +387,10 @@ typedef struct s_game
 	t_mlx		mlx;
 	t_win		win;
 
+	t_map		*maps;
+	size_t		map_count;
+	size_t		cur_map;
+
 	t_imgi		images[IMAGE_COUNT];
 	t_imgi		canvas;
 
@@ -405,7 +415,7 @@ bool		sl_load_images(t_mlx mlx, t_imgi *images);
 // Starts the game for the provided *valid* map.
 //
 // This function will only return once the game instance is closed.
-t_gerr		sl_game_start(t_map *map);
+t_gerr		sl_game_start(t_map *maps, size_t map_count);
 
 // Advances the game by one frame. This function is called by the event loop
 // of MiniLibX.

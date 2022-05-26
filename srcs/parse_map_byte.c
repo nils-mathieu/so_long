@@ -6,7 +6,7 @@
 /*   By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 17:07:19 by nmathieu          #+#    #+#             */
-/*   Updated: 2022/05/19 19:39:09 by nmathieu         ###   ########.fr       */
+/*   Updated: 2022/05/26 14:57:37 by nmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static bool	grow(t_upos **data, size_t *cap)
 
 static void	new_line(t_map_parser *p)
 {
-	if (p->map.height == 0)
-		p->map.width = p->line_len;
-	else if (p->map.width != p->line_len)
+	if (p->map->height == 0)
+		p->map->width = p->line_len;
+	else if (p->map->width != p->line_len)
 		p->is_rectangle = false;
-	p->map.height++;
+	p->map->height++;
 	p->line_len = 0;
 }
 
@@ -57,17 +57,17 @@ bool	sl_parse_byte(uint8_t byte, t_map_parser *p)
 	if (byte == '0')
 		return (p->line_len++, true);
 	else if (byte == '1')
-		return (push_and_add(&p->map.walls, &p->walls_cap, &p->map.wall_count,
-				(t_upos){p->line_len++, p->map.height}));
+		return (push_and_add(&p->map->walls, &p->walls_cap, &p->map->wall_count,
+				(t_upos){p->line_len++, p->map->height}));
 	else if (byte == 'C')
-		return (push_and_add(&p->map.coins, &p->coins_cap, &p->map.coin_count,
-				(t_upos){p->line_len++, p->map.height}));
+		return (push_and_add(&p->map->coins, &p->coins_cap, &p->map->coin_count,
+				(t_upos){p->line_len++, p->map->height}));
 	else if (byte == 'E')
-		return (push_and_add(&p->map.exits, &p->exits_cap, &p->map.exit_count,
-				(t_upos){p->line_len++, p->map.height}));
+		return (push_and_add(&p->map->exits, &p->exits_cap, &p->map->exit_count,
+				(t_upos){p->line_len++, p->map->height}));
 	else if (byte == 'P')
-		return (push_and_add(&p->map.players, &p->players_cap,
-				&p->map.player_count, (t_upos){p->line_len++, p->map.height}));
+		return (push_and_add(&p->map->players, &p->players_cap,
+			&p->map->player_count, (t_upos){p->line_len++, p->map->height}));
 	p->contains_invalid_character = true;
 	p->invalid_character = byte;
 	p->line_len++;

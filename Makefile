@@ -6,7 +6,7 @@
 #    By: nmathieu <nmathieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/13 13:32:31 by nmathieu          #+#    #+#              #
-#    Updated: 2022/05/25 12:22:13 by nmathieu         ###   ########.fr        #
+#    Updated: 2022/05/26 15:01:03 by nmathieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ define SRCS :=
 	render_enemies.c
 	ship_anim.c
 	animate_enemies.c
+	load_maps.c
 endef
 SRCS := $(strip $(SRCS))
 
