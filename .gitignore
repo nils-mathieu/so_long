@@ -1,7 +1,8 @@
 /so_long
-*.o
+/objs
 /.vscode
 /libs/libft/libft.a
+/libs/libft/inter
 /libs/minilibx/libmlx.a
 /libs/minilibx/libmlx_Linux.a
 /libs/minilibx/test/mlx-test
